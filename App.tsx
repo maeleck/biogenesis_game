@@ -842,7 +842,7 @@ function App() {
           {/* This div provides the full, unscaled dimensions for the scroll container to work with */}
           <div className="relative w-[2000px] h-[2500px]">
             {/* This div contains all the map content and is what gets scaled */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-gray-800 to-gray-900 transform origin-top-left scale-[0.35] md:scale-100">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-gray-800 to-gray-900 transform origin-top-left scale-[0.6] md:scale-100">
               <MapSection title="Cosmic Era" y="0%" height="20%" colorClass="bg-indigo-900/10" />
               <MapSection title="Planetary Era" y="20%" height="20%" colorClass="bg-yellow-900/10" />
               <MapSection title="Biological Era" y="40%" height="60%" colorClass="bg-teal-900/10" />
