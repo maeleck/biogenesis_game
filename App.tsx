@@ -17,6 +17,7 @@ import TestPanel from './components/TestPanel';
 import SettingsMenu from './components/CosmicPanel'; // Repurposed for SettingsMenu
 import DebugMenu from './components/DebugMenu';
 import { CogIcon, ChevronLeftIcon, ChevronRightIcon } from './components/Icons';
+import { UpgradeIcon } from './components/UpgradeIcons';
 
 
 const ALL_SUB_UPGRADES = UPGRADES.flatMap(u => u.panelContent?.subUpgrades || []);
@@ -74,7 +75,7 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDebugMenuOpen, setIsDebugMenuOpen] = useState(false);
   const [lastSaveTimestamp, setLastSaveTimestamp] = useState<number | null>(initialSaveData?.lastSaveTimestamp || null);
-  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(() => window.innerWidth > 768);
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(() => window.innerWidth > 1024);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(() => window.innerWidth > 1024);
 
 
@@ -554,6 +555,12 @@ function App() {
   const handleNodeClick = (upgradeId: string) => {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
     if (!upgrade) return;
+    
+    // On smaller screens, automatically close the left panel and open the right one.
+    if (window.innerWidth < 1024) {
+      setIsLeftPanelOpen(false);
+    }
+    setIsRightPanelOpen(true);
 
     const isPurchased = purchasedUpgrades.has(upgrade.id);
 
@@ -786,15 +793,42 @@ function App() {
           {isLeftPanelOpen ? <ChevronLeftIcon className="w-6 h-6" /> : <ChevronRightIcon className="w-6 h-6" />}
         </button>
         
-        {/* Right Panel Toggle */}
+        {/* Right Panel Toggle / Indicator */}
         {showRightPanel && (
-          <button
-            onClick={() => setIsRightPanelOpen(p => !p)}
-            className={`absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-l-lg p-1 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'right-64 md:right-80' : 'right-0'}`}
-            aria-label={isRightPanelOpen ? 'Close Chamber Panel' : 'Open Chamber Panel'}
-          >
-            {isRightPanelOpen ? <ChevronRightIcon className="w-6 h-6" /> : <ChevronLeftIcon className="w-6 h-6" />}
-          </button>
+          <>
+            {isRightPanelOpen ? (
+              <button
+                onClick={() => setIsRightPanelOpen(false)}
+                className="absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-l-lg p-1 transition-all duration-300 ease-in-out right-64 md:right-80"
+                aria-label="Close Panel"
+              >
+                <ChevronRightIcon className="w-6 h-6" />
+              </button>
+            ) : (
+              <>
+                {unlockedFeatures.has('protocell') && !activeCosmicPanel ? (
+                  <button
+                    onClick={() => setIsRightPanelOpen(true)}
+                    className="fixed top-1/2 right-0 -translate-y-1/2 z-30 bg-purple-600/90 backdrop-blur-sm border-y-2 border-l-2 border-purple-400/80 hover:bg-purple-500 text-white rounded-l-lg p-2 shadow-lg transition-all duration-300 ease-in-out flex items-center gap-2 animate-pulse"
+                    aria-label="Open Protocell Chamber"
+                  >
+                    <div className="transform -rotate-90 whitespace-nowrap flex items-center gap-2 px-1">
+                      <UpgradeIcon iconId="protocell" />
+                      <span className="font-semibold text-sm">Chamber</span>
+                    </div>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setIsRightPanelOpen(true)}
+                    className="absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-l-lg p-1 transition-all duration-300 ease-in-out right-0"
+                    aria-label="Open Panel"
+                  >
+                    <ChevronLeftIcon className="w-6 h-6" />
+                  </button>
+                )}
+              </>
+            )}
+          </>
         )}
 
         {/* Left Panel (Collapsible) */}
