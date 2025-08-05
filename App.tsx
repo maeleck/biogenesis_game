@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Resource, ProtocellState, HuntResult, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels } from './types';
 import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, HUNT_RESULTS, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT } from './constants';
@@ -15,7 +16,7 @@ import CosmicDetailPanel from './components/CosmicDetailPanel';
 import TestPanel from './components/TestPanel';
 import SettingsMenu from './components/CosmicPanel'; // Repurposed for SettingsMenu
 import DebugMenu from './components/DebugMenu';
-import { CogIcon, ChevronUpIcon, ChevronDownIcon } from './components/Icons';
+import { CogIcon, ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './components/Icons';
 import { UpgradeIcon } from './components/UpgradeIcons';
 
 
@@ -75,7 +76,7 @@ function App() {
   const [isDebugMenuOpen, setIsDebugMenuOpen] = useState(false);
   const [lastSaveTimestamp, setLastSaveTimestamp] = useState<number | null>(initialSaveData?.lastSaveTimestamp || null);
   const [isTopPanelOpen, setIsTopPanelOpen] = useState(() => window.innerWidth > 1024);
-  const [isBottomPanelOpen, setIsBottomPanelOpen] = useState(false);
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false);
 
 
   const mapRef = useRef<HTMLDivElement>(null);
@@ -558,7 +559,7 @@ function App() {
     if (window.innerWidth < 1024) {
       setIsTopPanelOpen(false);
     }
-    setIsBottomPanelOpen(true);
+    setIsLeftPanelOpen(true);
 
     const isPurchased = purchasedUpgrades.has(upgrade.id);
 
@@ -743,7 +744,7 @@ function App() {
   
   const fusionKnobs = KNOBS.filter(knob => unlockedKnobs.has(knob.id) && knob.workerType === 'Force');
   const synthesisKnobs = KNOBS.filter(knob => unlockedKnobs.has(knob.id) && knob.workerType === 'Hands');
-  const showBottomPanel = unlockedFeatures.has('protocell') || !!activeCosmicPanel;
+  const showLeftPanel = unlockedFeatures.has('protocell') || !!activeCosmicPanel;
 
 
   return (
@@ -757,7 +758,7 @@ function App() {
         </div>
       </header>
 
-      <main className="flex-grow flex flex-col relative overflow-hidden">
+      <main className="flex-grow flex relative overflow-hidden">
          <SettingsMenu 
             isOpen={isSettingsOpen}
             onClose={() => setIsSettingsOpen(false)}
@@ -776,124 +777,121 @@ function App() {
           onUnlockAll={handleDebugUnlockAll}
         />
         
-        {/* Top Panel */}
-        <div className="relative shrink-0 z-30">
-          <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isTopPanelOpen ? 'h-72 md:h-60' : 'h-0'}`}>
-            <div className="w-full h-full bg-black/30 backdrop-blur-lg border-b border-teal-500/20 shadow-2xl overflow-hidden p-3 flex flex-col">
-              <div className="flex border-b border-gray-700 shrink-0">
-                <button onClick={() => setActiveTab('resources')} className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'resources' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
-                  Resources
-                </button>
-                {unlockedFeatures.has('fusion') && (
-                  <button onClick={() => setActiveTab('fusion')} className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'fusion' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
-                    Fusion
-                  </button>
-                )}
-                {unlockedFeatures.has('synthesis') && (
-                  <button onClick={() => setActiveTab('synthesis')} className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'synthesis' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
-                    Synthesis
-                  </button>
-                )}
-                {unlockedFeatures.has('test') && (
-                  <button onClick={() => setActiveTab('knowledge')} className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'knowledge' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
-                    Knowledge
-                  </button>
-                )}
-              </div>
-              <div className="flex-grow overflow-y-auto scroll-container pt-3 pr-1">
-                {activeTab === 'resources' && (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                    {discoveredResources.map(resKey => (
-                      <ResourceDisplay key={resKey} resource={resKey} amount={resources[resKey]} capacity={resourceCapacities[resKey]}/>
-                    ))}
-                  </div>
-                )}
-                {activeTab === 'fusion' && (
-                  <div className="flex flex-col items-center">
-                    <p className="mb-2 text-base font-bold text-gray-300">Idle Force: <span className="text-green-400">{idleForce}</span> / {maxForce}</p>
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {fusionKnobs.length > 0 ? fusionKnobs.map(knob => (
-                          <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id]} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleForce > 0} canRemoveWorker={assignedWorkers[knob.id] > 0} />
-                      )) : <p className="text-center text-gray-500 italic md:col-span-2 lg:col-span-3">Unlock fusion upgrades on the map.</p>}
-                    </div>
-                  </div>
-                )}
-                {activeTab === 'synthesis' && (
-                  <div className="flex flex-col items-center">
-                    <p className="mb-2 text-base font-bold text-gray-300">Idle Hands: <span className="text-green-400">{idleHands}</span> / {maxHands}</p>
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {synthesisKnobs.length > 0 ? synthesisKnobs.map(knob => (
-                        <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id]} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleHands > 0} canRemoveWorker={assignedWorkers[knob.id] > 0} />
-                      )) : <p className="text-center text-gray-500 italic md:col-span-2 lg:col-span-3">Unlock synthesis upgrades on the map.</p>}
-                    </div>
-                  </div>
-                )}
-                {activeTab === 'knowledge' && <TestPanel testState={testState} onGenerateQuestion={handleGenerateQuestion} onAnswerQuestion={handleAnswerQuestion} availableQuestionCount={availableQuestions.length} baseGeneration={baseGeneration} stardustCapacity={stardustCapacity} />}
-              </div>
-            </div>
-          </div>
-          <button onClick={() => setIsTopPanelOpen(p => !p)} className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-40 bg-gray-800 hover:bg-gray-700 text-white rounded-full p-1 transition-all" aria-label={isTopPanelOpen ? 'Close Control Panel' : 'Open Control Panel'}>
-            {isTopPanelOpen ? <ChevronUpIcon className="w-6 h-6" /> : <ChevronDownIcon className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Map Area */}
-        <div ref={mapRef} id="map-container" className="flex-grow relative overflow-hidden cursor-grab">
-          {/* This div provides the full, unscaled dimensions for the scroll container to work with */}
-          <div className="relative w-[2000px] h-[2500px]">
-            {/* This div contains all the map content and is what gets scaled */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-gray-800 to-gray-900 transform origin-top-left scale-[0.6] md:scale-100">
-              <MapSection title="Cosmic Era" y="0%" height="20%" colorClass="bg-indigo-900/10" />
-              <MapSection title="Planetary Era" y="20%" height="20%" colorClass="bg-yellow-900/10" />
-              <MapSection title="Biological Era" y="40%" height="60%" colorClass="bg-teal-900/10" />
-              {MAP_SCENERY.map((scenery, index) => <MapScenery key={`scenery-${index}`} {...scenery} />)}
-              <MapLines upgrades={UPGRADES} purchasedUpgrades={purchasedUpgrades} visibleUpgrades={visibleUpgrades} />
-              {visibleUpgrades.map(upgrade => {
-                  const isPurchased = purchasedUpgrades.has(upgrade.id);
-                  const isInteractive = isPurchased && (!!upgrade.panelContent || unlockedFeatures.has('protocell'));
-                  const hasUnlimited = !!upgrade.panelContent?.subUpgrades.some(su => su.repeatable);
-                  return (
-                      <MapNode key={upgrade.id} upgrade={upgrade} isPurchased={isPurchased} isInteractive={isInteractive} canAfford={canAfford(upgrade.id)} onClick={() => handleNodeClick(upgrade.id)} resources={resources} hasUnlimited={hasUnlimited} />
-                  );
-              })}
-            </div>
-          </div>
-        </div>
-        
-        {/* Bottom Panel */}
-        {showBottomPanel && (
-          <div className="relative shrink-0 z-30">
-            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isBottomPanelOpen ? 'h-80 md:h-72' : 'h-0'}`}>
-              <div className="w-full h-full bg-black/30 backdrop-blur-lg border-t border-teal-500/20 shadow-2xl flex flex-col overflow-hidden">
+        {/* Left Panel */}
+        {showLeftPanel && (
+            <div className={`absolute top-0 left-0 h-full z-40 w-80 md:w-96 bg-black/40 backdrop-blur-lg border-r border-teal-500/20 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 {activeCosmicPanel ? (
-                  <CosmicDetailPanel onClose={() => setActiveCosmicPanel(null)} panelData={activeCosmicPanel} resources={resources} purchasedSubUpgrades={purchasedSubUpgrades} subUpgradeLevels={subUpgradeLevels} onPurchaseSubUpgrade={handlePurchaseSubUpgrade} />
+                  <CosmicDetailPanel onClose={() => {setActiveCosmicPanel(null); setIsLeftPanelOpen(false);}} panelData={activeCosmicPanel} resources={resources} purchasedSubUpgrades={purchasedSubUpgrades} subUpgradeLevels={subUpgradeLevels} onPurchaseSubUpgrade={handlePurchaseSubUpgrade} />
                 ) : (
                   unlockedFeatures.has('protocell') && <ProtocellPanel protocellTrainingLevels={protocellTrainingLevels} protocellAttributes={protocellAttributes} resources={resources} onTrain={handleTrainProtocell} onHunt={handleStartHunt} huntState={huntState} lastHuntResult={lastHuntResult} proteinLoot={proteinLoot} chamberUpgradeLevels={chamberUpgradeLevels} onPurchaseChamberUpgrade={handlePurchaseChamberUpgrade} unlockedFeatures={unlockedFeatures} />
                 )}
+            </div>
+        )}
+        
+        {/* Left Panel Toggles */}
+        {showLeftPanel && (
+            isLeftPanelOpen ? (
+                <button onClick={() => setIsLeftPanelOpen(false)} className="absolute top-1/2 -translate-y-1/2 left-80 md:left-96 z-50 bg-gray-800 hover:bg-gray-700 text-white rounded-r-full p-1 transition-all" aria-label="Close Panel">
+                    <ChevronLeftIcon className="w-6 h-6" />
+                </button>
+            ) : (
+                unlockedFeatures.has('protocell') ? (
+                    <button onClick={() => { setIsLeftPanelOpen(true); setActiveCosmicPanel(null); }} className="absolute top-1/2 -translate-y-1/2 left-0 z-30 bg-purple-600/90 backdrop-blur-sm border-y-2 border-r-2 border-purple-400/80 hover:bg-purple-500 text-white rounded-r-lg px-1 py-3 shadow-lg transition-all animate-pulse" aria-label="Open Protocell Chamber">
+                        <div className="flex flex-col items-center gap-2">
+                            <UpgradeIcon iconId="protocell" />
+                        </div>
+                    </button>
+                ) : (
+                    <button onClick={() => setIsLeftPanelOpen(true)} className="absolute top-1/2 -translate-y-1/2 left-0 z-30 bg-gray-800 hover:bg-gray-700 text-white rounded-r-full p-1 transition-all" aria-label="Open Panel">
+                        <ChevronRightIcon className="w-6 h-6" />
+                    </button>
+                )
+            )
+        )}
+        
+        <div className="flex-grow flex flex-col overflow-hidden">
+            {/* Top Panel */}
+            <div className="relative shrink-0 z-20">
+              <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isTopPanelOpen ? 'h-72 md:h-60' : 'h-0'}`}>
+                <div className="w-full h-full bg-black/30 backdrop-blur-lg border-b border-teal-500/20 shadow-2xl overflow-hidden p-3 flex flex-col">
+                  <div className="flex border-b border-gray-700 shrink-0">
+                    <button onClick={() => setActiveTab('resources')} className={`px-2 py-1.5 text-[11px] md:px-3 md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'resources' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
+                      Resources
+                    </button>
+                    {unlockedFeatures.has('fusion') && (
+                      <button onClick={() => setActiveTab('fusion')} className={`px-2 py-1.5 text-[11px] md:px-3 md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'fusion' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
+                        Fusion
+                      </button>
+                    )}
+                    {unlockedFeatures.has('synthesis') && (
+                      <button onClick={() => setActiveTab('synthesis')} className={`px-2 py-1.5 text-[11px] md:px-3 md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'synthesis' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
+                        Synthesis
+                      </button>
+                    )}
+                    {unlockedFeatures.has('test') && (
+                      <button onClick={() => setActiveTab('knowledge')} className={`px-2 py-1.5 text-[11px] md:px-3 md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'knowledge' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>
+                        Knowledge
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex-grow overflow-y-auto scroll-container pt-3 pr-1">
+                    {activeTab === 'resources' && (
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                        {discoveredResources.map(resKey => (
+                          <ResourceDisplay key={resKey} resource={resKey} amount={resources[resKey]} capacity={resourceCapacities[resKey]}/>
+                        ))}
+                      </div>
+                    )}
+                    {activeTab === 'fusion' && (
+                      <div className="flex flex-col items-center">
+                        <p className="mb-2 text-sm md:text-base font-bold text-gray-300">Idle Force: <span className="text-green-400">{idleForce}</span> / {maxForce}</p>
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {fusionKnobs.length > 0 ? fusionKnobs.map(knob => (
+                              <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id]} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleForce > 0} canRemoveWorker={assignedWorkers[knob.id] > 0} />
+                          )) : <p className="text-center text-gray-500 italic md:col-span-2 lg:col-span-3">Unlock fusion upgrades on the map.</p>}
+                        </div>
+                      </div>
+                    )}
+                    {activeTab === 'synthesis' && (
+                      <div className="flex flex-col items-center">
+                        <p className="mb-2 text-sm md:text-base font-bold text-gray-300">Idle Hands: <span className="text-green-400">{idleHands}</span> / {maxHands}</p>
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {synthesisKnobs.length > 0 ? synthesisKnobs.map(knob => (
+                            <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id]} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleHands > 0} canRemoveWorker={assignedWorkers[knob.id] > 0} />
+                          )) : <p className="text-center text-gray-500 italic md:col-span-2 lg:col-span-3">Unlock synthesis upgrades on the map.</p>}
+                        </div>
+                      </div>
+                    )}
+                    {activeTab === 'knowledge' && <TestPanel testState={testState} onGenerateQuestion={handleGenerateQuestion} onAnswerQuestion={handleAnswerQuestion} availableQuestionCount={availableQuestions.length} baseGeneration={baseGeneration} stardustCapacity={stardustCapacity} />}
+                  </div>
+                </div>
+              </div>
+              <button onClick={() => setIsTopPanelOpen(p => !p)} className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-40 bg-gray-800 hover:bg-gray-700 text-white rounded-full p-1 transition-all" aria-label={isTopPanelOpen ? 'Close Control Panel' : 'Open Control Panel'}>
+                {isTopPanelOpen ? <ChevronUpIcon className="w-6 h-6" /> : <ChevronDownIcon className="w-6 h-6" />}
+              </button>
+            </div>
+    
+            {/* Map Area */}
+            <div ref={mapRef} id="map-container" className="flex-grow relative overflow-hidden cursor-grab">
+              <div className="relative w-[2000px] h-[2500px]">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-gray-800 to-gray-900 transform origin-top-left scale-[0.6] md:scale-100">
+                  <MapSection title="Cosmic Era" y="0%" height="20%" colorClass="bg-indigo-900/10" />
+                  <MapSection title="Planetary Era" y="20%" height="20%" colorClass="bg-yellow-900/10" />
+                  <MapSection title="Biological Era" y="40%" height="60%" colorClass="bg-teal-900/10" />
+                  {MAP_SCENERY.map((scenery, index) => <MapScenery key={`scenery-${index}`} {...scenery} />)}
+                  <MapLines upgrades={UPGRADES} purchasedUpgrades={purchasedUpgrades} visibleUpgrades={visibleUpgrades} />
+                  {visibleUpgrades.map(upgrade => {
+                      const isPurchased = purchasedUpgrades.has(upgrade.id);
+                      const isInteractive = isPurchased && (!!upgrade.panelContent || unlockedFeatures.has('protocell'));
+                      const hasUnlimited = !!upgrade.panelContent?.subUpgrades.some(su => su.repeatable);
+                      return (
+                          <MapNode key={upgrade.id} upgrade={upgrade} isPurchased={isPurchased} isInteractive={isInteractive} canAfford={canAfford(upgrade.id)} onClick={() => handleNodeClick(upgrade.id)} resources={resources} hasUnlimited={hasUnlimited} />
+                      );
+                  })}
+                </div>
               </div>
             </div>
-            {isBottomPanelOpen ? (
-              <button onClick={() => setIsBottomPanelOpen(false)} className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-800 hover:bg-gray-700 text-white rounded-full p-1 transition-all" aria-label="Close Panel">
-                <ChevronUpIcon className="w-6 h-6" />
-              </button>
-            ) : (
-              <>
-                {unlockedFeatures.has('protocell') && !activeCosmicPanel ? (
-                  <button onClick={() => setIsBottomPanelOpen(true)} className="absolute bottom-0 left-1/2 -translate-x-1/2 z-40 bg-purple-600/90 backdrop-blur-sm border-x-2 border-t-2 border-purple-400/80 hover:bg-purple-500 text-white rounded-t-lg px-4 py-1 shadow-lg transition-all animate-pulse" aria-label="Open Protocell Chamber">
-                    <div className="whitespace-nowrap flex items-center gap-2">
-                      <UpgradeIcon iconId="protocell" />
-                      <span className="font-semibold text-sm">Chamber Ready</span>
-                    </div>
-                  </button>
-                ) : (
-                  <button onClick={() => setIsBottomPanelOpen(true)} className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-gray-800 hover:bg-gray-700 text-white rounded-full p-1 transition-all" aria-label="Open Panel">
-                    <ChevronDownIcon className="w-6 h-6" />
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        )}
+        </div>
       </main>
     </div>
   );

@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useMemo } from 'react';
 import { Resource, SubUpgrade, PanelContent, Upgrade, Fact } from '../types';
 import { ResourceIcon, XMarkIcon, InfinityIcon } from './Icons';
@@ -64,7 +65,7 @@ const CosmicDetailPanel: React.FC<CosmicDetailPanelProps> = ({ onClose, panelDat
 
         <div className="flex-grow overflow-y-auto scroll-container pr-2">
             {activeTab === 'enhancements' && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="space-y-3">
                 {content.subUpgrades.map(sub => {
                     const isRepeatable = !!sub.repeatable;
                     const currentLevel = subUpgradeLevels[sub.id] || 0;

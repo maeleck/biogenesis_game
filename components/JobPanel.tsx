@@ -18,7 +18,7 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ knob, workers, onAddWorker,
   return (
     <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700 flex flex-col h-full">
       <div className="flex-grow">
-        <h3 className="text-sm md:text-base font-bold text-teal-300">{knob.name}</h3>
+        <h3 className="text-sm font-bold text-teal-300">{knob.name}</h3>
         <p className="text-gray-400 mt-1 mb-3 text-[11px] md:text-xs">{knob.description}</p>
         
         {knob.workerType === 'Hands' && (

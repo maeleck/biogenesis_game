@@ -23,7 +23,7 @@ const TestPanel: React.FC<TestPanelProps> = ({ testState, onGenerateQuestion, on
 
   return (
     <div className="p-1">
-      <h3 className="text-base md:text-lg font-bold text-teal-300 mb-2">Knowledge</h3>
+      <h3 className="text-base font-bold text-teal-300 mb-2">Knowledge</h3>
       <p className="text-[11px] md:text-xs text-gray-400 mb-4">
         Answer questions based on your unlocked scientific facts to earn rewards. You have unlocked {availableQuestionCount} questions.
       </p>
@@ -32,7 +32,7 @@ const TestPanel: React.FC<TestPanelProps> = ({ testState, onGenerateQuestion, on
         <button
           onClick={onGenerateQuestion}
           disabled={availableQuestionCount === 0}
-          className="w-full px-4 py-2 md:px-6 md:py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-bold text-sm md:text-base disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+          className="w-full px-4 py-2 md:px-6 md:py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-bold text-xs md:text-sm disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
         >
           {availableQuestionCount > 0 ? 'Test Your Knowledge' : 'Unlock More Facts'}
         </button>
@@ -61,7 +61,7 @@ const TestPanel: React.FC<TestPanelProps> = ({ testState, onGenerateQuestion, on
           {lastAnswerStatus === 'correct' && (
             <div className="flex flex-col items-center text-green-400">
               <CheckCircleIcon className="w-8 h-8 md:w-10 md:h-10" />
-              <p className="text-base md:text-lg font-bold mt-2">Correct!</p>
+              <p className="text-base font-bold mt-2">Correct!</p>
               <div className="mt-4 text-left w-full space-y-2 text-[11px] md:text-xs">
                  <p className="font-semibold text-gray-300">Rewards Earned:</p>
                  <div className="p-2 bg-gray-900/50 rounded-md">
@@ -78,7 +78,7 @@ const TestPanel: React.FC<TestPanelProps> = ({ testState, onGenerateQuestion, on
           {lastAnswerStatus === 'incorrect' && (
             <div className="flex flex-col items-center text-red-400">
               <XCircleIcon className="w-8 h-8 md:w-10 md:h-10" />
-              <p className="text-base md:text-lg font-bold mt-2">Incorrect</p>
+              <p className="text-base font-bold mt-2">Incorrect</p>
               <p className="text-[11px] md:text-xs text-gray-400 mt-1">Better luck next time. Study the facts to improve!</p>
             </div>
           )}

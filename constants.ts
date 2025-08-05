@@ -135,7 +135,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Star Cluster',
     description: 'Form a dense cluster of stars, a stellar nursery that passively generates stardust.',
     cost: [{ resource: Resource.Stardust, amount: 1500 }],
-    position: { x: 20, y: 5 },
+    position: { x: 20, y: 10 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 20 }],
     icon: 'star_cluster',
     dependencies: ['cosmic_origins'],
