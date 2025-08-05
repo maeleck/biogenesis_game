@@ -75,7 +75,7 @@ function App() {
   const [isDebugMenuOpen, setIsDebugMenuOpen] = useState(false);
   const [lastSaveTimestamp, setLastSaveTimestamp] = useState<number | null>(initialSaveData?.lastSaveTimestamp || null);
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(() => window.innerWidth > 768);
-  const [isRightPanelOpen, setIsRightPanelOpen] = useState(() => window.innerWidth > 768);
+  const [isRightPanelOpen, setIsRightPanelOpen] = useState(() => window.innerWidth > 1024);
 
 
   const mapRef = useRef<HTMLDivElement>(null);
@@ -780,8 +780,7 @@ function App() {
         {/* Left Panel Toggle */}
         <button
           onClick={() => setIsLeftPanelOpen(p => !p)}
-          className="absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-r-lg p-1 transition-all duration-300 ease-in-out"
-          style={{ left: isLeftPanelOpen ? '20rem' : '0' }} // 20rem is w-80
+          className={`absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-r-lg p-1 transition-all duration-300 ease-in-out ${isLeftPanelOpen ? 'left-64 md:left-80' : 'left-0'}`}
           aria-label={isLeftPanelOpen ? 'Close Control Panel' : 'Open Control Panel'}
         >
           {isLeftPanelOpen ? <ChevronLeftIcon className="w-6 h-6" /> : <ChevronRightIcon className="w-6 h-6" />}
@@ -791,8 +790,7 @@ function App() {
         {showRightPanel && (
           <button
             onClick={() => setIsRightPanelOpen(p => !p)}
-            className="absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-l-lg p-1 transition-all duration-300 ease-in-out"
-            style={{ right: isRightPanelOpen ? '20rem' : '0' }}
+            className={`absolute top-1/2 -translate-y-1/2 z-30 bg-gray-800/80 hover:bg-gray-700 text-white rounded-l-lg p-1 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'right-64 md:right-80' : 'right-0'}`}
             aria-label={isRightPanelOpen ? 'Close Chamber Panel' : 'Open Chamber Panel'}
           >
             {isRightPanelOpen ? <ChevronRightIcon className="w-6 h-6" /> : <ChevronLeftIcon className="w-6 h-6" />}
@@ -800,15 +798,15 @@ function App() {
         )}
 
         {/* Left Panel (Collapsible) */}
-        <div className={`shrink-0 transition-all duration-300 ease-in-out ${isLeftPanelOpen ? 'w-80' : 'w-0'}`}>
-            <div className="w-80 h-full bg-black/30 backdrop-blur-lg border-r border-teal-500/20 shadow-2xl overflow-hidden">
+        <div className={`shrink-0 transition-all duration-300 ease-in-out ${isLeftPanelOpen ? 'w-64 md:w-80' : 'w-0'}`}>
+            <div className="w-64 md:w-80 h-full bg-black/30 backdrop-blur-lg border-r border-teal-500/20 shadow-2xl overflow-hidden">
                 <div className="p-3 w-full h-full flex flex-col">
-                    <h2 className="text-xl font-semibold mb-3 text-cyan-300 shrink-0">Control Panel</h2>
+                    <h2 className="text-lg md:text-xl font-semibold mb-3 text-cyan-300 shrink-0">Control Panel</h2>
                     
                     <div className="flex border-b border-gray-700 mb-3 shrink-0 overflow-x-auto">
                         <button
                             onClick={() => setActiveTab('resources')}
-                            className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'resources' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
+                            className={`px-3 py-1.5 text-[11px] md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'resources' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
                             aria-current={activeTab === 'resources' ? 'page' : undefined}
                         >
                             Resources
@@ -816,7 +814,7 @@ function App() {
                         {unlockedFeatures.has('fusion') && (
                             <button
                                 onClick={() => setActiveTab('fusion')}
-                                className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'fusion' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
+                                className={`px-3 py-1.5 text-[11px] md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'fusion' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
                                 aria-current={activeTab === 'fusion' ? 'page' : undefined}
                             >
                                 Fusion
@@ -825,7 +823,7 @@ function App() {
                         {unlockedFeatures.has('synthesis') && (
                             <button
                                 onClick={() => setActiveTab('synthesis')}
-                                className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'synthesis' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
+                                className={`px-3 py-1.5 text-[11px] md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'synthesis' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
                                 aria-current={activeTab === 'synthesis' ? 'page' : undefined}
                             >
                                 Synthesis
@@ -834,7 +832,7 @@ function App() {
                         {unlockedFeatures.has('test') && (
                             <button
                                 onClick={() => setActiveTab('knowledge')}
-                                className={`px-3 py-1.5 text-xs font-medium transition-colors shrink-0 ${activeTab === 'knowledge' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
+                                className={`px-3 py-1.5 text-[11px] md:text-xs font-medium transition-colors shrink-0 ${activeTab === 'knowledge' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}
                                 aria-current={activeTab === 'knowledge' ? 'page' : undefined}
                             >
                                 Knowledge
@@ -857,8 +855,8 @@ function App() {
                         )}
                         {activeTab === 'fusion' && (
                              <div>
-                                <h3 className="text-lg font-bold text-indigo-300 mb-2">Cosmic Force</h3>
-                                <p className="text-center mb-4 text-base font-bold text-gray-300">Idle Force: <span className="text-green-400">{idleForce}</span> / {maxForce}</p>
+                                <h3 className="text-base md:text-lg font-bold text-indigo-300 mb-2">Cosmic Force</h3>
+                                <p className="text-center mb-4 text-sm md:text-base font-bold text-gray-300">Idle Force: <span className="text-green-400">{idleForce}</span> / {maxForce}</p>
                                 <div className="grid grid-cols-1 gap-4">
                                     {fusionKnobs.length > 0 ? fusionKnobs.map(knob => (
                                         <ProcessPanel
@@ -878,8 +876,8 @@ function App() {
                         )}
                         {activeTab === 'synthesis' && (
                             <div>
-                                <h3 className="text-lg font-bold text-green-300 mb-2">Biological Hands</h3>
-                                <p className="text-center mb-4 text-base font-bold text-gray-300">Idle Hands: <span className="text-green-400">{idleHands}</span> / {maxHands}</p>
+                                <h3 className="text-base md:text-lg font-bold text-green-300 mb-2">Biological Hands</h3>
+                                <p className="text-center mb-4 text-sm md:text-base font-bold text-gray-300">Idle Hands: <span className="text-green-400">{idleHands}</span> / {maxHands}</p>
                                 <div className="grid grid-cols-1 gap-4">
                                     {synthesisKnobs.length > 0 ? synthesisKnobs.map(knob => (
                                         <ProcessPanel
@@ -952,8 +950,8 @@ function App() {
         
         {/* Right Panel (Collapsible) */}
         {showRightPanel && (
-          <div className={`shrink-0 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'w-80' : 'w-0'}`}>
-            <div className="w-80 h-full bg-black/30 backdrop-blur-lg border-l border-teal-500/20 shadow-2xl flex flex-col overflow-hidden">
+          <div className={`shrink-0 transition-all duration-300 ease-in-out ${isRightPanelOpen ? 'w-64 md:w-80' : 'w-0'}`}>
+            <div className="w-64 md:w-80 h-full bg-black/30 backdrop-blur-lg border-l border-teal-500/20 shadow-2xl flex flex-col overflow-hidden">
               {activeCosmicPanel ? (
                 <CosmicDetailPanel
                   onClose={() => setActiveCosmicPanel(null)}

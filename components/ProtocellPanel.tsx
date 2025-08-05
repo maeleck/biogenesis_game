@@ -1,5 +1,6 @@
 
 
+
 import React, { useState } from 'react';
 import { Resource, ProtocellState, HuntResult, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, ChamberUpgrade } from '../types';
 import { PROTOCELL_TRAINING_CONFIG, CHAMBER_UPGRADES } from '../constants';
@@ -32,17 +33,17 @@ const TrainingCard: React.FC<{
     const canAfford = resources[cost.resource] >= cost.amount;
 
     return (
-        <div className="bg-gray-800/70 p-4 rounded-lg border border-gray-700 flex flex-col items-center text-center">
+        <div className="bg-gray-800/70 p-3 rounded-lg border border-gray-700 flex flex-col items-center text-center">
             <div className="flex items-center gap-2">
-                <AttributeIcon iconId={config.icon as any} className="w-6 h-6 text-teal-300" />
-                <h4 className="text-base font-bold text-teal-300">{config.name}</h4>
+                <AttributeIcon iconId={config.icon as any} className="w-5 h-5 md:w-6 md:h-6 text-teal-300" />
+                <h4 className="text-sm md:text-base font-bold text-teal-300">{config.name}</h4>
             </div>
-            <p className="text-gray-400 text-xs mt-1 h-10">{config.description}</p>
-            <p className="text-xl font-mono my-2" title={`Trained: ${trainingLevel} | Total: ${totalValue}`}>{totalValue}</p>
+            <p className="text-gray-400 text-[11px] md:text-xs mt-1 h-9 md:h-10">{config.description}</p>
+            <p className="text-lg md:text-xl font-mono my-2" title={`Trained: ${trainingLevel} | Total: ${totalValue}`}>{totalValue}</p>
             <button
                 onClick={() => onTrain(attrId)}
                 disabled={!canAfford}
-                className="w-full text-xs font-semibold px-3 py-2 bg-teal-600 hover:bg-teal-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
+                className="w-full text-[11px] md:text-xs font-semibold px-3 py-2 bg-teal-600 hover:bg-teal-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
             >
                 Train (Lvl {trainingLevel})
                 <div className={`flex items-center justify-center gap-2 mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
@@ -65,22 +66,22 @@ const ChamberUpgradeCard: React.FC<{
   const isMaxLevel = level >= upgrade.maxLevel;
 
   return (
-    <div className={`p-3 rounded-lg border flex items-start gap-4 ${isMaxLevel ? 'bg-amber-900/50 border-amber-700' : 'bg-gray-800/70 border-gray-700'}`}>
+    <div className={`p-3 rounded-lg border flex items-start gap-3 ${isMaxLevel ? 'bg-amber-900/50 border-amber-700' : 'bg-gray-800/70 border-gray-700'}`}>
       <div className="flex-grow">
-        <h4 className={`font-bold text-sm ${isMaxLevel ? 'text-amber-200' : 'text-purple-300'}`}>{upgrade.name}</h4>
-        <p className="text-xs text-gray-400 mt-1">{upgrade.description}</p>
-        <p className="text-xs text-yellow-300 mt-1">Level: {level} / {upgrade.maxLevel}</p>
+        <h4 className={`font-bold text-xs md:text-sm ${isMaxLevel ? 'text-amber-200' : 'text-purple-300'}`}>{upgrade.name}</h4>
+        <p className="text-[11px] md:text-xs text-gray-400 mt-1">{upgrade.description}</p>
+        <p className="text-[11px] md:text-xs text-yellow-300 mt-1">Level: {level} / {upgrade.maxLevel}</p>
       </div>
-      <div className="flex-shrink-0 w-24 text-center">
+      <div className="flex-shrink-0 w-20 md:w-24 text-center">
         <button
           onClick={() => onPurchase(upgrade.id)}
           disabled={isMaxLevel || !canAfford}
-          className="w-full text-sm font-semibold px-2 py-2 bg-purple-600 hover:bg-purple-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
+          className="w-full text-xs md:text-sm font-semibold px-2 py-2 bg-purple-600 hover:bg-purple-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
         >
           {isMaxLevel ? 'Max' : (
             <div className="flex flex-col items-center">
-              <span className="text-xs">Upgrade</span>
-              <div className={`flex items-center justify-center gap-1 text-xs mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
+              <span className="text-[11px] md:text-xs">Upgrade</span>
+              <div className={`flex items-center justify-center gap-1 text-[11px] md:text-xs mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
                 <ProteinLootIcon lootType={upgrade.lootType} className="w-3 h-3"/>
                 <span>{Math.floor(cost).toLocaleString()}</span>
               </div>
@@ -102,22 +103,22 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
   const [activeTab, setActiveTab] = useState<'training' | 'hunting' | 'chamber'>('training');
 
   return (
-    <div className="p-4 w-full h-full flex flex-col relative">
-        <h2 className="text-xl font-semibold mb-2 text-cyan-300 shrink-0">Protocell Chamber</h2>
+    <div className="p-3 md:p-4 w-full h-full flex flex-col relative">
+        <h2 className="text-lg md:text-xl font-semibold mb-2 text-cyan-300 shrink-0">Protocell Chamber</h2>
         
             <div className="flex border-b border-gray-700 mb-4 shrink-0">
-            <button onClick={() => setActiveTab('training')} className={`px-4 py-2 text-xs font-medium transition-colors ${activeTab === 'training' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Training</button>
-            <button onClick={() => setActiveTab('hunting')} className={`px-4 py-2 text-xs font-medium transition-colors ${activeTab === 'hunting' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Hunting</button>
+            <button onClick={() => setActiveTab('training')} className={`px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-medium transition-colors ${activeTab === 'training' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Training</button>
+            <button onClick={() => setActiveTab('hunting')} className={`px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-medium transition-colors ${activeTab === 'hunting' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Hunting</button>
             {unlockedFeatures.has('chamber_upgrades') && (
-                <button onClick={() => setActiveTab('chamber')} className={`px-4 py-2 text-xs font-medium transition-colors ${activeTab === 'chamber' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Chamber</button>
+                <button onClick={() => setActiveTab('chamber')} className={`px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-medium transition-colors ${activeTab === 'chamber' ? 'text-teal-300 border-b-2 border-teal-300' : 'text-gray-400 hover:text-white'}`}>Chamber</button>
             )}
         </div>
 
         <div className="flex-grow overflow-y-auto scroll-container pr-2 space-y-6">
             {activeTab === 'training' && (
             <div>
-                <h3 className="text-lg font-bold text-teal-300 mb-3">Train Attributes</h3>
-                <p className="text-xs text-gray-400 mb-4">Use standard biological resources to train your protocell's core attributes.</p>
+                <h3 className="text-base md:text-lg font-bold text-teal-300 mb-3">Train Attributes</h3>
+                <p className="text-[11px] md:text-xs text-gray-400 mb-4">Use standard biological resources to train your protocell's core attributes.</p>
                 <div className="grid grid-cols-1 gap-3">
                     <TrainingCard attrId="speed" trainingLevel={protocellTrainingLevels.speed} totalValue={protocellAttributes.speed} resources={resources} onTrain={onTrain} />
                     <TrainingCard attrId="efficiency" trainingLevel={protocellTrainingLevels.efficiency} totalValue={protocellAttributes.efficiency} resources={resources} onTrain={onTrain} />
@@ -128,13 +129,13 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
 
             {activeTab === 'hunting' && (
             <div>
-                <h3 className="text-lg font-bold text-teal-300 mb-3">Primordial Hunt</h3>
-                    <p className="text-xs text-gray-400 mb-4">Send your protocell to hunt in the primordial soup for rare biological materials used to upgrade its chamber.</p>
-                <div className="bg-gray-800/70 p-4 rounded-lg border border-gray-700">
+                <h3 className="text-base md:text-lg font-bold text-teal-300 mb-3">Primordial Hunt</h3>
+                    <p className="text-[11px] md:text-xs text-gray-400 mb-4">Send your protocell to hunt in the primordial soup for rare biological materials used to upgrade its chamber.</p>
+                <div className="bg-gray-800/70 p-3 md:p-4 rounded-lg border border-gray-700">
                         <button 
                         onClick={onHunt}
                         disabled={huntState.status === 'hunting'}
-                        className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-bold text-base disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                        className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-bold text-sm md:text-base disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
                         >
                         {huntState.status === 'hunting' && <Spinner />}
                         {huntState.status === 'hunting' ? 'Hunting...' : 'Begin Hunt'}
@@ -145,16 +146,16 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
                         {lastHuntResult && (
                             <div className="mt-4 text-left space-y-4">
                                 <blockquote className="p-3 bg-gray-900/50 rounded-md border-l-4 border-cyan-400">
-                                <p className="text-sm italic text-cyan-200">"{lastHuntResult.adventure}"</p>
+                                <p className="text-xs md:text-sm italic text-cyan-200">"{lastHuntResult.adventure}"</p>
                                 </blockquote>
                                 
                                 <div className="space-y-2">
-                                    <h5 className="font-bold text-green-400">Loot Gained:</h5>
+                                    <h5 className="font-bold text-sm text-green-400">Loot Gained:</h5>
                                     {Object.keys(lastHuntResult.rewards).length > 0 ? (
                                     Object.entries(lastHuntResult.rewards).map(([lootKey, amount]) => (
                                         <div key={lootKey} className="p-2 bg-gray-900/50 rounded-lg border border-gray-700/50 flex items-center gap-2">
                                             <ProteinLootIcon lootType={lootKey as ProteinLootType} className="w-5 h-5"/>
-                                            <span className="font-semibold text-sm">{lootKey}:</span>
+                                            <span className="font-semibold text-xs md:text-sm">{lootKey}:</span>
                                             <span className="font-mono text-cyan-300 ml-auto">+{amount.toLocaleString()}</span>
                                         </div>
                                     ))
@@ -170,17 +171,17 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
             
             {activeTab === 'chamber' && unlockedFeatures.has('chamber_upgrades') && (
             <div>
-                <h3 className="text-lg font-bold text-purple-300 mb-3">Chamber Upgrades</h3>
-                    <p className="text-xs text-gray-400 mb-4">Use materials from successful hunts to permanently upgrade the protocell's housing and internal systems.</p>
+                <h3 className="text-base md:text-lg font-bold text-purple-300 mb-3">Chamber Upgrades</h3>
+                    <p className="text-[11px] md:text-xs text-gray-400 mb-4">Use materials from successful hunts to permanently upgrade the protocell's housing and internal systems.</p>
 
                 <div className="bg-gray-800/70 p-3 rounded-lg border border-gray-700 mb-4">
-                    <h4 className="text-sm font-bold text-gray-300 mb-2">Loot Storage</h4>
-                    <div className="grid grid-cols-3 gap-2 text-center">
+                    <h4 className="text-xs md:text-sm font-bold text-gray-300 mb-2">Loot Storage</h4>
+                    <div className="grid grid-cols-3 gap-1 md:gap-2 text-center">
                     {(Object.keys(proteinLoot) as ProteinLootType[]).map(lootType => (
                         <div key={lootType} className="p-2 rounded bg-black/30">
-                            <ProteinLootIcon lootType={lootType} className="w-6 h-6 mx-auto" />
-                            <p className="text-xs mt-1 truncate" title={lootType}>{lootType.replace(' ', '\n')}</p>
-                            <p className="font-mono text-sm text-cyan-300">{Math.floor(proteinLoot[lootType]).toLocaleString()}</p>
+                            <ProteinLootIcon lootType={lootType} className="w-5 h-5 md:w-6 md:h-6 mx-auto" />
+                            <p className="text-[10px] leading-tight md:text-xs mt-1" title={lootType}>{lootType.replace(' ', '\n')}</p>
+                            <p className="font-mono text-xs md:text-sm text-cyan-300">{Math.floor(proteinLoot[lootType]).toLocaleString()}</p>
                         </div>
                     ))}
                     </div>
