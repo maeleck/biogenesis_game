@@ -1,6 +1,5 @@
 
 
-
 import React, { useState } from 'react';
 import { Resource, ProtocellState, HuntResult, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, ChamberUpgrade } from '../types';
 import { PROTOCELL_TRAINING_CONFIG, CHAMBER_UPGRADES } from '../constants';
@@ -119,7 +118,7 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
             <div>
                 <h3 className="text-base md:text-lg font-bold text-teal-300 mb-3">Train Attributes</h3>
                 <p className="text-[11px] md:text-xs text-gray-400 mb-4">Use standard biological resources to train your protocell's core attributes.</p>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <TrainingCard attrId="speed" trainingLevel={protocellTrainingLevels.speed} totalValue={protocellAttributes.speed} resources={resources} onTrain={onTrain} />
                     <TrainingCard attrId="efficiency" trainingLevel={protocellTrainingLevels.efficiency} totalValue={protocellAttributes.efficiency} resources={resources} onTrain={onTrain} />
                     <TrainingCard attrId="resilience" trainingLevel={protocellTrainingLevels.resilience} totalValue={protocellAttributes.resilience} resources={resources} onTrain={onTrain} />
@@ -187,7 +186,7 @@ const ProtocellPanel: React.FC<ProtocellPanelProps> = (props) => {
                     </div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     {CHAMBER_UPGRADES.map(upgrade => (
                         <ChamberUpgradeCard 
                         key={upgrade.id}
