@@ -1,6 +1,3 @@
-
-
-
 import React, { useMemo } from 'react';
 import { Upgrade } from '../types';
 
@@ -97,7 +94,7 @@ const MapLines: React.FC<MapLinesProps> = ({ upgrades, purchasedUpgrades, visibl
               y1={y1}
               x2={x2}
               y2={y2}
-              stroke={isPurchased ? 'rgb(20 184 166)' : 'rgba(107, 114, 128, 0.5)'}
+              stroke={isPurchased ? 'rgb(168 85 247)' : 'rgba(100, 116, 139, 0.5)'}
               strokeWidth="3"
               strokeDasharray={isPreview ? '5 5' : 'none'}
               className={`line-base ${shouldAnimate && !isPreview ? 'line-drawing' : ''}`}

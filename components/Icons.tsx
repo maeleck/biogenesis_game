@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Resource, ProteinLootType } from '../types';
 
@@ -173,13 +172,13 @@ const GeneticMaterialIcon: React.FC<IconProps> = ({ className }) => (
 export const ResourceIcon: React.FC<{ resource: Resource; className?: string }> = ({ resource, className = 'w-6 h-6' }) => {
   switch (resource) {
     case Resource.Stardust: return <StardustIcon className={`${className} text-yellow-300`} />;
-    case Resource.Hydrogen: return <HydrogenIcon className={`${className} text-indigo-300`} />;
-    case Resource.Carbon: return <CarbonIcon className={`${className} text-gray-400`} />;
-    case Resource.Iron: return <IronIcon className={`${className} text-red-400`} />;
+    case Resource.Hydrogen: return <HydrogenIcon className={`${className} text-sky-300`} />;
+    case Resource.Carbon: return <CarbonIcon className={`${className} text-slate-400`} />;
+    case Resource.Iron: return <IronIcon className={`${className} text-rose-400`} />;
     case Resource.Rock: return <RockIcon className={`${className} text-orange-400`} />;
     case Resource.Water: return <WaterIcon className={`${className} text-blue-400`} />;
     case Resource.PrimordialSoup: return <PrimordialSoupIcon className={`${className} text-purple-400`} />;
-    case Resource.AminoAcids: return <AminoAcidIcon className={`${className} text-green-400`} />;
+    case Resource.AminoAcids: return <AminoAcidIcon className={`${className} text-emerald-400`} />;
     case Resource.Nucleotides: return <NucleotideIcon className={`${className} text-cyan-400`} />;
     case Resource.ATP: return <ATPIcon className={`${className} text-yellow-400`} />;
     default: return null;

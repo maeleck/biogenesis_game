@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Resource, ProtocellState, HuntResult, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels } from './types';
-import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, HUNT_RESULTS, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT } from './constants';
+import { Resource, ProtocellState, HuntResult, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem } from './types';
+import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, HUNT_RESULTS, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS } from './constants';
 import ResourceDisplay from './components/ResourceDisplay';
 import ProcessPanel from './components/JobPanel';
 import MapNode from './components/MapNode';
@@ -12,8 +11,9 @@ import MapSection from './components/MapSection';
 import ProtocellPanel from './components/ProtocellPanel';
 import UpgradeDetailPanel from './components/CosmicDetailPanel';
 import TestPanel from './components/TestPanel';
-import SettingsMenu from './components/CosmicPanel'; // Repurposed for SettingsMenu
+import SettingsMenu from './components/CosmicPanel';
 import DebugMenu from './components/DebugMenu';
+import ManufacturingPanel from './components/ManufacturingPanel';
 import { CogIcon, ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './components/Icons';
 import { UpgradeIcon } from './components/UpgradeIcons';
 
@@ -67,6 +67,9 @@ function App() {
   const [lastHuntResult, setLastHuntResult] = useState<HuntResult | null>(null);
   
   const [testState, setTestState] = useState<TestState>({ currentQuestion: null, lastAnswerStatus: 'unanswered' });
+
+  // Manufacturing State
+  const [craftedItemLevels, setCraftedItemLevels] = useState<Record<string, number>>(initialSaveData?.craftedItemLevels || {});
 
   // Settings and Save/Load state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -153,6 +156,7 @@ function App() {
     if (unlockedFeatures.has('fusion')) availableTabs.add('force');
     if (unlockedFeatures.has('synthesis')) availableTabs.add('hands');
     if (unlockedFeatures.has('protocell')) availableTabs.add('protocell');
+    if (unlockedFeatures.has('manufacturing')) availableTabs.add('manufacturing');
     
     if (!availableTabs.has(activeMainTab)) {
         if (availableTabs.has('force')) setActiveMainTab('force');
@@ -161,9 +165,41 @@ function App() {
     }
   }, [unlockedFeatures, activeMainTab]);
 
+  const manufacturingBonuses = useMemo(() => {
+    const bonuses = {
+      baseGeneration: {} as Partial<Record<Resource, number>>,
+      protocellLootMultiplier: 1,
+    };
+
+    for (const itemId in craftedItemLevels) {
+      const level = craftedItemLevels[itemId];
+      if (level > 0) {
+        const item = CRAFTABLE_ITEMS.find(i => i.id === itemId);
+        if (item) {
+          const itemEffects = item.effects(level);
+          itemEffects.forEach(effect => {
+            if (effect.type === 'ADD_BASE_GENERATION') {
+              bonuses.baseGeneration[effect.resource] = (bonuses.baseGeneration[effect.resource] || 0) + effect.value;
+            } else if (effect.type === 'INCREASE_PROTOCELL_LOOT_MULTIPLIER') {
+              bonuses.protocellLootMultiplier += effect.value;
+            }
+          });
+        }
+      }
+    }
+    return bonuses;
+  }, [craftedItemLevels]);
+
+
   const { stardustCapacity, baseGeneration } = useMemo(() => {
     let finalStardustCapacity = INITIAL_STARDUST_CAPACITY;
     const finalBaseGeneration: Partial<Record<Resource, number>> = { [Resource.Stardust]: BASE_STARDUST_GENERATION };
+    
+    // Apply bonuses from manufacturing
+    for(const res in manufacturingBonuses.baseGeneration) {
+        const resource = res as Resource;
+        finalBaseGeneration[resource] = (finalBaseGeneration[resource] || 0) + manufacturingBonuses.baseGeneration[resource]!;
+    }
 
     const allUpgradesAndSub = [...UPGRADES, ...ALL_SUB_UPGRADES];
 
@@ -214,7 +250,7 @@ function App() {
     }
 
     return { stardustCapacity: finalStardustCapacity, baseGeneration: finalBaseGeneration };
-  }, [purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels, stardustGenerationMultiplier]);
+  }, [purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels, stardustGenerationMultiplier, manufacturingBonuses]);
 
   const protocellAttributes = useMemo(() => {
     const finalAttrs: ProtocellState['attributes'] = { ...protocellTrainingLevels };
@@ -251,8 +287,8 @@ function App() {
             }
         }
     }
-    return multiplier;
-  }, [chamberUpgradeLevels]);
+    return multiplier * manufacturingBonuses.protocellLootMultiplier;
+  }, [chamberUpgradeLevels, manufacturingBonuses]);
 
   const resourceCapacities = useMemo(() => {
     const capacities: Partial<Record<Resource, number>> = {
@@ -391,6 +427,7 @@ function App() {
         chamberUpgradeLevels,
         proteinLoot,
         testState,
+        craftedItemLevels,
         lastSaveTimestamp: Date.now(),
       };
       localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
@@ -402,7 +439,7 @@ function App() {
     resources, universalStorageLevel, stardustGenerationMultiplier, assignedWorkers,
     maxForce, maxHands, purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels,
     unlockedFeatures, unlockedKnobs, protocellTrainingLevels, protocellBaseBonuses,
-    chamberUpgradeLevels, proteinLoot, testState
+    chamberUpgradeLevels, proteinLoot, testState, craftedItemLevels
   ]);
   
   const deleteSave = useCallback(() => {
@@ -457,7 +494,7 @@ function App() {
     const allKnobIds = new Set(KNOBS.map(k => k.id));
     setUnlockedKnobs(allKnobIds);
 
-    const allFeatures = new Set(['synthesis', 'protocell', 'test', 'chamber_upgrades', 'fusion']);
+    const allFeatures = new Set(['synthesis', 'protocell', 'test', 'chamber_upgrades', 'fusion', 'manufacturing']);
     setUnlockedFeatures(allFeatures);
 
     alert('DEBUG: Unlocked all major upgrades, knobs, and features!');
@@ -511,21 +548,15 @@ function App() {
     }
   };
 
-  const canAfford = useCallback((upgradeId: string) => {
-      const upgrade = UPGRADES.find(u => u.id === upgradeId);
-      if(!upgrade) return false;
-      // This is the check for purchasability - must meet REAL dependencies
-      if (!areDependenciesMet(upgrade.id)) {
-          return false;
-      }
-      return upgrade.cost.every(c => resources[c.resource] >= c.amount);
-  }, [resources, areDependenciesMet]);
+  const canAfford = useCallback((costs: {resource: Resource; amount: number}[]) => {
+      return costs.every(c => resources[c.resource] >= c.amount);
+  }, [resources]);
 
   const handlePurchaseUpgrade = (upgradeId: string) => {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
     if (!upgrade || purchasedUpgrades.has(upgradeId)) return;
 
-    if (!canAfford(upgradeId)) return;
+    if (!canAfford(upgrade.cost) || !areDependenciesMet(upgradeId)) return;
 
     setResources(prev => {
         const newRes = {...prev};
@@ -675,6 +706,26 @@ function App() {
     }
   };
 
+  const handleCraftItem = (itemId: string) => {
+    const item = CRAFTABLE_ITEMS.find(i => i.id === itemId);
+    if (!item) return;
+
+    const currentLevel = craftedItemLevels[itemId] || 0;
+    if (item.maxLevel && currentLevel >= item.maxLevel) return;
+
+    const costs = item.cost(currentLevel);
+    if (canAfford(costs)) {
+        setResources(prev => {
+            const newRes = {...prev};
+            costs.forEach(c => {
+                newRes[c.resource] -= c.amount;
+            });
+            return newRes;
+        });
+        setCraftedItemLevels(prev => ({...prev, [itemId]: currentLevel + 1 }));
+    }
+  };
+
   const availableQuestions = useMemo(() => {
     const questions: (Quiz & { factId: string })[] = [];
     const allUpgrades = [...UPGRADES, ...ALL_SUB_UPGRADES];
@@ -767,9 +818,9 @@ function App() {
   }
 
   return (
-    <div className="bg-gray-900 text-gray-200 font-sans h-screen w-screen flex flex-col overflow-hidden">
+    <div className="bg-slate-900 text-slate-200 font-sans h-screen w-screen flex flex-col overflow-hidden">
         {/* Top Panel - Resources */}
-        <div className={`fixed top-0 left-0 right-0 z-20 bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 transition-transform duration-300 ${isTopPanelOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+        <div className={`fixed top-0 left-0 right-0 z-20 bg-slate-900/80 backdrop-blur-sm border-b border-purple-800 transition-transform duration-300 ${isTopPanelOpen ? 'translate-y-0' : '-translate-y-full'}`}>
           <div className="p-2 md:p-3 container mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
                 {discoveredResources.map(res => (
@@ -787,7 +838,7 @@ function App() {
         {/* Toggle for Top Panel */}
         <button
           onClick={() => setIsTopPanelOpen(!isTopPanelOpen)}
-          className="fixed top-0 right-12 z-30 p-2 bg-gray-800/80 rounded-b-lg border-x border-b border-gray-700"
+          className="fixed top-0 right-12 z-30 p-2 bg-slate-800/80 rounded-b-xl border-x border-b border-purple-800"
           aria-label={isTopPanelOpen ? "Close resource panel" : "Open resource panel"}
         >
           {isTopPanelOpen ? <ChevronUpIcon className="w-5 h-5"/> : <ChevronDownIcon className="w-5 h-5"/>}
@@ -795,25 +846,28 @@ function App() {
 
 
         {/* Left Panel - Controls */}
-        <div className={`fixed top-0 left-0 bottom-0 z-20 w-80 md:w-96 bg-gray-900/90 backdrop-blur-sm border-r border-gray-700 transition-transform duration-300 transform ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed top-0 left-0 bottom-0 z-20 w-80 md:w-96 bg-slate-900/90 backdrop-blur-sm border-r border-purple-800 transition-transform duration-300 transform ${isLeftPanelOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             <div className="w-full h-full flex flex-col">
-                <div className="p-3 text-center border-b border-gray-700 flex-shrink-0">
-                    <h2 className="text-lg font-bold text-gray-200">Control Panel</h2>
+                <div className="p-3 text-center border-b border-purple-800 flex-shrink-0">
+                    <h2 className="text-xl font-bold text-slate-100">Control Panel</h2>
                 </div>
 
-                <div className="flex-shrink-0 border-b border-gray-700 flex flex-wrap">
-                    <button onClick={() => setActiveMainTab('upgrades')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'upgrades' ? 'bg-gray-800 text-teal-300' : 'text-gray-400 hover:text-white'}`}>Upgrades</button>
+                <div className="flex-shrink-0 border-b border-purple-800 flex flex-wrap">
+                    <button onClick={() => setActiveMainTab('upgrades')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'upgrades' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Upgrades</button>
                     {unlockedFeatures.has('fusion') && (
-                        <button onClick={() => setActiveMainTab('force')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'force' ? 'bg-gray-800 text-teal-300' : 'text-gray-400 hover:text-white'}`}>Force</button>
+                        <button onClick={() => setActiveMainTab('force')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'force' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Force</button>
                     )}
                     {unlockedFeatures.has('synthesis') && (
-                        <button onClick={() => setActiveMainTab('hands')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'hands' ? 'bg-gray-800 text-teal-300' : 'text-gray-400 hover:text-white'}`}>Hands</button>
+                        <button onClick={() => setActiveMainTab('hands')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'hands' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Hands</button>
+                    )}
+                     {unlockedFeatures.has('manufacturing') && (
+                        <button onClick={() => setActiveMainTab('manufacturing')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'manufacturing' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Manufacturing</button>
                     )}
                     {unlockedFeatures.has('protocell') && (
-                        <button onClick={() => setActiveMainTab('protocell')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'protocell' ? 'bg-gray-800 text-teal-300' : 'text-gray-400 hover:text-white'}`}>Protocell</button>
+                        <button onClick={() => setActiveMainTab('protocell')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'protocell' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Protocell</button>
                     )}
                     {unlockedFeatures.has('test') && (
-                        <button onClick={() => setActiveMainTab('knowledge')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'knowledge' ? 'bg-gray-800 text-teal-300' : 'text-gray-400 hover:text-white'}`}>Knowledge</button>
+                        <button onClick={() => setActiveMainTab('knowledge')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'knowledge' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Knowledge</button>
                     )}
                 </div>
 
@@ -829,7 +883,7 @@ function App() {
                                     onPurchaseSubUpgrade={handlePurchaseSubUpgrade}
                                 />
                             ) : (
-                                <div className="text-center text-gray-400 p-8 flex flex-col items-center justify-center h-full">
+                                <div className="text-center text-slate-400 p-8 flex flex-col items-center justify-center h-full">
                                     <UpgradeIcon iconId="spark" />
                                     <p className="mt-4 text-sm">Select a researched upgrade from the map to view its details, enhancements, and unlockable facts.</p>
                                 </div>
@@ -838,8 +892,8 @@ function App() {
                     )}
                     {activeMainTab === 'force' && unlockedFeatures.has('fusion') && (
                         <div className="p-3">
-                             <h3 className="text-base font-bold text-teal-300 mb-2">Cosmic Force</h3>
-                             <p className="text-sm font-mono text-cyan-300 mb-4">Idle Force: {idleForce} / {maxForce}</p>
+                             <h3 className="text-base font-bold text-yellow-300 mb-2">Cosmic Force</h3>
+                             <p className="text-sm font-mono text-yellow-200 mb-4">Idle Force: {idleForce} / {maxForce}</p>
                              <div className="grid grid-cols-1 gap-3">
                                 {KNOBS.filter(k => k.workerType === 'Force' && unlockedKnobs.has(k.id)).map(knob => (
                                     <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id] || 0} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleForce > 0} canRemoveWorker={(assignedWorkers[knob.id] || 0) > 0} />
@@ -849,14 +903,21 @@ function App() {
                     )}
                     {activeMainTab === 'hands' && unlockedFeatures.has('synthesis') && (
                         <div className="p-3">
-                            <h3 className="text-base font-bold text-teal-300 mb-2">Biological Manipulation</h3>
-                            <p className="text-sm font-mono text-cyan-300 mb-4">Idle Hands: {idleHands} / {maxHands}</p>
+                            <h3 className="text-base font-bold text-yellow-300 mb-2">Biological Manipulation</h3>
+                            <p className="text-sm font-mono text-yellow-200 mb-4">Idle Hands: {idleHands} / {maxHands}</p>
                             <div className="grid grid-cols-1 gap-3">
                                 {KNOBS.filter(k => k.workerType === 'Hands' && unlockedKnobs.has(k.id)).map(knob => (
                                     <ProcessPanel key={knob.id} knob={knob} workers={assignedWorkers[knob.id] || 0} onAddWorker={() => handleAddWorker(knob.id)} onRemoveWorker={() => handleRemoveWorker(knob.id)} canAddWorker={idleHands > 0} canRemoveWorker={(assignedWorkers[knob.id] || 0) > 0} />
                                 ))}
                             </div>
                         </div>
+                    )}
+                    {activeMainTab === 'manufacturing' && unlockedFeatures.has('manufacturing') && (
+                        <ManufacturingPanel
+                            craftedItemLevels={craftedItemLevels}
+                            resources={resources}
+                            onCraft={handleCraftItem}
+                        />
                     )}
                     {activeMainTab === 'protocell' && unlockedFeatures.has('protocell') && (
                         <ProtocellPanel 
@@ -890,7 +951,7 @@ function App() {
         {/* Toggle for Left Panel */}
         <button
             onClick={() => setIsLeftPanelOpen(!isLeftPanelOpen)}
-            className={`fixed top-12 z-30 p-2 bg-gray-800/80 rounded-r-lg border-r border-t border-b border-gray-700 transition-all duration-300 ${isLeftPanelOpen ? 'left-80 md:left-96' : 'left-0'}`}
+            className={`fixed top-12 z-30 p-2 bg-slate-800/80 rounded-r-xl border-r border-t border-b border-purple-800 transition-all duration-300 ${isLeftPanelOpen ? 'left-80 md:left-96' : 'left-0'}`}
             aria-label={isLeftPanelOpen ? "Close controls panel" : "Open controls panel"}
         >
             {isLeftPanelOpen ? <ChevronLeftIcon className="w-5 h-5"/> : <ChevronRightIcon className="w-5 h-5"/>}
@@ -898,7 +959,7 @@ function App() {
 
 
         {/* Main Map Content */}
-        <div ref={mapRef} className="flex-grow w-full h-full overflow-auto cursor-grab relative map-bg">
+        <div ref={mapRef} className="flex-grow w-full h-full overflow-auto cursor-grab relative map-bg bg-slate-900">
             <div className="relative" style={{ width: 2000, height: 2500 }}>
                 {MAP_SCENERY.map((s, i) => <MapScenery key={i} {...s} />)}
                 <MapSection title="Cosmic Era" y="0%" height="25%" colorClass="bg-gradient-to-b from-blue-900/20 to-transparent" />
@@ -911,7 +972,7 @@ function App() {
                         upgrade={upgrade}
                         isPurchased={purchasedUpgrades.has(upgrade.id)}
                         isInteractive={!!upgrade.panelContent || !purchasedUpgrades.has(upgrade.id)}
-                        canAfford={canAfford(upgrade.id)}
+                        canAfford={canAfford(upgrade.cost)}
                         onClick={() => handleNodeClick(upgrade.id)}
                         resources={resources}
                         hasUnlimited={!!upgrade.panelContent?.subUpgrades.some(su => su.repeatable && purchasedUpgrades.has(upgrade.id))}
@@ -921,7 +982,7 @@ function App() {
         </div>
         
         {/* Settings Button & Panel */}
-        <button onClick={() => setIsSettingsOpen(true)} className="fixed top-1 right-1 z-30 p-2 text-gray-400 hover:text-white bg-gray-800/80 rounded-b-lg border-x border-b border-gray-700">
+        <button onClick={() => setIsSettingsOpen(true)} className="fixed top-1 right-1 z-30 p-2 text-slate-400 hover:text-white bg-slate-800/80 rounded-b-xl border-x border-b border-purple-800">
             <CogIcon className="w-6 h-6" />
         </button>
 

@@ -38,14 +38,15 @@ export interface Knob {
 
 export type UpgradeEffect =
   | { type: 'ADD_BASE_GENERATION'; resource: Resource, value: number }
-  | { type: 'UNLOCK_FEATURE'; value: 'synthesis' | 'protocell' | 'test' | 'chamber_upgrades' | 'fusion' }
+  | { type: 'UNLOCK_FEATURE'; value: 'synthesis' | 'protocell' | 'test' | 'chamber_upgrades' | 'fusion' | 'manufacturing' }
   | { type: 'UNLOCK_KNOBS', value: string[] }
   | { type: 'INCREASE_MAX_HANDS', value: number }
   | { type: 'INCREASE_MAX_FORCE', value: number }
   | { type: 'INCREASE_CAPACITY', resource: Resource, value: number }
   | { type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource, value: number }
   | { type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed' | 'efficiency' | 'resilience', value: number }
-  | { type: 'INCREASE_UNIVERSAL_STORAGE', value: number };
+  | { type: 'INCREASE_UNIVERSAL_STORAGE', value: number }
+  | { type: 'INCREASE_PROTOCELL_LOOT_MULTIPLIER', value: number };
 
 export interface SubUpgrade {
   id: string;
@@ -120,4 +121,13 @@ export interface HuntResult {
 export interface TestState {
     currentQuestion: (Quiz & { factId: string }) | null;
     lastAnswerStatus: 'correct' | 'incorrect' | 'unanswered';
+}
+
+export interface CraftableItem {
+  id: string;
+  name: string;
+  description: (level: number) => string;
+  cost: (level: number) => { resource: Resource; amount: number }[];
+  effects: (level: number) => UpgradeEffect[];
+  maxLevel?: number;
 }

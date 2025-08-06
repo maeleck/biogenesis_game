@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 
 // A simple, stylized 2D DNA spiral component.
@@ -108,9 +107,9 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStartGame }) => {
   }, []);
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-gray-900 text-gray-100 p-4 relative overflow-hidden">
+    <div className="h-screen w-screen flex flex-col items-center justify-center bg-slate-900 text-slate-100 p-4 relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-radial from-gray-800 to-gray-900"></div>
+      <div className="absolute inset-0 bg-gradient-radial from-slate-800 to-slate-900"></div>
       
       {/* Animated DNA background */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
@@ -126,26 +125,26 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStartGame }) => {
             }}
           >
             <div style={{ transform: `scale(${p.scale})` }}>
-              <DNASpiralIcon className="w-12 h-48 text-teal-400" />
+              <DNASpiralIcon className="w-12 h-48 text-purple-400" />
             </div>
           </div>
         ))}
       </div>
 
       <div className="relative z-10 text-center animate-fade-in-up">
-        <h1 className="text-5xl md:text-7xl font-bold text-teal-300 tracking-wider" style={{ textShadow: '0 0 15px rgba(56, 249, 215, 0.4)' }}>
-          BioGenesis
+        <h1 className="text-5xl md:text-7xl font-bold text-yellow-300 tracking-wider" style={{ textShadow: '0 0 15px rgba(252, 211, 77, 0.4)' }}>
+          Boop-Genesis
         </h1>
-        <p className="mt-4 text-base md:text-lg text-cyan-200/80">An Incremental Game of Cosmic Creation</p>
+        <p className="mt-4 text-base md:text-lg text-slate-200/80">An Incremental Game of Cosmic Creation</p>
         
-        <p className="mt-8 text-sm md:text-base text-cyan-300/70 font-mono h-12 flex items-center justify-center px-4 w-full max-w-4xl mx-auto text-center">
+        <p className="mt-8 text-sm md:text-base text-slate-300/70 font-mono h-12 flex items-center justify-center px-4 w-full max-w-4xl mx-auto text-center">
           {dynamicQuote}
         </p>
 
         <button
           onClick={onStartGame}
-          className="mt-8 px-10 py-4 bg-teal-500/80 text-white font-bold text-lg rounded-lg border-2 border-teal-400
-                     hover:bg-teal-500 hover:scale-105 hover:shadow-2xl hover:shadow-teal-500/30
+          className="mt-8 px-10 py-4 bg-yellow-500/80 text-slate-900 font-bold text-lg rounded-2xl border-2 border-yellow-400
+                     hover:bg-yellow-500 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/30
                      transition-all duration-300 ease-in-out
                      animate-pulse-slow"
           aria-label="Start Game"
@@ -164,7 +163,7 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStartGame }) => {
         }
         @keyframes pulse-slow {
           50% {
-            box-shadow: 0 0 20px rgba(56, 249, 215, 0.5);
+            box-shadow: 0 0 20px rgba(252, 211, 77, 0.5);
           }
         }
         .animate-pulse-slow {

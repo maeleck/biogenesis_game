@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Resource } from '../types';
 import { RESOURCES } from '../constants';
@@ -16,12 +15,12 @@ const ResourceDisplay: React.FC<ResourceDisplayProps> = ({ resource, amount, cap
   const displayCapacity = capacity ? ` / ${Math.floor(capacity).toLocaleString()}` : '';
 
   return (
-    <div className="flex items-center justify-between p-2 bg-gray-800/60 rounded-lg" title={resourceData.description}>
+    <div className="flex items-center justify-between p-2 bg-slate-800/60 rounded-xl" title={resourceData.description}>
       <div className="flex items-center space-x-2">
         <ResourceIcon resource={resource} className="w-5 h-5 flex-shrink-0" />
-        <span className="font-semibold text-xs md:text-sm text-gray-200">{resourceData.name}</span>
+        <span className="font-semibold text-xs md:text-sm text-slate-200">{resourceData.name}</span>
       </div>
-      <span className="text-sm md:text-base font-mono text-cyan-300">{displayAmount}{displayCapacity}</span>
+      <span className="text-sm md:text-base font-mono text-yellow-300">{displayAmount}{displayCapacity}</span>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Resource, SubUpgrade, Fact } from '../types';
 import { UPGRADES } from '../constants';
@@ -34,7 +33,7 @@ const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, reso
   }, [upgradeId]);
 
   if (!panelData) {
-    return <div className="text-center text-gray-400 p-8">This upgrade has no further details.</div>;
+    return <div className="text-center text-slate-400 p-8">This upgrade has no further details.</div>;
   }
   
   const { upgrade, content } = panelData;
@@ -42,20 +41,20 @@ const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, reso
   return (
     <div className="w-full h-full flex flex-col relative">
         <div className="shrink-0 mb-4">
-            <h2 className="text-lg md:text-xl font-semibold text-indigo-300">{upgrade.name}</h2>
-            <p className="text-xs md:text-sm text-gray-400 mt-2 italic border-l-2 border-indigo-400/50 pl-3">{upgrade.description}</p>
+            <h2 className="text-lg md:text-xl font-semibold text-yellow-300">{upgrade.name}</h2>
+            <p className="text-xs md:text-sm text-slate-400 mt-2 italic border-l-2 border-yellow-400/50 pl-3">{upgrade.description}</p>
         </div>
         
-        <div className="flex border-b border-gray-700 mb-4 shrink-0">
+        <div className="flex border-b border-purple-800/50 mb-4 shrink-0">
             <button
                 onClick={() => setActiveTab('enhancements')}
-                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'enhancements' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
+                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'enhancements' ? 'text-yellow-300 border-b-2 border-yellow-300' : 'text-slate-400 hover:text-white'}`}
             >
                 Enhancements
             </button>
             <button
                 onClick={() => setActiveTab('facts')}
-                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'facts' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
+                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'facts' ? 'text-yellow-300 border-b-2 border-yellow-300' : 'text-slate-400 hover:text-white'}`}
             >
                 Facts ({visibleFacts.length}/{content.facts.length})
             </button>
@@ -90,13 +89,13 @@ const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, reso
 
 
                     return (
-                        <div key={sub.id} className={`p-3 rounded-lg border flex items-start gap-3 ${isPurchased || isMaxedOut ? 'bg-indigo-900/50 border-indigo-700' : 'bg-gray-800/70 border-gray-700'}`}>
+                        <div key={sub.id} className={`p-3 rounded-xl border flex items-start gap-3 ${isPurchased || isMaxedOut ? 'bg-purple-900/50 border-purple-700' : 'bg-slate-800/70 border-slate-700'}`}>
                             <div className="flex-grow">
                                 <div className="flex items-center gap-2">
                                     {isRepeatable && <InfinityIcon className="w-4 h-4 text-amber-300" />}
-                                    <h4 className={`font-bold text-xs md:text-sm ${isPurchased || isMaxedOut ? 'text-indigo-200' : 'text-indigo-300'}`}>{sub.name}</h4>
+                                    <h4 className={`font-bold text-xs md:text-sm ${isPurchased || isMaxedOut ? 'text-purple-200' : 'text-purple-300'}`}>{sub.name}</h4>
                                 </div>
-                                <p className="text-xs text-gray-400 mt-1">{sub.description}</p>
+                                <p className="text-xs text-slate-400 mt-1">{sub.description}</p>
                                 {sub.id === 'co_inf_cap' ? (
                                     <p className="text-xs text-yellow-300 mt-1">Improves Stardust generation and capacity based on level.</p>
                                 ) : (
@@ -112,12 +111,12 @@ const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, reso
                                 <button
                                     onClick={() => onPurchaseSubUpgrade(sub)}
                                     disabled={isDisabled}
-                                    className="w-full text-xs font-semibold px-2 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
+                                    className="w-full text-xs font-semibold px-2 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg disabled:bg-slate-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
                                 >
                                     {isPurchased ? 'Done' : isMaxedOut ? 'Maxed' : (
                                         <div className="flex flex-col items-center">
                                             <span>{isRepeatable ? `Upgrade` : 'Purchase'}</span>
-                                            <div className={`flex items-center justify-center gap-1 text-xs mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
+                                            <div className={`flex items-center justify-center gap-1 text-xs mt-1 ${canAfford ? 'text-slate-200' : 'text-rose-400'}`}>
                                                 <ResourceIcon resource={cost.resource} className="w-3 h-3"/>
                                                 <span>{Math.floor(cost.amount).toLocaleString()}</span>
                                             </div>
@@ -133,8 +132,8 @@ const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, reso
             {activeTab === 'facts' && (
                 <div className="space-y-4">
                     {visibleFacts.map((fact, index) => (
-                        <blockquote key={index} className="p-3 bg-gray-900/50 rounded-md border-l-4 border-cyan-400/70">
-                            <p className="text-xs md:text-sm italic text-cyan-200">{fact.text}</p>
+                        <blockquote key={index} className="p-3 bg-slate-900/50 rounded-xl border-l-4 border-yellow-400/70">
+                            <p className="text-xs md:text-sm italic text-yellow-200">{fact.text}</p>
                         </blockquote>
                     ))}
                 </div>
