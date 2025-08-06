@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Spinner: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (

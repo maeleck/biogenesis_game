@@ -105,7 +105,6 @@ const icons: Record<string, React.FC> = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 9h15M4.5 15h15" />
     </svg>
   ),
-  // New Planetary & Biological Icons from previous step
   ozone_layer: () => (
     <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
@@ -655,6 +654,43 @@ const icons: Record<string, React.FC> = {
   population_iii_stars: () => (
     <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354l-4.502 2.873c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" />
+    </svg>
+  ),
+  bacteriophage: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 14.25l-2.25 2.25m0-4.5l2.25 2.25m4.5 0l2.25-2.25m0 4.5l-2.25-2.25M12 6.75l-2.25 2.25m0-4.5l2.25 2.25m4.5 0l2.25-2.25m0 4.5l-2.25-2.25" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 14.25V6.75" />
+    </svg>
+  ),
+  bacterium: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12.75a4.5 4.5 0 01-4.5-4.5v-1.5a4.5 4.5 0 019 0v1.5a4.5 4.5 0 01-4.5 4.5z" />
+    </svg>
+  ),
+  bacterium_strep: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <circle cx="8" cy="12" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <circle cx="16" cy="12" r="2" />
+    </svg>
+  ),
+  virus_influenza: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2m0 14v2m-9-9h2m14 0h2m-2.929-7.071l-1.414 1.414m11.314 11.314l-1.414-1.414m0-11.314l1.414 1.414m-11.314 11.314l-1.414-1.414" />
+    </svg>
+  ),
+   bacterium_ecoli: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12.75a4.5 4.5 0 01-4.5-4.5v-1.5a4.5 4.5 0 019 0v1.5a4.5 4.5 0 01-4.5 4.5z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 6.75L3 4.5M16.5 6.75l4.5-2.25M7.5 17.25L3 19.5" />
+    </svg>
+  ),
+  virus_hiv: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12a3 3 0 100-6 3 3 0 000 6z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 10.5l3 3m0-3l-3 3" />
     </svg>
   ),
 };

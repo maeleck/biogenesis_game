@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Resource, type Upgrade } from '../types';
 import { ResourceIcon, InfinityIcon } from './Icons';

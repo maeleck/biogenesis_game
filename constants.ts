@@ -14,6 +14,12 @@ export * from './constants/protocell';
 export * from './constants/scenery';
 // Export everything from manufacturing.ts
 export * from './constants/manufacturing';
+// Export everything from genes.ts
+export * from './constants/genes';
+// Export everything from enemies.ts
+export * from './constants/enemies';
+// Export everything from stages.ts
+export * from './constants/stages';
 
 export const UPGRADES: Upgrade[] = [
     ...cosmicUpgrades,

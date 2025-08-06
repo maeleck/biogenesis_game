@@ -1,4 +1,5 @@
 
+
 import { Resource, ProteinLootState, ProtocellState, TestState } from '../types';
 import { INITIAL_RESOURCES, INITIAL_PROTEIN_LOOT, INITIAL_PROTOCELL_TRAINING_LEVELS } from './protocell';
 import { INITIAL_WORKERS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS } from './resources';

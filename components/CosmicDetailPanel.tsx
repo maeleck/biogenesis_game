@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Resource, SubUpgrade, Fact } from '../types';
 import { UPGRADES } from '../constants';

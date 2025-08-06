@@ -1,4 +1,5 @@
 
+
 export const MAP_SCENERY = [
     // Cosmic Era
     { x: 5, y: 5, size: 250, rotation: 15, color: 'bg-indigo-500/30' },

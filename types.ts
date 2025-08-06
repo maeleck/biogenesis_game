@@ -95,6 +95,8 @@ export interface ProtocellState {
     efficiency: number;
     resilience: number;
   };
+  level: number;
+  xp: number;
 }
 
 export type ChamberUpgradeLevels = Record<string, number>;
@@ -113,11 +115,6 @@ export interface ChamberUpgrade {
   };
 }
 
-export interface HuntResult {
-  adventure: string;
-  rewards: Partial<Record<ProteinLootType, number>>;
-}
-
 export interface TestState {
     currentQuestion: (Quiz & { factId: string }) | null;
     lastAnswerStatus: 'correct' | 'incorrect' | 'unanswered';
@@ -130,4 +127,46 @@ export interface CraftableItem {
   cost: (level: number) => { resource: Resource; amount: number }[];
   effects: (level: number) => UpgradeEffect[];
   maxLevel?: number;
+}
+
+export interface GeneCard {
+  id: string;
+  name: string;
+  description: string;
+  application: string;
+}
+
+export interface Enemy {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+  stats: {
+    hp: number;
+    attack: number;
+    speed: number;
+  };
+  rewards: {
+    xp: number;
+    loot: Partial<Record<ProteinLootType, [number, number]>>; // [min, max]
+    geneCardDropChance: number; // 0 to 1
+  };
+}
+
+export interface CombatResult {
+  outcome: 'win' | 'loss';
+  combatLog: string[];
+  xpGained: number;
+  lootGained: Partial<Record<ProteinLootType, number>>;
+  geneCardFound: string | null;
+  enemyName: string;
+  enemyIcon: string;
+}
+
+export interface HuntStage {
+  id: string;
+  name: string;
+  description: string;
+  levelRequirement: number;
+  enemyIds: string[];
 }

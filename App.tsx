@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Resource, ProtocellState, HuntResult, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem } from './types';
-import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, HUNT_RESULTS, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS } from './constants';
+import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage } from './types';
+import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES } from './constants';
 import ResourceDisplay from './components/ResourceDisplay';
 import ProcessPanel from './components/JobPanel';
 import MapNode from './components/MapNode';
@@ -58,13 +59,17 @@ function App() {
   const [activeMainTab, setActiveMainTab] = useState('knowledge');
   
   // Protocell related state
+  const [protocellState, setProtocellState] = useState<ProtocellState>(initialSaveData?.protocellState || INITIAL_PROTOCELL_STATE);
   const [protocellTrainingLevels, setProtocellTrainingLevels] = useState<ProtocellState['attributes']>(initialSaveData?.protocellTrainingLevels || INITIAL_PROTOCELL_TRAINING_LEVELS);
   const [protocellBaseBonuses, setProtocellBaseBonuses] = useState<ProtocellState['attributes']>(initialSaveData?.protocellBaseBonuses || { speed: 0, efficiency: 0, resilience: 0 });
   const [chamberUpgradeLevels, setChamberUpgradeLevels] = useState<ChamberUpgradeLevels>(initialSaveData?.chamberUpgradeLevels || {});
   const [proteinLoot, setProteinLoot] = useState<ProteinLootState>(initialSaveData?.proteinLoot || INITIAL_PROTEIN_LOOT);
+  const [collectedGeneCards, setCollectedGeneCards] = useState<Set<string>>(new Set(initialSaveData?.collectedGeneCards || []));
   
   const [huntState, setHuntState] = useState<{status: 'idle' | 'hunting' | 'cooldown' | 'error', message: string}>({status: 'idle', message: ''});
-  const [lastHuntResult, setLastHuntResult] = useState<HuntResult | null>(null);
+  const [lastCombatResult, setLastCombatResult] = useState<CombatResult | null>(null);
+  const [selectedHuntStageId, setSelectedHuntStageId] = useState<string>(initialSaveData?.selectedHuntStageId || HUNT_STAGES[0].id);
+
   
   const [testState, setTestState] = useState<TestState>({ currentQuestion: null, lastAnswerStatus: 'unanswered' });
 
@@ -255,6 +260,11 @@ function App() {
   const protocellAttributes = useMemo(() => {
     const finalAttrs: ProtocellState['attributes'] = { ...protocellTrainingLevels };
     
+    const levelBonus = (protocellState.level - 1) * LEVEL_UP_STAT_BONUS;
+    finalAttrs.speed += levelBonus;
+    finalAttrs.efficiency += levelBonus;
+    finalAttrs.resilience += levelBonus;
+    
     // Add bonuses from map upgrades
     for (const key in protocellBaseBonuses) {
         const attr = key as keyof ProtocellState['attributes'];
@@ -273,7 +283,7 @@ function App() {
         }
     }
     return finalAttrs;
-  }, [protocellTrainingLevels, protocellBaseBonuses, chamberUpgradeLevels]);
+  }, [protocellState.level, protocellTrainingLevels, protocellBaseBonuses, chamberUpgradeLevels]);
   
   const lootMultiplier = useMemo(() => {
     let multiplier = 1;
@@ -407,6 +417,26 @@ function App() {
     return () => clearInterval(intervalId);
   }, [gameTick, gameState]);
 
+  const handleLevelUp = useCallback(() => {
+    setProtocellState(prev => {
+        let newLevel = prev.level;
+        let newXp = prev.xp;
+        let nextLevelXp = XP_TO_NEXT_LEVEL(newLevel);
+        
+        while(newXp >= nextLevelXp) {
+            newLevel++;
+            newXp -= nextLevelXp;
+            nextLevelXp = XP_TO_NEXT_LEVEL(newLevel);
+        }
+
+        return { level: newLevel, xp: newXp, attributes: prev.attributes };
+    });
+  }, []);
+
+  useEffect(() => {
+    handleLevelUp();
+  }, [protocellState.xp, handleLevelUp]);
+
   // Save/Load Logic
   const saveGame = useCallback(() => {
     try {
@@ -422,10 +452,13 @@ function App() {
         subUpgradeLevels,
         unlockedFeatures: Array.from(unlockedFeatures),
         unlockedKnobs: Array.from(unlockedKnobs),
+        protocellState,
         protocellTrainingLevels,
         protocellBaseBonuses,
         chamberUpgradeLevels,
         proteinLoot,
+        collectedGeneCards: Array.from(collectedGeneCards),
+        selectedHuntStageId,
         testState,
         craftedItemLevels,
         lastSaveTimestamp: Date.now(),
@@ -438,8 +471,8 @@ function App() {
   }, [
     resources, universalStorageLevel, stardustGenerationMultiplier, assignedWorkers,
     maxForce, maxHands, purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels,
-    unlockedFeatures, unlockedKnobs, protocellTrainingLevels, protocellBaseBonuses,
-    chamberUpgradeLevels, proteinLoot, testState, craftedItemLevels
+    unlockedFeatures, unlockedKnobs, protocellState, protocellTrainingLevels, protocellBaseBonuses,
+    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels
   ]);
   
   const deleteSave = useCallback(() => {
@@ -478,7 +511,8 @@ function App() {
       }
       return newLoot;
     });
-    alert('DEBUG: Added 100,000 to all protein loot!');
+    setProtocellState(p => ({...p, xp: p.xp + 10000}));
+    alert('DEBUG: Added 100,000 to all protein loot and 10,000 XP!');
   }, []);
   
   const handleDebugGainWorkers = useCallback(() => {
@@ -669,26 +703,122 @@ function App() {
   };
   
   const handleStartHunt = () => {
-    setHuntState({ status: 'hunting', message: 'The protocell is on the hunt...' });
-    setLastHuntResult(null);
+    const stage = HUNT_STAGES.find(s => s.id === selectedHuntStageId);
+    if (!stage) {
+      setHuntState({ status: 'error', message: 'Selected stage not found.' });
+      return;
+    }
 
-    const huntDuration = Math.max(1000, 4000 - protocellAttributes.speed * 100);
+    if (protocellState.level < stage.levelRequirement) {
+        setHuntState({ status: 'error', message: 'Protocell level is too low for this stage.' });
+        return;
+    }
+    
+    setHuntState({ status: 'hunting', message: 'The protocell is on the hunt...' });
+    setLastCombatResult(null);
+
+    const huntDuration = 1000;
 
     setTimeout(() => {
-        const result = HUNT_RESULTS[Math.floor(Math.random() * HUNT_RESULTS.length)];
+        const availableEnemies = ENEMIES.filter(e => stage.enemyIds.includes(e.id));
+        if (availableEnemies.length === 0) {
+            setHuntState({ status: 'error', message: 'No enemies found for this stage.' });
+            return;
+        }
         
-        setProteinLoot(prevLoot => {
-            const newLoot = {...prevLoot};
-            for (const key in result.rewards) {
-                const lootType = key as ProteinLootType;
-                const amount = result.rewards[lootType] || 0;
-                newLoot[lootType] += Math.floor(amount * lootMultiplier);
-            }
-            return newLoot;
-        });
+        const enemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
+        
+        // Combat simulation
+        let protocellHP = protocellAttributes.resilience * 10;
+        let enemyHP = enemy.stats.hp;
+        
+        const protocellAttack = protocellAttributes.efficiency * 2;
+        const protocellSpeed = protocellAttributes.speed;
+        
+        const combatLog: string[] = [`A wild ${enemy.name} appears!`];
+        let turn = 0;
 
-        setLastHuntResult(result);
-        setHuntState({ status: 'idle', message: 'Hunt successful!' });
+        const protocellGoesFirst = protocellSpeed >= enemy.stats.speed;
+
+        while(protocellHP > 0 && enemyHP > 0 && turn < 20) {
+            turn++;
+            combatLog.push(`--- Turn ${turn} ---`);
+            if (protocellGoesFirst) {
+                // Protocell attacks
+                const damageDealt = Math.max(1, Math.floor(protocellAttack * (0.8 + Math.random() * 0.4)));
+                enemyHP -= damageDealt;
+                combatLog.push(`Protocell attacks for ${damageDealt} damage. ${enemy.name} has ${Math.max(0, enemyHP)} HP left.`);
+                if (enemyHP <= 0) break;
+
+                // Enemy attacks
+                const damageTaken = Math.max(1, Math.floor(enemy.stats.attack * (0.8 + Math.random() * 0.4)));
+                protocellHP -= damageTaken;
+                combatLog.push(`${enemy.name} attacks for ${damageTaken} damage. Protocell has ${Math.max(0, protocellHP)} HP left.`);
+
+            } else {
+                 // Enemy attacks
+                const damageTaken = Math.max(1, Math.floor(enemy.stats.attack * (0.8 + Math.random() * 0.4)));
+                protocellHP -= damageTaken;
+                combatLog.push(`${enemy.name} attacks for ${damageTaken} damage. Protocell has ${Math.max(0, protocellHP)} HP left.`);
+                if (protocellHP <= 0) break;
+
+                // Protocell attacks
+                const damageDealt = Math.max(1, Math.floor(protocellAttack * (0.8 + Math.random() * 0.4)));
+                enemyHP -= damageDealt;
+                combatLog.push(`Protocell attacks for ${damageDealt} damage. ${enemy.name} has ${Math.max(0, enemyHP)} HP left.`);
+            }
+        }
+        
+        const result: CombatResult = {
+            outcome: 'loss',
+            combatLog,
+            xpGained: 0,
+            lootGained: {},
+            geneCardFound: null,
+            enemyName: enemy.name,
+            enemyIcon: enemy.icon,
+        };
+
+        if (protocellHP > 0) {
+            result.outcome = 'win';
+            combatLog.push(`Protocell is victorious!`);
+            
+            result.xpGained = enemy.rewards.xp;
+            setProtocellState(prev => ({ ...prev, xp: prev.xp + result.xpGained }));
+
+            for (const key in enemy.rewards.loot) {
+                const lootType = key as ProteinLootType;
+                const [min, max] = enemy.rewards.loot[lootType]!;
+                const amount = Math.floor((min + Math.random() * (max - min)) * lootMultiplier);
+                if (amount > 0) {
+                    result.lootGained[lootType] = amount;
+                }
+            }
+            
+            setProteinLoot(prevLoot => {
+                const newLoot = {...prevLoot};
+                for (const key in result.lootGained) {
+                    const lootType = key as ProteinLootType;
+                    newLoot[lootType] += result.lootGained[lootType]!;
+                }
+                return newLoot;
+            });
+            
+            if (Math.random() < enemy.rewards.geneCardDropChance) {
+                const availableCards = GENE_CARDS.filter(card => !collectedGeneCards.has(card.id));
+                if (availableCards.length > 0) {
+                    const foundCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+                    result.geneCardFound = foundCard.id;
+                    setCollectedGeneCards(prev => new Set(prev).add(foundCard.id));
+                }
+            }
+
+        } else {
+             combatLog.push(`Protocell has been defeated.`);
+        }
+
+        setLastCombatResult(result);
+        setHuntState({ status: 'idle', message: 'Hunt complete!' });
     }, huntDuration);
   };
   
@@ -921,17 +1051,22 @@ function App() {
                     )}
                     {activeMainTab === 'protocell' && unlockedFeatures.has('protocell') && (
                         <ProtocellPanel 
+                            protocellState={protocellState}
                             protocellTrainingLevels={protocellTrainingLevels}
                             protocellAttributes={protocellAttributes}
+                            protocellBaseBonuses={protocellBaseBonuses}
+                            chamberUpgradeLevels={chamberUpgradeLevels}
                             resources={resources}
                             onTrain={handleTrainProtocell}
                             onHunt={handleStartHunt}
                             huntState={huntState}
-                            lastHuntResult={lastHuntResult}
+                            lastCombatResult={lastCombatResult}
                             proteinLoot={proteinLoot}
-                            chamberUpgradeLevels={chamberUpgradeLevels}
                             onPurchaseChamberUpgrade={handlePurchaseChamberUpgrade}
                             unlockedFeatures={unlockedFeatures}
+                            collectedGeneCards={collectedGeneCards}
+                            selectedHuntStageId={selectedHuntStageId}
+                            onSelectHuntStage={setSelectedHuntStageId}
                         />
                     )}
                     {activeMainTab === 'knowledge' && unlockedFeatures.has('test') && (
