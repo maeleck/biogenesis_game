@@ -135,10 +135,10 @@ export const UPGRADES: Upgrade[] = [
     name: 'Star Cluster',
     description: 'Form a dense cluster of stars, a stellar nursery that passively generates stardust.',
     cost: [{ resource: Resource.Stardust, amount: 1500 }],
-    position: { x: 20, y: 10 },
+    position: { x: 48, y: 18 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 20 }],
     icon: 'star_cluster',
-    dependencies: ['cosmic_origins'],
+    dependencies: ['population_iii_stars'],
     panelContent: {
       facts: [
         { text: "Star clusters are large groups of stars. Open clusters are loosely bound and contain young, hot stars, while globular clusters are ancient, tightly bound spheres of hundreds of thousands of stars." },
@@ -155,7 +155,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'CMB Analysis',
     description: 'Study the faint afterglow of the Big Bang to understand the initial conditions of the universe.',
     cost: [{ resource: Resource.Stardust, amount: 20 }],
-    position: { x: 20, y: 15 },
+    position: { x: 15, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }],
     icon: 'cosmic_microwave_background',
     dependencies: ['cosmic_origins'],
@@ -194,7 +194,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Protostar Formation',
     description: 'A large mass of gas and dust collapses, forming a protostar, the precursor to a star.',
     cost: [{ resource: Resource.Stardust, amount: 20 }],
-    position: { x: 25, y: 10 },
+    position: { x: 45, y: 10 },
     effects: [{ type: 'UNLOCK_FEATURE', value: 'fusion' }, { type: 'UNLOCK_KNOBS', value: ['h_fusion'] }, { type: 'INCREASE_MAX_FORCE', value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }],
     icon: 'protostar',
     dependencies: ['cosmic_origins'],
@@ -215,7 +215,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Stellar Nucleosynthesis',
     description: 'Ignite the core of a star, fusing hydrogen into heavier elements like carbon.',
     cost: [{ resource: Resource.Hydrogen, amount: 20 }],
-    position: { x: 35, y: 10 },
+    position: { x: 60, y: 10 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['c_fusion'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'nucleosynthesis',
     dependencies: ['protostar_formation'],
@@ -242,14 +242,13 @@ export const UPGRADES: Upgrade[] = [
     name: 'AGB Star Phase',
     description: 'Medium-mass stars swell into giants, dredging up carbon from their core.',
     cost: [{ resource: Resource.Carbon, amount: 250 }],
-    position: { x: 45, y: 8 },
+    position: { x: 70, y: 8 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'agb_star',
     dependencies: ['stellar_nucleosynthesis'],
     panelContent: {
       facts: [
-        { text: "Asymptotic Giant Branch (AGB) stars are evolved, cool, luminous stars. They are a major source of carbon and other elements in the galaxy, which they expel through powerful stellar winds." },
-        { text: "AGB stars experience thermal pulses, violent helium shell flashes that create convection zones, dredging up carbon and other fusion products to the surface.", unlockedBySubUpgradeId: 'agb_dredge' }
+        { text: "Asymptotic Giant Branch (AGB) stars are evolved, cool, luminous stars. They are a major source of carbon and other elements in the galaxy, which they expel through powerful stellar winds." }
       ],
       subUpgrades: [
         { id: 'agb_dredge', name: 'Third Dredge-up', description: 'Enhance thermal pulses to improve passive Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 3 }] },
@@ -261,7 +260,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Supernova',
     description: 'A massive star ends its life in a cataclysmic explosion, creating the heaviest elements.',
     cost: [{ resource: Resource.Carbon, amount: 75 }],
-    position: { x: 45, y: 12 },
+    position: { x: 70, y: 12 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['fe_fusion'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
     icon: 'supernova',
     dependencies: ['stellar_nucleosynthesis'],
@@ -289,7 +288,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Gravitational Singularity',
     description: 'Harness a localized singularity to vastly increase your command over cosmic forces. Unlocks repeatable upgrades.',
     cost: [{ resource: Resource.Iron, amount: 2500 }],
-    position: { x: 55, y: 15 },
+    position: { x: 80, y: 15 },
     effects: [],
     icon: 'singularity',
     dependencies: ['supernova_explosion'],
@@ -314,7 +313,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Neutron Star Collision',
     description: 'Merge two ultra-dense stellar remnants, forging vast amounts of heavy elements.',
     cost: [{ resource: Resource.Iron, amount: 5000 }],
-    position: { x: 55, y: 10 },
+    position: { x: 80, y: 10 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 5 }],
     icon: 'neutron_star_collision',
     dependencies: ['supernova_explosion'],
@@ -332,7 +331,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Dark Matter Studies',
     description: "Theorize the existence of an invisible substance that adds gravity to the cosmos.",
     cost: [{ resource: Resource.Stardust, amount: 2500 }],
-    position: { x: 50, y: 18 },
+    position: { x: 75, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }],
     icon: 'dark_matter',
     dependencies: ['supernova_explosion'],
@@ -352,7 +351,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Galaxy Formation',
     description: 'Dark matter halos allow vast structures of stars, gas, and dust to form.',
     cost: [{ resource: Resource.Stardust, amount: 50000 }],
-    position: { x: 60, y: 18 },
+    position: { x: 90, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.2 }],
     icon: 'galaxy_formation',
     dependencies: ['dark_matter_studies'],
@@ -365,6 +364,148 @@ export const UPGRADES: Upgrade[] = [
       ]
     }
   },
+  
+  // --- NEW COSMIC ERA NODES ---
+  {
+    id: 'interstellar_medium',
+    name: 'Interstellar Medium',
+    description: 'Cultivate the diffuse gas and dust between stars, a reservoir for future star formation.',
+    cost: [{ resource: Resource.Stardust, amount: 2000 }],
+    position: { x: 55, y: 16 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 5 }],
+    icon: 'interstellar_medium',
+    dependencies: ['star_cluster_formation'],
+    panelContent: {
+        facts: [{ text: "The Interstellar Medium (ISM) is incredibly tenuous; on average, its density is about one atom per cubic centimeter. It's the raw material for new stars." }],
+        subUpgrades: [{ id: 'ism_enrichment', name: 'ISM Enrichment', description: 'Seed the medium with heavy elements, improving Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 2500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 10 }] }]
+    }
+  },
+  {
+    id: 'planetary_nebula',
+    name: 'Planetary Nebula',
+    description: 'Capture the glowing, expanding shell of gas ejected from a dying low-mass star.',
+    cost: [{ resource: Resource.Carbon, amount: 800 }],
+    position: { x: 75, y: 10 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }],
+    icon: 'planetary_nebula',
+    dependencies: ['agb_star'],
+    panelContent: {
+        facts: [{ text: "'Planetary nebulae' are a misnomer; they have nothing to do with planets but were named so due to their round, planet-like appearance through early telescopes." }],
+        subUpgrades: [{ id: 'pn_recycling', name: 'Nebula Recycling', description: 'Efficiently harvest the ejected shell for more passive Carbon.', cost: () => ({ resource: Resource.Carbon, amount: 1200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] }]
+    }
+  },
+  {
+    id: 'gravitational_lensing',
+    name: 'Gravitational Lensing',
+    description: 'Use gravity to bend light, acting as a natural telescope to find resource-rich regions.',
+    cost: [{ resource: Resource.Stardust, amount: 7500 }],
+    position: { x: 65, y: 22 },
+    effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }],
+    icon: 'gravitational_lensing',
+    dependencies: ['dark_matter_studies'],
+    panelContent: {
+        facts: [{ text: "Gravitational lensing provides strong evidence for both General Relativity and the existence of dark matter by observing how mass warps spacetime." }],
+        subUpgrades: [{ id: 'gl_focusing', name: 'Lensing Focus', description: 'Refine your observations to further boost Stardust generation efficiency.', cost: () => ({ resource: Resource.Stardust, amount: 10000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
+    }
+  },
+  {
+    id: 'reionization_epoch',
+    name: 'Epoch of Reionization',
+    description: 'The first stars produce enough radiation to re-ionize the neutral hydrogen filling the universe.',
+    cost: [{ resource: Resource.Hydrogen, amount: 5000 }],
+    position: { x: 25, y: 20 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }],
+    icon: 'reionization',
+    dependencies: ['cosmic_microwave_background'],
+    panelContent: {
+        facts: [{ text: "During this epoch, the 'cosmic dark ages' ended as the universe became transparent to ultraviolet light for the first time." }],
+        subUpgrades: [{ id: 're_efficiency', name: 'Reionization Efficiency', description: 'Harness the energy of reionization to passively generate Hydrogen.', cost: () => ({ resource: Resource.Hydrogen, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }] }]
+    }
+  },
+  {
+    id: 'supermassive_black_hole',
+    name: 'Supermassive Black Hole',
+    description: 'A gravitational singularity at the galactic core, profoundly influencing the galaxy\'s structure.',
+    cost: [{ resource: Resource.Iron, amount: 50000 }],
+    position: { x: 80, y: 15 },
+    effects: [{ type: 'INCREASE_MAX_FORCE', value: 20 }],
+    icon: 'black_hole',
+    dependencies: ['galaxy_formation'],
+    panelContent: {
+        facts: [{ text: "Nearly every large galaxy, including our own Milky Way, is thought to have a supermassive black hole at its center, some with billions of times the Sun's mass." }],
+        subUpgrades: [{ id: 'smbh_gravity_well', name: 'Deepen Gravity Well', description: 'The intense gravity provides a significant boost to max Force.', cost: () => ({ resource: Resource.Iron, amount: 75000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 30 }] }]
+    }
+  },
+  {
+    id: 'quasar',
+    name: 'Quasar Activation',
+    description: 'Ignite the accretion disk of a supermassive black hole, creating one of the most luminous objects in the universe.',
+    cost: [{ resource: Resource.Stardust, amount: 100000 }],
+    position: { x: 85, y: 13 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 100 }],
+    icon: 'quasar',
+    dependencies: ['supermassive_black_hole'],
+    panelContent: {
+        facts: [{ text: "Quasars are powered by matter falling into a supermassive black hole and can outshine their entire host galaxy." }],
+        subUpgrades: [{ id: 'quasar_jets', name: 'Harness Relativistic Jets', description: 'Channel the quasar\'s immense energy output to boost Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 150000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 150 }] }]
+    }
+  },
+  {
+    id: 'dark_energy',
+    name: 'Dark Energy',
+    description: 'Acknowledge a mysterious repulsive force causing the universe\'s expansion to accelerate.',
+    cost: [{ resource: Resource.Stardust, amount: 100000 }],
+    position: { x: 85, y: 21 },
+    effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }],
+    icon: 'dark_energy',
+    dependencies: ['galaxy_formation'],
+    panelContent: {
+        facts: [{ text: "Dark energy is believed to make up about 68% of the universe's total energy density, dominating over both dark and normal matter." }],
+        subUpgrades: [{ id: 'de_understanding', name: 'Cosmological Constant', description: 'A deeper understanding of dark energy boosts all Stardust acquisition.', cost: () => ({ resource: Resource.Stardust, amount: 120000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
+    }
+  },
+  {
+    id: 'cosmic_web',
+    name: 'Cosmic Web',
+    description: 'Map the vast, filamentary structures of dark matter that form the scaffolding of the universe.',
+    cost: [{ resource: Resource.Stardust, amount: 75000 }],
+    position: { x: 80, y: 23 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 10 }],
+    icon: 'cosmic_web',
+    dependencies: ['galaxy_formation'],
+    panelContent: {
+        facts: [{ text: "Galaxies form and cluster at the intersections of the cosmic web's filaments, like cities on a vast, invisible highway system." }],
+        subUpgrades: [{ id: 'cw_filaments', name: 'Trace Filaments', description: 'Tracing the gas in cosmic filaments improves passive Hydrogen generation.', cost: () => ({ resource: Resource.Hydrogen, amount: 50000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 20 }] }]
+    }
+  },
+  {
+    id: 'galactic_merger',
+    name: 'Galactic Merger',
+    description: 'Collide two galaxies to trigger a massive burst of star formation and elemental creation.',
+    cost: [{ resource: Resource.Stardust, amount: 200000 }],
+    position: { x: 90, y: 16 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 50 }],
+    icon: 'galactic_merger',
+    dependencies: ['galaxy_formation'],
+    panelContent: {
+        facts: [{ text: "Galactic mergers often result in the formation of a much larger elliptical galaxy and can trigger the rapid growth of the central supermassive black hole." }],
+        subUpgrades: [{ id: 'gm_starburst', name: 'Starburst Galaxy', description: 'The intense star formation significantly boosts Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 250000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 100 }] }]
+    }
+  },
+  {
+    id: 'population_iii_stars',
+    name: 'Population III Stars',
+    description: 'Form the very first generation of stars, composed almost purely of Hydrogen.',
+    cost: [{ resource: Resource.Hydrogen, amount: 1000 }],
+    position: { x: 40, y: 15 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 2 }],
+    icon: 'population_iii_stars',
+    dependencies: ['protostar_formation'],
+    panelContent: {
+        facts: [{ text: "Population III stars were the first stars, theorized to be extremely massive and short-lived, and responsible for creating the first heavy elements." }],
+        subUpgrades: [{ id: 'p3_enrichment', name: 'First Enrichment', description: 'The death of these first stars provides a small passive income of Carbon.', cost: () => ({ resource: Resource.Hydrogen, amount: 1500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 0.1 }] }]
+    }
+  },
 
    // --- PLANETARY ERA (Middle Tier) ---
   {
@@ -372,7 +513,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Protoplanetary Disk',
     description: 'Form a swirling disk of dense gas and dust around a young star, the birthplace of planets.',
     cost: [{ resource: Resource.Stardust, amount: 300 }],
-    position: { x: 30, y: 25 },
+    position: { x: 20, y: 25 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['rock_formation'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }],
     icon: 'protoplanetary_disk',
     dependencies: ['cosmic_origins'],
@@ -401,7 +542,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Kuiper Belt Formation',
     description: 'Form a belt of icy planetesimals at the edge of the system.',
     cost: [{ resource: Resource.Rock, amount: 1000 }],
-    position: { x: 20, y: 22 },
+    position: { x: 10, y: 28 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }],
     icon: 'kuiper_belt',
     dependencies: ['protoplanetary_disk'],
@@ -439,7 +580,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Planetary Differentiation',
     description: 'The planet heats up, causing denser materials to sink to the core.',
     cost: [{ resource: Resource.Iron, amount: 1000 }],
-    position: { x: 50, y: 22 },
+    position: { x: 55, y: 22 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
     icon: 'planetary_differentiation',
     dependencies: ['planetary_accretion'],
@@ -457,7 +598,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Moon Formation',
     description: 'A large impactor strikes the planet, creating a debris ring that coalesces into a moon.',
     cost: [{ resource: Resource.Rock, amount: 2000 }],
-    position: { x: 50, y: 28 },
+    position: { x: 58, y: 28 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }],
     icon: 'moon_formation',
     dependencies: ['planetary_accretion'],
@@ -475,7 +616,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Cometary Delivery',
     description: 'Harness comets and asteroids to deliver water and organic molecules to the young planet.',
     cost: [{ resource: Resource.Water, amount: 50 }, { resource: Resource.Rock, amount: 250 }],
-    position: { x: 55, y: 25 },
+    position: { x: 65, y: 25 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['asteroid_mining'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 10 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'cometary_impact',
     dependencies: ['planetary_accretion'],
@@ -503,7 +644,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'First Oceans',
     description: 'Water vapor condenses, forming vast oceans that cover the planet.',
     cost: [{ resource: Resource.Water, amount: 5000 }],
-    position: { x: 65, y: 25 },
+    position: { x: 88, y: 25 },
     effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Water, value: 10000 }],
     icon: 'first_oceans',
     dependencies: ['cometary_delivery'],
@@ -521,7 +662,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Volcanic Activity',
     description: 'Planetary volcanoes release trapped gases and chemicals, shaping the early atmosphere and oceans.',
     cost: [{ resource: Resource.Rock, amount: 800 }, { resource: Resource.Iron, amount: 200 }],
-    position: { x: 40, y: 32 },
+    position: { x: 48, y: 32 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'volcano',
     dependencies: ['planetary_accretion'],
@@ -541,7 +682,7 @@ export const UPGRADES: Upgrade[] = [
     name: 'Plate Tectonics',
     description: 'The planets crust breaks into moving plates, recycling materials and driving geological activity.',
     cost: [{ resource: Resource.Rock, amount: 5000 }],
-    position: { x: 50, y: 32 },
+    position: { x: 60, y: 32 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }],
     icon: 'plate_tectonics',
     dependencies: ['volcanic_activity'],
@@ -552,6 +693,120 @@ export const UPGRADES: Upgrade[] = [
         subUpgrades: [
             { id: 'pt_subduction', name: 'Subduction Zones', description: 'Efficiently recycling crust boosts passive generation of Carbon and Rock.', cost: () => ({ resource: Resource.Rock, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] }
         ]
+    }
+  },
+    
+  // --- NEW PLANETARY ERA NODES ---
+  {
+    id: 'late_heavy_bombardment',
+    name: 'Late Heavy Bombardment',
+    description: 'A period of intense comet and asteroid impacts that reshapes the planet\'s surface.',
+    cost: [{ resource: Resource.Rock, amount: 2500 }],
+    position: { x: 78, y: 30 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }],
+    icon: 'late_heavy_bombardment',
+    dependencies: ['cometary_delivery'],
+    panelContent: {
+        facts: [{ text: "The Late Heavy Bombardment, which occurred roughly 4.1 to 3.8 billion years ago, may have delivered vast quantities of water and organic compounds to the early Earth." }],
+        subUpgrades: [{ id: 'lhb_surface_cracking', name: 'Surface Cracking', description: 'The impacts expose new minerals, improving passive Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 3000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }] }]
+    }
+  },
+  {
+    id: 'magnetosphere',
+    name: 'Magnetosphere',
+    description: 'Generate a planetary magnetic field to shield against stellar wind and cosmic radiation.',
+    cost: [{ resource: Resource.Iron, amount: 2500 }],
+    position: { x: 55, y: 18 },
+    effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }],
+    icon: 'magnetosphere',
+    dependencies: ['planetary_differentiation'],
+    panelContent: {
+        facts: [{ text: "A planet's magnetosphere is crucial for retaining an atmosphere, as it deflects high-energy particles from the star that would otherwise strip it away." }],
+        subUpgrades: [{ id: 'mag_deflection', name: 'Strengthen Deflectors', description: 'A stronger field allows for better control, granting more max Force.', cost: () => ({ resource: Resource.Iron, amount: 3000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }]
+    }
+  },
+  {
+    id: 'tide_pools',
+    name: 'Tidal Pools',
+    description: 'The moon\'s gravity creates coastal pools with wet-dry cycles, ideal for concentrating chemicals.',
+    cost: [{ resource: Resource.Water, amount: 3000 }],
+    position: { x: 62, y: 35 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.2 }],
+    icon: 'tide_pools',
+    dependencies: ['moon_formation'],
+    panelContent: {
+        facts: [{ text: "Tidal pools are considered a strong candidate for the origin of life, as the cycles of wetting and drying could have driven the polymerization of molecules like RNA." }],
+        subUpgrades: [{ id: 'tp_concentration', name: 'Chemical Concentration', description: 'Enhance wet-dry cycles to passively generate more Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.3 }] }]
+    }
+  },
+  {
+    id: 'banded_iron_formations',
+    name: 'Banded Iron Formations',
+    description: 'The first oxygen produced by life rusts the iron in the oceans, creating vast mineral deposits.',
+    cost: [{ resource: Resource.Iron, amount: 5000 }],
+    position: { x: 92, y: 22 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
+    icon: 'banded_iron_formations',
+    dependencies: ['first_oceans', 'photosynthesis'],
+    panelContent: {
+        facts: [{ text: "Banded iron formations are a distinctive type of rock found in Precambrian sedimentary rocks, and their existence points to the Great Oxidation Event." }],
+        subUpgrades: [{ id: 'bif_mining', name: 'Iron Sequestration', description: 'Harvesting these iron deposits provides a passive Iron income.', cost: () => ({ resource: Resource.Iron, amount: 6000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] }]
+    }
+  },
+  {
+    id: 'continental_crust',
+    name: 'Continental Crust',
+    description: 'Form lighter, buoyant continental crust that rises above the oceans.',
+    cost: [{ resource: Resource.Rock, amount: 8000 }],
+    position: { x: 65, y: 30 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }],
+    icon: 'continental_crust',
+    dependencies: ['plate_tectonics'],
+    panelContent: {
+        facts: [{ text: "Continental crust is less dense than oceanic crust, which is why it 'floats' higher on the mantle, creating the landmasses we know today." }],
+        subUpgrades: [{ id: 'cc_weathering', name: 'Crust Weathering', description: 'The erosion of continents provides a passive stream of Rock.', cost: () => ({ resource: Resource.Rock, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] }]
+    }
+  },
+  {
+    id: 'snowball_earth',
+    name: 'Snowball Earth',
+    description: 'A period of intense global glaciation, challenging early life to survive.',
+    cost: [{ resource: Resource.Water, amount: 10000 }],
+    position: { x: 90, y: 35 },
+    effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Carbon, value: 0.05 }],
+    icon: 'snowball_earth',
+    dependencies: ['first_oceans'],
+    panelContent: {
+        facts: [{ text: "The end of 'Snowball Earth' events is thought to have been caused by the buildup of volcanic CO2 in the atmosphere, leading to extreme greenhouse warming." }],
+        subUpgrades: [{ id: 'se_recovery', name: 'Volcanic Recovery', description: 'Understanding the recovery from this period boosts Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 5000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] }]
+    }
+  },
+  {
+    id: 'hadean_eon',
+    name: 'Hadean Eon',
+    description: 'Survive the chaotic first eon of the planet\'s history, characterized by intense heat and impacts.',
+    cost: [{ resource: Resource.Rock, amount: 1000 }],
+    position: { x: 48, y: 28 },
+    effects: [{ type: 'INCREASE_MAX_FORCE', value: 2 }],
+    icon: 'hadean_eon',
+    dependencies: ['planetary_accretion'],
+    panelContent: {
+        facts: [{ text: "The Hadean Eon is named after Hades, the Greek god of the underworld, due to the hellish conditions on the early Earth." }],
+        subUpgrades: [{ id: 'he_resilience', name: 'Chaotic Resilience', description: 'Mastering chaos grants more max Force.', cost: () => ({ resource: Resource.Rock, amount: 1500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 3 }] }]
+    }
+  },
+  {
+    id: 'archean_eon',
+    name: 'Archean Eon',
+    description: 'A new eon dawns as the crust cools and the first life, prokaryotes, appears.',
+    cost: [{ resource: Resource.Water, amount: 8000 }],
+    position: { x: 92, y: 28 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }],
+    icon: 'archean_eon',
+    dependencies: ['first_oceans', 'abiogenesis'],
+    panelContent: {
+        facts: [{ text: "During the Archean Eon, the atmosphere was still devoid of free oxygen and the sky would have appeared orange from methane haze." }],
+        subUpgrades: [{ id: 'ae_prokaryotes', name: 'Prokaryotic Mats', description: 'The first microbial mats begin to enrich the oceans, generating Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] }]
     }
   },
 
@@ -816,6 +1071,547 @@ export const UPGRADES: Upgrade[] = [
             { id: 'ee_resilience', name: 'Evolutionary Resilience', description: 'Life that survived the cataclysm is stronger, boosting all passive biological generation permanently.', cost: () => ({ resource: Resource.ATP, amount: 100000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 5 }] }
         ]
     }
+  },
+
+  // --- OLD "NEW" BIOLOGICAL ERA NODES ---
+  {
+    id: 'prokaryotic_cell',
+    name: 'Prokaryotic Cell',
+    description: 'Establish simple cells without a nucleus, which will dominate the planet for eons.',
+    cost: [{ resource: Resource.ATP, amount: 100 }],
+    position: { x: 60, y: 50 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.5 }],
+    icon: 'prokaryotic_cell',
+    dependencies: ['protocell'],
+    panelContent: {
+        facts: [{ text: "Prokaryotes, such as bacteria and archaea, are the most widespread and abundant organisms on Earth, thriving in an incredible diversity of environments." }],
+        subUpgrades: [{ id: 'pc_metabolism', name: 'Metabolic Diversity', description: 'Unlock diverse metabolisms, improving Primordial Soup generation.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] }]
+    }
+  },
+  {
+    id: 'horizontal_gene_transfer',
+    name: 'Horizontal Gene Transfer',
+    description: 'Allow prokaryotes to exchange genetic material, accelerating evolution.',
+    cost: [{ resource: Resource.Nucleotides, amount: 1000 }],
+    position: { x: 65, y: 48 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.2 }],
+    icon: 'horizontal_gene_transfer',
+    dependencies: ['prokaryotic_cell'],
+    panelContent: {
+        facts: [{ text: "Horizontal gene transfer is a primary reason for the rapid spread of antibiotic resistance among bacteria." }],
+        subUpgrades: [{ id: 'hgt_efficiency', name: 'Plasmid Exchange', description: 'Optimize gene sharing to passively generate Nucleotides.', cost: () => ({ resource: Resource.Nucleotides, amount: 1500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.3 }] }]
+    }
+  },
+  {
+    id: 'transposons',
+    name: 'Transposons',
+    description: 'Activate "jumping genes," sequences of DNA that can move and replicate within the genome.',
+    cost: [{ resource: Resource.Nucleotides, amount: 3000 }],
+    position: { x: 70, y: 60 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.1 }],
+    icon: 'transposons',
+    dependencies: ['dna_replication'],
+    panelContent: {
+        facts: [{ text: "Transposons, or 'jumping genes,' make up a large fraction of the genome of many eukaryotes and can be a major driver of genetic variation and evolution." }],
+        subUpgrades: [{ id: 'transposon_activity', name: 'Increase Transposition', description: 'Controlled genomic instability provides a small passive generation of Nucleotides.', cost: () => ({ resource: Resource.Nucleotides, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.2 }] }]
+    }
+  },
+  {
+    id: 'epigenetics',
+    name: 'Epigenetics',
+    description: 'Develop systems to modify gene expression without changing the DNA sequence itself.',
+    cost: [{ resource: Resource.AminoAcids, amount: 5000 }],
+    position: { x: 88, y: 68 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }],
+    icon: 'epigenetics',
+    dependencies: ['eukaryotic_cell'],
+    panelContent: {
+        facts: [{ text: "Epigenetic modifications, such as DNA methylation and histone modification, can be influenced by the environment and are heritable in some cases." }],
+        subUpgrades: [{ id: 'epi_control', name: 'Gene Regulation', description: 'Finer control over gene expression grants more Max Hands.', cost: () => ({ resource: Resource.AminoAcids, amount: 6000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] }]
+    }
+  },
+  {
+    id: 'rna_interference',
+    name: 'RNA Interference',
+    description: 'Utilize small RNA molecules to silence specific genes, providing a defense against viruses and regulating the genome.',
+    cost: [{ resource: Resource.Nucleotides, amount: 4000 }],
+    position: { x: 85, y: 60 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
+    icon: 'rna_interference',
+    dependencies: ['eukaryotic_cell'],
+    panelContent: {
+        facts: [{ text: "RNA interference (RNAi) is a powerful tool used by scientists to 'knock down' the expression of specific genes to study their function." }],
+        subUpgrades: [{ id: 'rnai_defense', name: 'Viral Defense', description: 'An improved genetic defense system improves protocell resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 5000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }]
+    }
+  },
+  {
+    id: 'krebs_cycle',
+    name: 'Krebs Cycle',
+    description: 'Evolve a more efficient aerobic respiration pathway, generating significantly more ATP.',
+    cost: [{ resource: Resource.ATP, amount: 8000 }],
+    position: { x: 90, y: 80 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 20 }],
+    icon: 'krebs_cycle',
+    dependencies: ['endosymbiosis'],
+    panelContent: {
+        facts: [{ text: "The Krebs Cycle (or Citric Acid Cycle) is a central metabolic hub in the cell, and the complete oxidation of one glucose molecule yields about 30-32 ATP molecules." }],
+        subUpgrades: [{ id: 'kc_optimization', name: 'Cycle Optimization', description: 'Fine-tuning the Krebs Cycle greatly boosts passive ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 30 }] }]
+    }
+  },
+  {
+    id: 'homeostasis',
+    name: 'Homeostasis',
+    description: 'Develop the ability for multicellular organisms to maintain a stable internal environment.',
+    cost: [{ resource: Resource.ATP, amount: 12000 }],
+    position: { x: 70, y: 90 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
+    icon: 'homeostasis',
+    dependencies: ['multicellularity'],
+    panelContent: {
+        facts: [{ text: "Homeostasis is a self-regulating process by which biological systems maintain stability while adjusting to conditions that are optimal for survival." }],
+        subUpgrades: [{ id: 'homeo_stability', name: 'Internal Stability', description: 'A stable internal state improves the resilience of all biological units.', cost: () => ({ resource: Resource.ATP, amount: 15000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }]
+    }
+  },
+  {
+    id: 'sexual_reproduction',
+    name: 'Sexual Reproduction',
+    description: 'Combine genetic material from two parents to dramatically increase genetic variation.',
+    cost: [{ resource: Resource.Nucleotides, amount: 15000 }],
+    position: { x: 80, y: 92 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }],
+    icon: 'sexual_reproduction',
+    dependencies: ['multicellularity'],
+    panelContent: {
+        facts: [{ text: "The evolution of sexual reproduction is a major puzzle because it has significant costs (like finding a mate), but its benefit of creating genetic diversity is thought to outweigh them." }],
+        subUpgrades: [{ id: 'sr_recombination', name: 'Genetic Recombination', description: 'The constant shuffling of genes provides a passive source of Nucleotides.', cost: () => ({ resource: Resource.Nucleotides, amount: 20000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 2 }] }]
+    }
+  },
+  {
+    id: 'hox_genes',
+    name: 'HOX Genes',
+    description: 'Evolve a set of master control genes that specify the body plan of an embryo.',
+    cost: [{ resource: Resource.Nucleotides, amount: 20000 }],
+    position: { x: 60, y: 75 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
+    icon: 'hox_genes',
+    dependencies: ['cambrian_explosion'],
+    panelContent: {
+        facts: [{ text: "HOX genes are highly conserved across the animal kingdom, meaning a fly's body-plan gene can function in a mouse, highlighting a shared ancestry." }],
+        subUpgrades: [{ id: 'hox_control', name: 'Body Plan Control', description: 'Mastery over body plans allows for more complex manipulation, granting Max Hands.', cost: () => ({ resource: Resource.Nucleotides, amount: 25000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }] }]
+    }
+  },
+  {
+    id: 'evolution_of_vision',
+    name: 'Evolution of Vision',
+    description: 'Develop light-sensitive cells, evolving from simple eye-spots to complex, image-forming eyes.',
+    cost: [{ resource: Resource.ATP, amount: 30000 }],
+    position: { x: 50, y: 85 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }],
+    icon: 'evolution_of_vision',
+    dependencies: ['nervous_system'],
+    panelContent: {
+        facts: [{ text: "The eye has evolved independently in many different lineages, a classic example of convergent evolution, starting from a simple patch of photoreceptor proteins." }],
+        subUpgrades: [{ id: 'eov_acuity', name: 'Visual Acuity', description: 'Better vision allows for more effective protocell hunts, improving its speed.', cost: () => ({ resource: Resource.ATP, amount: 40000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 15 }] }]
+    }
+  },
+  {
+    id: 'cephalization',
+    name: 'Cephalization',
+    description: 'Concentrate sensory organs and nerve cells at the anterior end, forming a distinct head and brain.',
+    cost: [{ resource: Resource.AminoAcids, amount: 40000 }],
+    position: { x: 50, y: 95 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 30 }],
+    icon: 'cephalization',
+    dependencies: ['nervous_system'],
+    panelContent: {
+        facts: [{ text: "Cephalization is strongly correlated with bilateral symmetry and an organism's ability to move forward and actively hunt or explore." }],
+        subUpgrades: [{ id: 'ceph_brain', name: 'Brain Development', description: 'The formation of a complex brain vastly increases your capacity for manipulation.', cost: () => ({ resource: Resource.AminoAcids, amount: 50000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 40 }] }]
+    }
+  },
+  // --- NEW MOLECULAR BIOLOGY NODES ---
+  {
+    id: 'telomere_maintenance',
+    name: 'Telomere Maintenance',
+    description: 'Develop primitive mechanisms to protect the ends of chromosomes during DNA replication, slightly extending cellular lifespan.',
+    cost: [{ resource: Resource.Nucleotides, amount: 4500 }],
+    position: { x: 78, y: 56 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
+    icon: 'telomere_maintenance',
+    dependencies: ['dna_replication'],
+    panelContent: { facts: [{ text: "Telomeres are repetitive nucleotide sequences at the end of chromosomes that protect them from deterioration. With each cell division, they shorten, contributing to cellular aging. Early life had to find ways to manage this." }], subUpgrades: [] }
+  },
+  {
+    id: 'antioxidant_defense',
+    name: 'Antioxidant Defense',
+    description: 'Produce enzymes like catalase and superoxide dismutase to neutralize damaging reactive oxygen species from metabolism.',
+    cost: [{ resource: Resource.AminoAcids, amount: 6000 }],
+    position: { x: 70, y: 65 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
+    icon: 'antioxidant_defense',
+    dependencies: ['glycolysis'],
+    panelContent: { facts: [{ text: "Reactive oxygen species (ROS) are inevitable byproducts of aerobic respiration. Antioxidants are molecules that can safely interact with these free radicals, preventing them from causing damage to DNA, proteins, and lipids." }], subUpgrades: [] }
+  },
+  {
+    id: 'lipid_metabolism',
+    name: 'Lipid Metabolism',
+    description: 'Evolve beta-oxidation pathways to break down fatty acids, unlocking a dense and efficient energy source.',
+    cost: [{ resource: Resource.ATP, amount: 6500 }],
+    position: { x: 72, y: 59 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }],
+    icon: 'lipid_metabolism',
+    dependencies: ['glycolysis'],
+    panelContent: { facts: [{ text: "Fatty acids are a more energy-dense storage molecule than carbohydrates. The ability to metabolize lipids provided a significant advantage, allowing for longer survival between feeding." }], subUpgrades: [] }
+  },
+  {
+    id: 'glycogen_storage',
+    name: 'Glycogen Storage',
+    description: 'Polymerize glucose into glycogen, creating a readily accessible short-term energy reserve for bursts of activity.',
+    cost: [{ resource: Resource.ATP, amount: 5500 }],
+    position: { x: 68, y: 62 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }],
+    icon: 'glycogen_storage',
+    dependencies: ['glycolysis'],
+    panelContent: { facts: [{ text: "Glycogen is a large, branched polymer of glucose that can be quickly broken down to release glucose molecules when energy is needed, making it ideal for rapid metabolic response." }], subUpgrades: [] }
+  },
+  {
+    id: 'evolution_of_lungs',
+    name: 'Gas Bladder',
+    description: 'Develop an internal bladder for buoyancy control, a precursor to terrestrial lungs for breathing air.',
+    cost: [{ resource: Resource.AminoAcids, amount: 12000 }],
+    position: { x: 70, y: 85 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 5 }],
+    icon: 'evolution_of_lungs',
+    dependencies: ['multicellularity'],
+    panelContent: { facts: [{ text: "The lungs of terrestrial vertebrates and the gas bladders of fish are homologous structures, meaning they share a common evolutionary origin from an out-pocketing of the primitive gut." }], subUpgrades: [] }
+  },
+  {
+    id: 'cellular_homeostasis',
+    name: 'Cellular Homeostasis',
+    description: 'Develop internal feedback loops to maintain a stable intracellular environment, resisting external fluctuations.',
+    cost: [{ resource: Resource.ATP, amount: 7500 }],
+    position: { x: 88, y: 80 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
+    icon: 'cellular_homeostasis',
+    dependencies: ['endosymbiosis'],
+    panelContent: { facts: [{ text: "Cellular homeostasis involves a multitude of processes, such as ion pumps and pH buffering, that keep the cell's internal state within a narrow, optimal range for life, even when the external environment changes dramatically." }], subUpgrades: [] }
+  },
+  {
+    id: 'circadian_rhythm',
+    name: 'Circadian Rhythm',
+    description: 'Evolve an internal molecular clock to anticipate daily environmental changes, like light and temperature cycles.',
+    cost: [{ resource: Resource.Nucleotides, amount: 6000 }],
+    position: { x: 90, y: 72 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }],
+    icon: 'circadian_rhythm',
+    dependencies: ['epigenetics'],
+    panelContent: { facts: [{ text: "The circadian rhythm is driven by a transcription-translation feedback loop of specific 'clock genes'. This internal pacemaker allows organisms to optimize their metabolism and behavior in sync with the 24-hour day-night cycle." }], subUpgrades: [] }
+  },
+  {
+    id: 'evolution_of_hearing',
+    name: 'Vibration Sensing',
+    description: 'Develop mechanoreceptors to detect vibrations in the surrounding medium, the first step towards hearing.',
+    cost: [{ resource: Resource.ATP, amount: 28000 }],
+    position: { x: 48, y: 88 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }],
+    icon: 'evolution_of_hearing',
+    dependencies: ['nervous_system'],
+    panelContent: { facts: [{ text: "In mammals, the three tiny bones of the middle ear (the malleus, incus, and stapes) evolved from bones that once formed the jaw joint in their reptilian ancestors." }], subUpgrades: [] }
+  },
+  {
+    id: 'chemosensation',
+    name: 'Chemosensation',
+    description: 'Evolve surface receptors that bind to specific molecules, allowing the organism to "taste" or "smell" its environment.',
+    cost: [{ resource: Resource.ATP, amount: 26000 }],
+    position: { x: 60, y: 92 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }],
+    icon: 'chemosensation',
+    dependencies: ['nervous_system'],
+    panelContent: { facts: [{ text: "The sense of smell is incredibly ancient and vital. It relies on a vast family of G-protein coupled receptors, one of the largest gene families in most animal genomes." }], subUpgrades: [] }
+  },
+
+  // --- NEW BIOCHEMISTRY & EVOLUTION NODES ---
+  {
+    id: 'protein_folding',
+    name: 'Protein Folding',
+    description: 'Master the complex process of folding amino acid chains into functional 3D protein structures.',
+    dependencies: ['atp_coupling'],
+    position: { x: 40, y: 60 },
+    cost: [{ resource: Resource.AminoAcids, amount: 250 }, { resource: Resource.ATP, amount: 150 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }],
+    icon: 'protein_folding',
+    panelContent: {
+        facts: [{ text: "The 'protein folding problem'—predicting a protein's 3D structure from its amino acid sequence—is one of the biggest challenges in biochemistry." }],
+        subUpgrades: [{ id: 'pf_chaperones', name: 'Chaperone Proteins', description: 'Utilize specialized proteins to prevent misfolding and aggregation, improving overall cellular efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 400 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] }]
+    }
+  },
+  {
+    id: 'ribosomes',
+    name: 'Ribosome Assembly',
+    description: 'Construct molecular machines that translate genetic code from RNA into proteins, the workhorses of the cell.',
+    dependencies: ['rna_world'],
+    position: { x: 48, y: 65 },
+    cost: [{ resource: Resource.Nucleotides, amount: 250 }, { resource: Resource.AminoAcids, amount: 250 }],
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }],
+    icon: 'ribosomes',
+    panelContent: {
+        facts: [{ text: "Ribosomes are found in all known life, from bacteria to humans, underscoring their ancient and fundamental role in biology." }],
+        subUpgrades: [{ id: 'rib_polysomes', name: 'Polysome Formation', description: 'Allow multiple ribosomes to translate a single mRNA simultaneously, greatly increasing protein synthesis capacity.', cost: () => ({ resource: Resource.Nucleotides, amount: 500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] }]
+    }
+  },
+  {
+    id: 'dna_repair',
+    name: 'DNA Repair Mechanisms',
+    description: 'Develop enzymatic pathways to correct errors and damage in DNA, ensuring genomic stability.',
+    dependencies: ['dna_replication'],
+    position: { x: 72, y: 48 },
+    cost: [{ resource: Resource.Nucleotides, amount: 1500 }, { resource: Resource.ATP, amount: 1000 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
+    icon: 'dna_repair',
+    panelContent: {
+        facts: [{ text: "Your cells' DNA repair mechanisms fix thousands of errors every single day, protecting you from mutations that can lead to disease." }],
+        subUpgrades: [{ id: 'dr_mismatch', name: 'Mismatch Repair', description: 'Implement a system to correct mismatched base pairs that were missed by proofreading, further boosting resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 2000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }]
+    }
+  },
+  {
+    id: 'transcription_factors',
+    name: 'Transcription Factors',
+    description: 'Evolve proteins that bind to specific DNA sequences to control the rate of transcription, allowing for complex gene regulation.',
+    dependencies: ['eukaryotic_cell'],
+    position: { x: 88, y: 62 },
+    cost: [{ resource: Resource.AminoAcids, amount: 3000 }, { resource: Resource.ATP, amount: 2000 }],
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
+    icon: 'transcription_factors',
+    panelContent: {
+        facts: [{ text: "Transcription factors are key to cellular differentiation; they are what makes a muscle cell different from a neuron, even though both have the same DNA." }],
+        subUpgrades: [{ id: 'tf_enhancers', name: 'Enhancer Regions', description: 'Utilize distant DNA regions to boost transcription, providing much finer control over gene expression.', cost: () => ({ resource: Resource.Nucleotides, amount: 4000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }] }]
+    }
+  },
+  {
+    id: 'exoskeleton',
+    name: 'Exoskeleton',
+    description: 'Develop a hard, external skeleton for protection and support, a key innovation of the Cambrian.',
+    dependencies: ['cambrian_explosion'],
+    position: { x: 50, y: 80 },
+    cost: [{ resource: Resource.Carbon, amount: 20000 }, { resource: Resource.ATP, amount: 10000 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 20 }],
+    icon: 'exoskeleton',
+    panelContent: {
+        facts: [{ text: "Arthropods, like insects and crustaceans, owe their incredible success to their versatile chitinous exoskeletons, but must shed them periodically to grow." }],
+        subUpgrades: [{ id: 'exo_molting', name: 'Efficient Molting', description: 'Streamline the process of shedding and regrowing the exoskeleton, improving overall resilience.', cost: () => ({ resource: Resource.ATP, amount: 15000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }]
+    }
+  },
+  {
+    id: 'endoskeleton',
+    name: 'Endoskeleton',
+    description: 'Develop an internal skeleton of bone and cartilage, allowing for larger body sizes and continuous growth.',
+    dependencies: ['hox_genes'],
+    position: { x: 65, y: 70 },
+    cost: [{ resource: Resource.Rock, amount: 5000 }, { resource: Resource.ATP, amount: 25000 }],
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 5 }],
+    icon: 'endoskeleton',
+    panelContent: {
+        facts: [{ text: "Your own bones are a living tissue constantly being remodeled. They also serve as a storage site for minerals like calcium and produce blood cells in the marrow." }],
+        subUpgrades: [{ id: 'endo_marrow', name: 'Bone Marrow', description: 'Develop hematopoietic stem cells within the marrow, creating a steady passive supply of Amino Acids.', cost: () => ({ resource: Resource.ATP, amount: 30000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 10 }] }]
+    }
+  },
+  {
+    id: 'circulatory_system',
+    name: 'Circulatory System',
+    description: 'Evolve a system of vessels and a pump (a heart) to transport nutrients and oxygen to every cell in a large organism.',
+    dependencies: ['multicellularity'],
+    position: { x: 75, y: 78 },
+    cost: [{ resource: Resource.AminoAcids, amount: 15000 }, { resource: Resource.ATP, amount: 15000 }],
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 20 }],
+    icon: 'circulatory_system',
+    panelContent: {
+        facts: [{ text: "An adult human's blood vessels, if laid end-to-end, would circle the Earth more than twice. This vast network ensures no cell is far from a supply line." }],
+        subUpgrades: [{ id: 'cs_heart', name: 'Four-Chambered Heart', description: 'Develop a highly efficient, four-chambered heart that separates oxygenated and deoxygenated blood, boosting ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 20000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 30 }] }]
+    }
+  },
+  {
+    id: 'adaptive_immunity',
+    name: 'Adaptive Immunity',
+    description: 'Develop a sophisticated immune system with memory, capable of recognizing and targeting specific pathogens.',
+    dependencies: ['homeostasis'],
+    position: { x: 68, y: 95 },
+    cost: [{ resource: Resource.Nucleotides, amount: 25000 }, { resource: Resource.AminoAcids, amount: 25000 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 20 }],
+    icon: 'adaptive_immunity',
+    panelContent: {
+        facts: [{ text: "Vaccines work by introducing a harmless part of a pathogen to your adaptive immune system, allowing it to build a 'memory' for a rapid response to future infections." }],
+        subUpgrades: [{ id: 'ai_antibodies', name: 'Antibody Production', description: 'Optimize the production of highly specific antibodies, dramatically increasing resilience against environmental threats.', cost: () => ({ resource: Resource.AminoAcids, amount: 30000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 20 }] }]
+    }
+  },
+  
+  // --- NEW MOLECULAR BIOLOGY NODES (LEFT SIDE) ---
+  {
+    id: 'heat_shock_proteins',
+    name: 'Heat Shock Proteins',
+    description: 'Evolve chaperone proteins that refold other proteins denatured by stress, ensuring survival in harsh conditions.',
+    cost: [{ resource: Resource.AminoAcids, amount: 800 }, { resource: Resource.ATP, amount: 500 }],
+    position: { x: 30, y: 65 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }],
+    icon: 'heat_shock_proteins',
+    dependencies: ['protein_folding'],
+    panelContent: {
+      facts: [{ text: "Heat shock proteins are named for being produced in response to heat, but they also respond to cold, UV light, and other stresses. They are some of the most highly conserved proteins across all life." }],
+      subUpgrades: [{ id: 'hsp_resilience', name: 'Stress Response', description: 'Improve the stress response system, further boosting protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 1000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }]
+    }
+  },
+  {
+    id: 'telomerase_enzyme',
+    name: 'Telomerase',
+    description: 'Evolve an enzyme to lengthen telomeres, counteracting cellular aging and enabling more complex organisms.',
+    cost: [{ resource: Resource.Nucleotides, amount: 10000 }, { resource: Resource.ATP, amount: 12000 }],
+    position: { x: 45, y: 70 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
+    icon: 'telomerase_enzyme',
+    dependencies: ['eukaryotic_cell'],
+    panelContent: {
+      facts: [{ text: "Telomerase is often called the 'immortality enzyme' as it allows cells to divide beyond their normal limit. It's active in stem cells and, unfortunately, most cancer cells." }],
+      subUpgrades: [{ id: 'te_extension', name: 'Telomere Extension', description: 'Enhance telomerase activity to further improve protocell resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 15000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }] }]
+    }
+  },
+  {
+    id: 'green_fluorescent_protein',
+    name: 'Green Fluorescent Protein',
+    description: 'Discover a glowing protein from jellyfish, revolutionizing the ability to observe cellular processes in real time.',
+    cost: [{ resource: Resource.AminoAcids, amount: 18000 }, { resource: Resource.ATP, amount: 15000 }],
+    position: { x: 40, y: 85 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }],
+    icon: 'green_fluorescent_protein',
+    dependencies: ['multicellularity'],
+    panelContent: {
+      facts: [{ text: "The discovery of GFP was so significant that its discoverers won the Nobel Prize. It allows scientists to literally watch proteins move inside living cells." }],
+      subUpgrades: [{ id: 'gfp_tagging', name: 'Fluorescent Tagging', description: 'Tagging key proteins improves hunting coordination, boosting protocell efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 25000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }] }]
+    }
+  },
+  {
+    id: 'crispr_cas9',
+    name: 'CRISPR-Cas9 System',
+    description: 'Harness a bacterial immune system for precise genome editing, unlocking unprecedented control over life.',
+    cost: [{ resource: Resource.Nucleotides, amount: 40000 }, { resource: Resource.ATP, amount: 35000 }],
+    position: { x: 40, y: 95 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 50 }],
+    icon: 'crispr_cas9',
+    dependencies: ['adaptive_immunity'],
+    panelContent: {
+      facts: [{ text: "CRISPR-Cas9 is a gene-editing tool adapted from a defense mechanism bacteria use to chop up the DNA of invading viruses and store a memory of them." }],
+      subUpgrades: [{ id: 'crispr_gRNA', name: 'Guide RNA Synthesis', description: 'Mass production of guide RNAs improves genetic manipulation, passively generating Nucleotides.', cost: () => ({ resource: Resource.ATP, amount: 50000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 10 }] }]
+    }
+  },
+    // --- LATEST BIOLOGY NODES (LEFT SIDE) ---
+  {
+    id: 'p53_protein',
+    name: 'p53 Tumor Suppressor',
+    description: 'Evolve a critical transcription factor that halts the cell cycle upon DNA damage, preventing mutations.',
+    dependencies: ['dna_repair'],
+    position: { x: 30, y: 75 },
+    cost: [{ resource: Resource.Nucleotides, amount: 2500 }, { resource: Resource.ATP, amount: 1500 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }],
+    icon: 'p53_protein',
+    panelContent: {
+      facts: [{ text: "p53 is called the 'guardian of the genome' for its role in conserving stability by preventing genome mutation. It is mutated and inactivated in over 50% of human cancers." }],
+      subUpgrades: [{ id: 'p53_apoptosis', name: 'Trigger Apoptosis', description: 'Enable p53 to trigger programmed cell death in irreparably damaged cells, a vital anti-cancer mechanism.', cost: () => ({ resource: Resource.ATP, amount: 2500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }] }]
+    }
+  },
+  {
+    id: 'opsins',
+    name: 'Opsin Proteins',
+    description: 'Evolve the family of light-sensitive opsin proteins, the molecular basis for all animal vision.',
+    dependencies: ['eukaryotic_cell'],
+    position: { x: 30, y: 80 },
+    cost: [{ resource: Resource.AminoAcids, amount: 3000 }, { resource: Resource.ATP, amount: 2000 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }],
+    icon: 'opsins',
+    panelContent: {
+      facts: [{ text: 'Opsins bind to a chromophore molecule (like retinal, derived from Vitamin A) to become light-sensitive. The combination, called rhodopsin, is the fundamental building block of sight.' }],
+      subUpgrades: [{ id: 'ops_color', name: 'Color Vision', description: 'Evolve different types of opsin proteins that are sensitive to different wavelengths of light, allowing for color vision.', cost: () => ({ resource: Resource.ATP, amount: 4000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }] }]
+    }
+  },
+  {
+    id: 'hemoglobin',
+    name: 'Hemoglobin',
+    description: 'Develop a sophisticated protein to efficiently transport oxygen via a circulatory system, enabling higher metabolisms.',
+    dependencies: ['circulatory_system'],
+    position: { x: 25, y: 85 },
+    cost: [{ resource: Resource.Iron, amount: 10000 }, { resource: Resource.ATP, amount: 20000 }],
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 10 }],
+    icon: 'hemoglobin',
+    panelContent: {
+      facts: [{ text: "Hemoglobin's four subunits exhibit cooperative binding: when one iron atom binds an oxygen molecule, the protein's shape changes, making it easier for the other three to bind oxygen." }],
+      subUpgrades: [{ id: 'hemo_myo', name: 'Myoglobin', description: 'Develop myoglobin to store oxygen directly in muscle tissue, allowing for longer bursts of activity.', cost: () => ({ resource: Resource.ATP, amount: 25000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 15 }] }]
+    }
+  },
+  {
+    id: 'collagen',
+    name: 'Collagen Synthesis',
+    description: 'Produce vast quantities of collagen, the main structural protein in the extracellular matrix, forming connective tissues.',
+    dependencies: ['multicellularity'],
+    position: { x: 35, y: 90 },
+    cost: [{ resource: Resource.AminoAcids, amount: 15000 }, { resource: Resource.ATP, amount: 10000 }],
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
+    icon: 'collagen',
+    panelContent: {
+      facts: [{ text: 'Collagen is the most abundant protein in the animal kingdom, making up as much as 35% of the whole-body protein content. It provides strength and structure to everything from skin to bones.' }],
+      subUpgrades: [{ id: 'col_cartilage', name: 'Form Cartilage', description: 'Use specialized collagen to form flexible cartilage, a key component of joints and early skeletons.', cost: () => ({ resource: Resource.AminoAcids, amount: 20000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }] }]
+    }
+  },
+  {
+    id: 'aquaporins',
+    name: 'Aquaporins',
+    description: 'Evolve specialized channel proteins for the rapid and efficient transport of water across the cell membrane.',
+    cost: [{ resource: Resource.AminoAcids, amount: 800 }, { resource: Resource.ATP, amount: 500 }],
+    position: { x: 20, y: 55 },
+    effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }],
+    icon: 'aquaporins',
+    dependencies: ['protocell'],
+    panelContent: {
+      facts: [{ text: "Aquaporins transport water molecules single-file at a rate of billions per second, while remarkably blocking the passage of even tiny ions like protons." }],
+      subUpgrades: [{ id: 'aqp_efficiency', name: 'Gated Channels', description: 'Develop gated aquaporins for better osmosis control, improving Water generation.', cost: () => ({ resource: Resource.ATP, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 10 }] }]
+    }
+  },
+  {
+    id: 'histone_regulation',
+    name: 'Histone Gene Regulation',
+    description: 'Use histone proteins to compact DNA into chromatin, enabling complex control over gene expression.',
+    cost: [{ resource: Resource.AminoAcids, amount: 5000 }, { resource: Resource.Nucleotides, amount: 5000 }],
+    position: { x: 25, y: 65 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
+    icon: 'histone_regulation',
+    dependencies: ['eukaryotic_cell'],
+    panelContent: {
+      facts: [{ text: "If the DNA in a single human cell were stretched out, it would be about 2 meters long. Histones compact it to fit into a nucleus that's only about 6 micrometers in diameter." }],
+      subUpgrades: [{ id: 'histone_marks', name: 'Epigenetic Marks', description: 'Develop enzymes to add chemical tags to histones, allowing for finer control of gene silencing and activation.', cost: () => ({ resource: Resource.ATP, amount: 8000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }] }]
+    }
+  },
+  {
+    id: 'actin_cytoskeleton',
+    name: 'Actin Cytoskeleton',
+    description: 'Develop a dynamic internal scaffolding of actin filaments, providing structural integrity and enabling cell motility.',
+    cost: [{ resource: Resource.AminoAcids, amount: 6000 }, { resource: Resource.ATP, amount: 4000 }],
+    position: { x: 20, y: 70 },
+    effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }],
+    icon: 'actin_cytoskeleton',
+    dependencies: ['eukaryotic_cell'],
+    panelContent: {
+      facts: [{ text: "Actin filaments are in a constant state of flux, with subunits adding to one end and removing from the other, a process called 'treadmilling' that drives cell movement." }],
+      subUpgrades: [{ id: 'actin_pseudopods', name: 'Develop Pseudopods', description: 'Use actin polymerization to form pseudopods ("false feet"), significantly improving protocell hunting speed.', cost: () => ({ resource: Resource.ATP, amount: 6000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 15 }] }]
+    }
+  },
+  {
+    id: 'myosin_motors',
+    name: 'Myosin Motors',
+    description: 'Evolve motor proteins that "walk" along actin filaments, powering muscle contraction and intracellular transport.',
+    cost: [{ resource: Resource.AminoAcids, amount: 20000 }, { resource: Resource.ATP, amount: 18000 }],
+    position: { x: 20, y: 78 },
+    effects: [{ type: 'INCREASE_MAX_HANDS', value: 20 }],
+    icon: 'myosin_motors',
+    dependencies: ['actin_cytoskeleton', 'multicellularity'],
+    panelContent: {
+      facts: [{ text: "The movement of myosin heads along actin filaments, powered by ATP hydrolysis, is the fundamental molecular mechanism behind all muscle contraction in animals." }],
+      subUpgrades: [{ id: 'myosin_transport', name: 'Intracellular Transport', description: 'Use myosin to actively transport vesicles and organelles, boosting max hands.', cost: () => ({ resource: Resource.ATP, amount: 25000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 25 }] }]
+    }
   }
 ];
 
@@ -892,7 +1688,7 @@ export const PROTOCELL_TRAINING_CONFIG: Record<keyof ProtocellState['attributes'
     },
     resilience: {
         name: 'Resilience Training',
-        description: 'Strengthens the lipid membrane, increasing the chance of surviving harsh environments and finding better loot.',
+        description: 'Strengthens the lipid membrane, increasing the chance of surviving harsh environments and findin_g better loot.',
         icon: 'resilience',
         cost: (level) => ({ resource: Resource.Nucleotides, amount: 15 * Math.pow(1.3, level) })
     }

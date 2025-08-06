@@ -1,22 +1,26 @@
 
+import React, { useState, useMemo, useEffect } from 'react';
+import { Resource, SubUpgrade, Fact } from '../types';
+import { UPGRADES } from '../constants';
+import { ResourceIcon, InfinityIcon } from './Icons';
 
-
-import React, { useState, useMemo } from 'react';
-import { Resource, SubUpgrade, PanelContent, Upgrade, Fact } from '../types';
-import { ResourceIcon, XMarkIcon, InfinityIcon } from './Icons';
-
-interface CosmicDetailPanelProps {
-  onClose: () => void;
-  panelData: { upgrade: Upgrade, content: PanelContent } | null;
+interface UpgradeDetailPanelProps {
+  upgradeId: string;
   resources: Record<Resource, number>;
   purchasedSubUpgrades: Set<string>;
   subUpgradeLevels: Record<string, number>;
   onPurchaseSubUpgrade: (subUpgrade: SubUpgrade) => void;
 }
 
-const CosmicDetailPanel: React.FC<CosmicDetailPanelProps> = ({ onClose, panelData, resources, purchasedSubUpgrades, subUpgradeLevels, onPurchaseSubUpgrade }) => {
+const UpgradeDetailPanel: React.FC<UpgradeDetailPanelProps> = ({ upgradeId, resources, purchasedSubUpgrades, subUpgradeLevels, onPurchaseSubUpgrade }) => {
   const [activeTab, setActiveTab] = useState<'enhancements' | 'facts'>('enhancements');
   
+  const panelData = useMemo(() => {
+    const upgrade = UPGRADES.find(u => u.id === upgradeId);
+    if (!upgrade || !upgrade.panelContent) return null;
+    return { upgrade, content: upgrade.panelContent };
+  }, [upgradeId]);
+
   const visibleFacts = useMemo(() => {
     if (!panelData) return [];
     return panelData.content.facts.filter(fact => 
@@ -24,40 +28,34 @@ const CosmicDetailPanel: React.FC<CosmicDetailPanelProps> = ({ onClose, panelDat
     );
   }, [panelData, purchasedSubUpgrades]);
 
-  // Reset tab to enhancements when panel changes
-  React.useEffect(() => {
-      if(panelData) {
-        setActiveTab('enhancements');
-      }
-  }, [panelData?.upgrade.id]);
+  // Reset tab to enhancements when upgradeId changes
+  useEffect(() => {
+      setActiveTab('enhancements');
+  }, [upgradeId]);
 
   if (!panelData) {
-    return null;
+    return <div className="text-center text-gray-400 p-8">This upgrade has no further details.</div>;
   }
-
+  
   const { upgrade, content } = panelData;
 
   return (
-    <div className="p-3 md:p-4 w-full h-full flex flex-col relative">
-        <button onClick={onClose} className="absolute top-3 right-3 md:top-4 md:right-4 text-gray-400 hover:text-white z-20">
-            <XMarkIcon className="w-6 h-6" />
-        </button>
-
+    <div className="w-full h-full flex flex-col relative">
         <div className="shrink-0 mb-4">
-            <h2 className="text-lg md:text-xl font-semibold text-indigo-300 pr-6">{upgrade.name}</h2>
-            <p className="text-[11px] md:text-xs text-gray-400 mt-2 italic border-l-2 border-indigo-400/50 pl-3">{upgrade.description}</p>
+            <h2 className="text-lg md:text-xl font-semibold text-indigo-300">{upgrade.name}</h2>
+            <p className="text-xs md:text-sm text-gray-400 mt-2 italic border-l-2 border-indigo-400/50 pl-3">{upgrade.description}</p>
         </div>
         
-            <div className="flex border-b border-gray-700 mb-4 shrink-0">
+        <div className="flex border-b border-gray-700 mb-4 shrink-0">
             <button
                 onClick={() => setActiveTab('enhancements')}
-                className={`px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-medium transition-colors ${activeTab === 'enhancements' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
+                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'enhancements' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
             >
                 Enhancements
             </button>
-                <button
+            <button
                 onClick={() => setActiveTab('facts')}
-                className={`px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-medium transition-colors ${activeTab === 'facts' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
+                className={`px-3 py-1.5 md:px-4 md:py-2 text-xs font-medium transition-colors ${activeTab === 'facts' ? 'text-indigo-300 border-b-2 border-indigo-300' : 'text-gray-400 hover:text-white'}`}
             >
                 Facts ({visibleFacts.length}/{content.facts.length})
             </button>
@@ -98,28 +96,28 @@ const CosmicDetailPanel: React.FC<CosmicDetailPanelProps> = ({ onClose, panelDat
                                     {isRepeatable && <InfinityIcon className="w-4 h-4 text-amber-300" />}
                                     <h4 className={`font-bold text-xs md:text-sm ${isPurchased || isMaxedOut ? 'text-indigo-200' : 'text-indigo-300'}`}>{sub.name}</h4>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-400 mt-1">{sub.description}</p>
+                                <p className="text-xs text-gray-400 mt-1">{sub.description}</p>
                                 {sub.id === 'co_inf_cap' ? (
-                                    <p className="text-[11px] md:text-xs text-yellow-300 mt-1">Improves Stardust generation and capacity based on level.</p>
+                                    <p className="text-xs text-yellow-300 mt-1">Improves Stardust generation and capacity based on level.</p>
                                 ) : (
                                     effectTexts.map((text, i) => (
-                                    <p key={i} className="text-[11px] md:text-xs text-yellow-300 mt-1">{text}</p>
+                                    <p key={i} className="text-xs text-yellow-300 mt-1">{text}</p>
                                     ))
                                 )}
                                 {isRepeatable && (
-                                    <p className="text-[11px] md:text-xs text-amber-300/80 mt-1">Level: {currentLevel}</p>
+                                    <p className="text-xs text-amber-300/80 mt-1">Level: {currentLevel}</p>
                                 )}
                             </div>
                             <div className="flex-shrink-0 w-20 md:w-24 text-center">
                                 <button
                                     onClick={() => onPurchaseSubUpgrade(sub)}
                                     disabled={isDisabled}
-                                    className="w-full text-[11px] md:text-xs font-semibold px-2 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
+                                    className="w-full text-xs font-semibold px-2 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors disabled:opacity-50"
                                 >
                                     {isPurchased ? 'Done' : isMaxedOut ? 'Maxed' : (
                                         <div className="flex flex-col items-center">
                                             <span>{isRepeatable ? `Upgrade` : 'Purchase'}</span>
-                                            <div className={`flex items-center justify-center gap-1 text-[11px] mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
+                                            <div className={`flex items-center justify-center gap-1 text-xs mt-1 ${canAfford ? 'text-gray-200' : 'text-red-400'}`}>
                                                 <ResourceIcon resource={cost.resource} className="w-3 h-3"/>
                                                 <span>{Math.floor(cost.amount).toLocaleString()}</span>
                                             </div>
@@ -146,4 +144,4 @@ const CosmicDetailPanel: React.FC<CosmicDetailPanelProps> = ({ onClose, panelDat
   );
 };
 
-export default CosmicDetailPanel;
+export default UpgradeDetailPanel;
