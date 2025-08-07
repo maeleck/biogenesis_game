@@ -1,5 +1,7 @@
 
 
+
+
 export enum Resource {
   Stardust = 'Stardust',
   Hydrogen = 'Hydrogen',
@@ -164,9 +166,20 @@ export interface CombatResult {
 }
 
 export interface HuntStage {
-  id: string;
+  id:string;
   name: string;
   description: string;
   levelRequirement: number;
   enemyIds: string[];
+}
+
+export interface RewardedAd {
+    show: () => void;
+}
+
+export interface AdService {
+    loadRewardedAd: (callbacks: {
+        onAdLoaded: (ad: RewardedAd) => void;
+        onAdFailedToLoad: (error: string) => void;
+    }) => void;
 }

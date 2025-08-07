@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { XMarkIcon } from './Icons';
+import Spinner from './Spinner';
 
 interface SettingsMenuProps {
   isOpen: boolean;
@@ -9,9 +10,14 @@ interface SettingsMenuProps {
   onDelete: () => void;
   lastSaveTimestamp: number | null;
   onOpenDebugMenu: () => void;
+  onWatchAd: () => void;
+  adCooldownString: string;
+  isAdLoading: boolean;
 }
 
-const SettingsMenu: React.FC<SettingsMenuProps> = ({ isOpen, onClose, onSave, onDelete, lastSaveTimestamp, onOpenDebugMenu }) => {
+const SettingsMenu: React.FC<SettingsMenuProps> = ({ 
+  isOpen, onClose, onSave, onDelete, lastSaveTimestamp, onOpenDebugMenu, onWatchAd, adCooldownString, isAdLoading
+}) => {
   if (!isOpen) {
     return null;
   }
@@ -24,10 +30,10 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ isOpen, onClose, onSave, on
     onOpenDebugMenu();
     onClose();
   };
-
+  
   return (
     <div className="absolute top-1 right-1 p-4 z-50" role="dialog" aria-modal="true" aria-labelledby="settings-title">
-      <div className="relative w-64 bg-slate-800/95 backdrop-blur-sm border border-purple-700 rounded-2xl shadow-2xl p-4 text-sm">
+      <div className="relative w-72 bg-slate-800/95 backdrop-blur-sm border border-purple-700 rounded-2xl shadow-2xl p-4 text-sm">
         <button onClick={onClose} className="absolute top-2 right-2 text-slate-400 hover:text-white" aria-label="Close Settings">
           <XMarkIcon className="w-5 h-5" />
         </button>
@@ -40,6 +46,18 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ isOpen, onClose, onSave, on
                 className="w-full px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg font-semibold transition-colors"
             >
                 Save Now
+            </button>
+            <button
+                onClick={onWatchAd}
+                disabled={!!adCooldownString || isAdLoading}
+                className="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-colors disabled:bg-slate-600 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+                {isAdLoading && <Spinner className="w-4 h-4" />}
+                {isAdLoading 
+                    ? 'Loading Ad...' 
+                    : adCooldownString 
+                    ? `Reward Ready in ${adCooldownString}` 
+                    : 'Watch Ad for Reward'}
             </button>
              <button
                 onClick={onDelete}

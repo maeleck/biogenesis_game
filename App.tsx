@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage } from './types';
+import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage, RewardedAd } from './types';
 import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES } from './constants';
 import ResourceDisplay from './components/ResourceDisplay';
 import ProcessPanel from './components/JobPanel';
@@ -15,8 +15,11 @@ import TestPanel from './components/TestPanel';
 import SettingsMenu from './components/CosmicPanel';
 import DebugMenu from './components/DebugMenu';
 import ManufacturingPanel from './components/ManufacturingPanel';
+import AdPlayer from './components/AdPlayer';
 import { CogIcon, ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './components/Icons';
 import { UpgradeIcon } from './components/UpgradeIcons';
+import Spinner from './components/Spinner';
+import { adService } from './services/adService';
 
 
 const ALL_SUB_UPGRADES = UPGRADES.flatMap(u => u.panelContent?.subUpgrades || []);
@@ -75,6 +78,15 @@ function App() {
 
   // Manufacturing State
   const [craftedItemLevels, setCraftedItemLevels] = useState<Record<string, number>>(initialSaveData?.craftedItemLevels || {});
+
+  // Ad State
+  const [isAdLoading, setIsAdLoading] = useState<boolean>(false);
+  const [rewardedAd, setRewardedAd] = useState<RewardedAd | null>(null);
+  const [adError, setAdError] = useState<string | null>(null);
+  const [isAdPlaying, setIsAdPlaying] = useState<boolean>(false);
+  const [adCooldownEndTime, setAdCooldownEndTime] = useState<number | null>(initialSaveData?.adCooldownEndTime || null);
+  const [adCooldownString, setAdCooldownString] = useState<string>('');
+
 
   // Settings and Save/Load state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -253,7 +265,7 @@ function App() {
     if (finalBaseGeneration[Resource.Stardust]) {
         finalBaseGeneration[Resource.Stardust] *= stardustGenerationMultiplier;
     }
-
+    
     return { stardustCapacity: finalStardustCapacity, baseGeneration: finalBaseGeneration };
   }, [purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels, stardustGenerationMultiplier, manufacturingBonuses]);
 
@@ -343,13 +355,15 @@ function App() {
   }, [purchasedUpgrades]);
 
   const gameTick = useCallback(() => {
+    const resourceMultiplier = 1;
+
     setResources(prevResources => {
       const newResources = { ...prevResources };
       const netChanges: Partial<Record<Resource, number>> = {};
       
       for (const res in baseGeneration) {
           const resourceKey = res as Resource;
-          netChanges[resourceKey] = (netChanges[resourceKey] || 0) + baseGeneration[resourceKey]!;
+          netChanges[resourceKey] = (netChanges[resourceKey] || 0) + baseGeneration[resourceKey]! * resourceMultiplier;
       }
 
       if (unlockedFeatures.has('synthesis') || unlockedFeatures.has('fusion')) {
@@ -388,7 +402,7 @@ function App() {
               netChanges[input.resource] = (netChanges[input.resource] || 0) - cost;
             }
             for (const output of knob.outputs) {
-              netChanges[output.resource] = (netChanges[output.resource] || 0) + (output.amount * effectiveRuns);
+              netChanges[output.resource] = (netChanges[output.resource] || 0) + (output.amount * effectiveRuns * resourceMultiplier);
             }
           }
         }
@@ -461,6 +475,7 @@ function App() {
         selectedHuntStageId,
         testState,
         craftedItemLevels,
+        adCooldownEndTime,
         lastSaveTimestamp: Date.now(),
       };
       localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
@@ -472,7 +487,7 @@ function App() {
     resources, universalStorageLevel, stardustGenerationMultiplier, assignedWorkers,
     maxForce, maxHands, purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels,
     unlockedFeatures, unlockedKnobs, protocellState, protocellTrainingLevels, protocellBaseBonuses,
-    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels
+    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels, adCooldownEndTime
   ]);
   
   const deleteSave = useCallback(() => {
@@ -490,6 +505,25 @@ function App() {
     }, 60000); // Autosave every 1 minute
     return () => clearInterval(interval);
   }, [gameState, saveGame]);
+  
+  // Ad Cooldown Timer Effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (adCooldownEndTime && adCooldownEndTime > Date.now()) {
+        const remaining = adCooldownEndTime - Date.now();
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
+        setAdCooldownString(`${minutes}:${seconds}`);
+      } else {
+        setAdCooldownString('');
+        if(adCooldownEndTime) {
+            setAdCooldownEndTime(null);
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [adCooldownEndTime]);
 
   // --- DEBUG HANDLERS ---
   const handleDebugGiveResources = useCallback(() => {
@@ -783,7 +817,9 @@ function App() {
             result.outcome = 'win';
             combatLog.push(`Protocell is victorious!`);
             
-            result.xpGained = enemy.rewards.xp;
+            const xpMultiplier = 1;
+            result.xpGained = Math.floor(enemy.rewards.xp * xpMultiplier);
+            
             setProtocellState(prev => ({ ...prev, xp: prev.xp + result.xpGained }));
 
             for (const key in enemy.rewards.loot) {
@@ -924,7 +960,8 @@ function App() {
         // Add passive generation reward
         for (const res in baseGeneration) {
           const resourceKey = res as Resource;
-          const generationPerSecond = baseGeneration[resourceKey]!;
+          let generationPerSecond = baseGeneration[resourceKey]!;
+
           const rewardAmount = generationPerSecond * TEST_REWARD_GENERATION_SECONDS;
           
           if (rewardAmount > 0) {
@@ -942,6 +979,70 @@ function App() {
       setTestState(prev => ({ ...prev, lastAnswerStatus: 'incorrect' }));
     }
   }, [testState, stardustCapacity, resourceCapacities, baseGeneration]);
+  
+    const handleWatchAd = () => {
+        if (isAdLoading || adCooldownString) {
+            return;
+        }
+
+        setIsAdLoading(true);
+        setAdError(null);
+
+        adService.loadRewardedAd({
+            onAdLoaded: (ad) => {
+                setIsAdLoading(false);
+                setRewardedAd(ad);
+                setIsAdPlaying(true); 
+                ad.show();
+            },
+            onAdFailedToLoad: (error) => {
+                setIsAdLoading(false);
+                setAdError(error);
+                console.error("Ad failed to load:", error);
+                alert(`Could not load ad: ${error}`);
+            }
+        });
+    };
+
+
+  const handleAdComplete = () => {
+    setIsAdPlaying(false);
+    setRewardedAd(null);
+    
+    // Grant reward
+    const stardustReward = Math.floor(stardustCapacity * 0.05); // 5%
+    const generationSeconds = 15;
+
+    setResources(prevResources => {
+      const newResources = { ...prevResources };
+      
+      newResources[Resource.Stardust] = Math.min(
+        (newResources[Resource.Stardust] || 0) + stardustReward,
+        resourceCapacities[Resource.Stardust] || Infinity
+      );
+
+      for (const res in baseGeneration) {
+        const resourceKey = res as Resource;
+        const rewardAmount = (baseGeneration[resourceKey] || 0) * generationSeconds;
+        
+        if (rewardAmount > 0) {
+           newResources[resourceKey] = Math.min(
+              (newResources[resourceKey] || 0) + rewardAmount,
+              resourceCapacities[resourceKey] || Infinity
+           );
+        }
+      }
+      return newResources;
+    });
+
+    // Set cooldown
+    setAdCooldownEndTime(Date.now() + 5 * 60 * 1000); // 5 minutes
+  };
+
+  const handleAdSkip = () => {
+    setIsAdPlaying(false);
+    setRewardedAd(null);
+  };
 
   if (gameState === 'title') {
     return <TitleScreen onStartGame={() => setGameState('playing')} />;
@@ -1128,6 +1229,9 @@ function App() {
             onDelete={deleteSave}
             lastSaveTimestamp={lastSaveTimestamp}
             onOpenDebugMenu={() => setIsDebugMenuOpen(true)}
+            onWatchAd={handleWatchAd}
+            adCooldownString={adCooldownString}
+            isAdLoading={isAdLoading}
         />
         
         <DebugMenu
@@ -1138,6 +1242,8 @@ function App() {
             onUnlockAll={handleDebugUnlockAll}
             onGainWorkers={handleDebugGainWorkers}
         />
+        
+        {isAdPlaying && <AdPlayer onComplete={handleAdComplete} onSkip={handleAdSkip} />}
     </div>
   );
 }
