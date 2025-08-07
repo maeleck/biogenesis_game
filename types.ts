@@ -40,7 +40,7 @@ export interface Knob {
 
 export type UpgradeEffect =
   | { type: 'ADD_BASE_GENERATION'; resource: Resource, value: number }
-  | { type: 'UNLOCK_FEATURE'; value: 'synthesis' | 'protocell' | 'test' | 'chamber_upgrades' | 'fusion' | 'manufacturing' }
+  | { type: 'UNLOCK_FEATURE'; value: 'synthesis' | 'protocell' | 'test' | 'chamber_upgrades' | 'fusion' | 'manufacturing' | 'rush' }
   | { type: 'UNLOCK_KNOBS', value: string[] }
   | { type: 'INCREASE_MAX_HANDS', value: number }
   | { type: 'INCREASE_MAX_FORCE', value: number }

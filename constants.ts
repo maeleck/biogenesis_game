@@ -20,6 +20,8 @@ export * from './constants/genes';
 export * from './constants/enemies';
 // Export everything from stages.ts
 export * from './constants/stages';
+// Export everything from knowledge.ts
+export * from './constants/knowledge';
 
 export const UPGRADES: Upgrade[] = [
     ...cosmicUpgrades,

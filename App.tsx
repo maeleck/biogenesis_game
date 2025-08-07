@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage, RewardedAd } from './types';
-import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES } from './constants';
+import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES, RUSH_DURATION_SECONDS, KNOWLEDGE_XP_PER_CORRECT_ANSWER, XP_TO_NEXT_KNOWLEDGE_LEVEL, KNOWLEDGE_BONUS_PER_LEVEL } from './constants';
 import ResourceDisplay from './components/ResourceDisplay';
 import ProcessPanel from './components/JobPanel';
 import MapNode from './components/MapNode';
@@ -15,6 +15,7 @@ import TestPanel from './components/TestPanel';
 import SettingsMenu from './components/CosmicPanel';
 import DebugMenu from './components/DebugMenu';
 import ManufacturingPanel from './components/ManufacturingPanel';
+import RushPanel from './components/RushPanel';
 import AdPlayer from './components/AdPlayer';
 import { CogIcon, ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './components/Icons';
 import { UpgradeIcon } from './components/UpgradeIcons';
@@ -78,6 +79,17 @@ function App() {
 
   // Manufacturing State
   const [craftedItemLevels, setCraftedItemLevels] = useState<Record<string, number>>(initialSaveData?.craftedItemLevels || {});
+
+  // Knowledge & Rush state
+  const [knowledgeLevel, setKnowledgeLevel] = useState<number>(initialSaveData?.knowledgeLevel || 1);
+  const [knowledgeXP, setKnowledgeXP] = useState<number>(initialSaveData?.knowledgeXP || 0);
+  const [rushState, setRushState] = useState<{ status: 'idle' | 'active' | 'results', timer: number, score: number, currentQuestion: (Quiz & { factId: string }) | null }>({
+    status: 'idle',
+    timer: RUSH_DURATION_SECONDS,
+    score: 0,
+    currentQuestion: null,
+  });
+  const [lastRushResult, setLastRushResult] = useState<{ score: number, xpGained: number, startLevel: number, endLevel: number } | null>(initialSaveData?.lastRushResult || null);
 
   // Ad State
   const [isAdLoading, setIsAdLoading] = useState<boolean>(false);
@@ -174,6 +186,7 @@ function App() {
     if (unlockedFeatures.has('synthesis')) availableTabs.add('hands');
     if (unlockedFeatures.has('protocell')) availableTabs.add('protocell');
     if (unlockedFeatures.has('manufacturing')) availableTabs.add('manufacturing');
+    if (unlockedFeatures.has('rush')) availableTabs.add('rush');
     
     if (!availableTabs.has(activeMainTab)) {
         if (availableTabs.has('force')) setActiveMainTab('force');
@@ -207,6 +220,9 @@ function App() {
     return bonuses;
   }, [craftedItemLevels]);
 
+  const knowledgeBonusMultiplier = useMemo(() => {
+    return 1 + ((knowledgeLevel - 1) * KNOWLEDGE_BONUS_PER_LEVEL);
+  }, [knowledgeLevel]);
 
   const { stardustCapacity, baseGeneration } = useMemo(() => {
     let finalStardustCapacity = INITIAL_STARDUST_CAPACITY;
@@ -355,7 +371,7 @@ function App() {
   }, [purchasedUpgrades]);
 
   const gameTick = useCallback(() => {
-    const resourceMultiplier = 1;
+    const resourceMultiplier = knowledgeBonusMultiplier;
 
     setResources(prevResources => {
       const newResources = { ...prevResources };
@@ -422,7 +438,7 @@ function App() {
 
       return newResources;
     });
-  }, [assignedWorkers, baseGeneration, unlockedFeatures, unlockedKnobs, resourceCapacities]);
+  }, [assignedWorkers, baseGeneration, unlockedFeatures, unlockedKnobs, resourceCapacities, knowledgeBonusMultiplier]);
 
   useEffect(() => {
     if (gameState !== 'playing') return;
@@ -475,6 +491,9 @@ function App() {
         selectedHuntStageId,
         testState,
         craftedItemLevels,
+        knowledgeLevel,
+        knowledgeXP,
+        lastRushResult,
         adCooldownEndTime,
         lastSaveTimestamp: Date.now(),
       };
@@ -487,7 +506,8 @@ function App() {
     resources, universalStorageLevel, stardustGenerationMultiplier, assignedWorkers,
     maxForce, maxHands, purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels,
     unlockedFeatures, unlockedKnobs, protocellState, protocellTrainingLevels, protocellBaseBonuses,
-    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels, adCooldownEndTime
+    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels, 
+    knowledgeLevel, knowledgeXP, lastRushResult, adCooldownEndTime
   ]);
   
   const deleteSave = useCallback(() => {
@@ -562,7 +582,7 @@ function App() {
     const allKnobIds = new Set(KNOBS.map(k => k.id));
     setUnlockedKnobs(allKnobIds);
 
-    const allFeatures = new Set(['synthesis', 'protocell', 'test', 'chamber_upgrades', 'fusion', 'manufacturing']);
+    const allFeatures = new Set(['synthesis', 'protocell', 'test', 'chamber_upgrades', 'fusion', 'manufacturing', 'rush']);
     setUnlockedFeatures(allFeatures);
 
     alert('DEBUG: Unlocked all major upgrades, knobs, and features!');
@@ -1043,6 +1063,74 @@ function App() {
     setIsAdPlaying(false);
     setRewardedAd(null);
   };
+  
+  // --- KNOWLEDGE RUSH HANDLERS ---
+  const handleStartRush = useCallback(() => {
+    if (availableQuestions.length === 0) return;
+    const firstQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+    setRushState({
+      status: 'active',
+      timer: RUSH_DURATION_SECONDS,
+      score: 0,
+      currentQuestion: firstQuestion,
+    });
+    setLastRushResult(null);
+  }, [availableQuestions]);
+
+  const handleAnswerRushQuestion = useCallback((selectedIndex: number) => {
+    if (rushState.status !== 'active' || !rushState.currentQuestion) return;
+
+    const correct = selectedIndex === rushState.currentQuestion.answerIndex;
+    
+    let nextQuestion = rushState.currentQuestion;
+    if(availableQuestions.length > 1) {
+        while(nextQuestion.factId === rushState.currentQuestion.factId) {
+            nextQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        }
+    } else {
+        nextQuestion = availableQuestions[0];
+    }
+
+    setRushState(prev => ({
+      ...prev,
+      score: prev.score + (correct ? 1 : 0),
+      currentQuestion: nextQuestion,
+    }));
+  }, [rushState, availableQuestions]);
+
+  // Rush timer effect
+  useEffect(() => {
+    if (rushState.status !== 'active') return;
+
+    if (rushState.timer <= 0) {
+      const xpGained = rushState.score * KNOWLEDGE_XP_PER_CORRECT_ANSWER;
+      const newTotalXP = knowledgeXP + xpGained;
+      
+      const startLevel = knowledgeLevel;
+      let tempLevel = knowledgeLevel;
+      let tempXP = newTotalXP;
+      let xpForNext = XP_TO_NEXT_KNOWLEDGE_LEVEL(tempLevel);
+
+      while(tempXP >= xpForNext) {
+        tempXP -= xpForNext;
+        tempLevel++;
+        xpForNext = XP_TO_NEXT_KNOWLEDGE_LEVEL(tempLevel);
+      }
+      setKnowledgeLevel(tempLevel);
+      setKnowledgeXP(tempXP);
+
+      setLastRushResult({ score: rushState.score, xpGained, startLevel, endLevel: tempLevel });
+      setRushState({ status: 'results', timer: RUSH_DURATION_SECONDS, score: 0, currentQuestion: null });
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      setRushState(prev => ({ ...prev, timer: prev.timer - 1 }));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [rushState.status, rushState.timer, rushState.score, knowledgeXP, knowledgeLevel]);
+  // --- END RUSH HANDLERS ---
 
   if (gameState === 'title') {
     return <TitleScreen onStartGame={() => setGameState('playing')} />;
@@ -1099,6 +1187,9 @@ function App() {
                     )}
                     {unlockedFeatures.has('test') && (
                         <button onClick={() => setActiveMainTab('knowledge')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'knowledge' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Knowledge</button>
+                    )}
+                    {unlockedFeatures.has('rush') && (
+                        <button onClick={() => setActiveMainTab('rush')} className={`flex-1 p-2 text-xs font-bold uppercase transition-colors ${activeMainTab === 'rush' ? 'bg-slate-800 text-yellow-300' : 'text-slate-400 hover:text-white'}`}>Rush</button>
                     )}
                 </div>
 
@@ -1178,6 +1269,18 @@ function App() {
                             availableQuestionCount={availableQuestions.length}
                             baseGeneration={baseGeneration}
                             stardustCapacity={stardustCapacity}
+                        />
+                    )}
+                    {activeMainTab === 'rush' && unlockedFeatures.has('rush') && (
+                        <RushPanel 
+                            knowledgeLevel={knowledgeLevel}
+                            knowledgeXP={knowledgeXP}
+                            rushState={rushState}
+                            lastRushResult={lastRushResult}
+                            onStartRush={handleStartRush}
+                            onAnswerRushQuestion={handleAnswerRushQuestion}
+                            availableQuestionCount={availableQuestions.length}
+                            knowledgeBonusMultiplier={knowledgeBonusMultiplier}
                         />
                     )}
                 </div>
