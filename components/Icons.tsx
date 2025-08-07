@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Resource, ProteinLootType } from '../types';
+import { Resource, ProteinLootType, UniqueResource } from '../types';
 
 interface IconProps {
   className?: string;
@@ -167,6 +167,101 @@ export const SparklesIcon: React.FC<IconProps> = ({ className }) => (
     </svg>
 );
 
+export const RecycleIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.664 0l3.18-3.182m-3.182-4.991v4.99" />
+    </svg>
+);
+
+export const FunnelIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h18M6.75 9l3.435 4.122a2.25 2.25 0 003.63 0L17.25 9M12 21v-8.25" />
+    </svg>
+);
+
+export const VolcanoIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12.75L12 3.75l8.25 9m-16.5 0h16.5m-16.5 0l3.75 3.75h9l3.75-3.75" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0V6.75zm3.75 0a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0V6.75z" />
+    </svg>
+);
+
+// --- NEW UNIQUE RESOURCE ICONS ---
+const SyntheticAlloyIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v9l-2.25 1.313M3 7.5l2.25-1.313M3 7.5v9l2.25 1.313M12 21v-5.25m0 0l-3.75-2.188M12 15.75l3.75-2.188M12 15.75l-3.75 2.188m3.75-2.188l3.75 2.188M12 3L9.75 4.313m2.25-1.313L14.25 4.313m-4.5 0L7.5 3m4.5 1.313L7.5 3m0 0L3 7.5m4.5-3.187L9.75 6.187M7.5 3L12 5.25m4.5-2.25L16.5 3m0 0l4.5 4.5M12 5.25l4.5-2.25M12 5.25L9.75 6.187" />
+  </svg>
+);
+const LogicCircuitIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.25V15.75a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 15.75V8.25M15 3.75a2.25 2.25 0 00-2.25-2.25H11.25A2.25 2.25 0 009 3.75v1.5M12 18.75v-1.5m-3.75-6.75h.008v.008H8.25v-.008zm3.75 0h.008v.008H12v-.008zm3.75 0h.008v.008H15.75v-.008z" />
+  </svg>
+);
+const BiopolymerGelIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5a2.25 2.25 0 012.25-2.25h6a2.25 2.25 0 012.25 2.25v6a2.25 2.25 0 01-2.25 2.25h-6a2.25 2.25 0 01-2.25-2.25v-6z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 11.25s1.5 1.5 3 0 3 0 3 0" />
+  </svg>
+);
+const ResonantCrystalIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+// --- NEW MANUFACTURING ITEM ICONS ---
+const CosmicForgeIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6-9 6-9-6z" />
+    </svg>
+);
+const HydroponicsBayIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.185 0-9.44 4.013-9.728 9.15.28-5.137 4.543-9.15 9.728-9.15s9.448 4.013 9.728 9.15c-.28-5.137-4.543-9.15-9.728-9.15z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5" />
+    </svg>
+);
+const QuantumComputerIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 12m-2.25 0a2.25 2.25 0 104.5 0 2.25 2.25 0 10-4.5 0" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a9 9 0 100 18" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h3m3-9v3m9 6h-3m-3 9v-3" />
+    </svg>
+);
+const GravitonStabilizerIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 12m-6 0a6 6 0 1012 0 6 6 0 10-12 0" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.828-7.172L8.636 8.636m6.728 6.728l-2.475-2.475" />
+    </svg>
+);
+const ProtocellIncubatorIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 01-9-9h18a9 9 0 01-9 9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 12a3 3 0 100-6 3 3 0 000 6z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h2.25m13.5 0H21M12 3v2.25" />
+    </svg>
+);
+const DnaSequencerIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 3.75c1.5 4.5 1.5 12 1.5 16.5M15 3.75c-1.5 4.5-1.5 12-1.5 16.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 9h15M4.5 15h15" />
+        <circle cx="10" cy="10" r="2.25" />
+    </svg>
+);
+const EnzymeReactorIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8a2 2 0 002-2V9a2 2 0 00-2-2H8a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 7V5a2 2 0 012-2h0a2 2 0 012 2v2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15.75a2.25 2.25 0 01-2.25-2.25 2.25 2.25 0 012.25-2.25 2.25 2.25 0 012.25 2.25 2.25 2.25 0 01-2.25 2.25z" />
+    </svg>
+);
+const StructuralAssemblerIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9.75l-4.5 2.625" />
+    </svg>
+);
+
 
 const StructuralFragmentsIcon: React.FC<IconProps> = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -188,7 +283,7 @@ const GeneticMaterialIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
-export const ResourceIcon: React.FC<{ resource: Resource; className?: string }> = ({ resource, className = 'w-6 h-6' }) => {
+export const ResourceIcon: React.FC<{ resource: Resource | UniqueResource; className?: string }> = ({ resource, className = 'w-6 h-6' }) => {
   switch (resource) {
     case Resource.Stardust: return <StardustIcon className={`${className} text-yellow-300`} />;
     case Resource.Hydrogen: return <HydrogenIcon className={`${className} text-sky-300`} />;
@@ -203,6 +298,16 @@ export const ResourceIcon: React.FC<{ resource: Resource; className?: string }> 
     default: return null;
   }
 };
+
+export const UniqueResourceIcon: React.FC<{ resource: UniqueResource; className?: string }> = ({ resource, className = 'w-6 h-6' }) => {
+  switch (resource) {
+    case UniqueResource.SyntheticAlloy: return <SyntheticAlloyIcon className={`${className} text-slate-300`} />;
+    case UniqueResource.LogicCircuit: return <LogicCircuitIcon className={`${className} text-sky-400`} />;
+    case UniqueResource.BiopolymerGel: return <BiopolymerGelIcon className={`${className} text-emerald-400`} />;
+    case UniqueResource.ResonantCrystal: return <ResonantCrystalIcon className={`${className} text-purple-400`} />;
+    default: return null;
+  }
+}
 
 export const ProteinLootIcon: React.FC<{ lootType: ProteinLootType; className?: string }> = ({ lootType, className = 'w-6 h-6' }) => {
   switch (lootType) {
@@ -221,4 +326,22 @@ export const AttributeIcon: React.FC<{ iconId: 'speed' | 'efficiency' | 'resilie
         case 'resilience': return <ResilienceIcon className={className} />;
         default: return null;
     }
+};
+
+export const CraftableItemIcon: React.FC<{ itemId: string; className?: string }> = ({ itemId, className = 'w-8 h-8' }) => {
+  switch (itemId) {
+    case 'auto_synth': return <CogIcon className={`${className} text-sky-300`} />;
+    case 'nutrient_recycler': return <RecycleIcon className={`${className} text-emerald-300`} />;
+    case 'geo_catalyst': return <VolcanoIcon className={`${className} text-rose-400`} />;
+    case 'protein_filter': return <FunnelIcon className={`${className} text-purple-300`} />;
+    case 'cosmic_forge': return <CosmicForgeIcon className={`${className} text-orange-400`} />;
+    case 'hydroponics_bay': return <HydroponicsBayIcon className={`${className} text-cyan-400`} />;
+    case 'quantum_computer': return <QuantumComputerIcon className={`${className} text-blue-400`} />;
+    case 'graviton_stabilizer': return <GravitonStabilizerIcon className={`${className} text-indigo-400`} />;
+    case 'protocell_incubator': return <ProtocellIncubatorIcon className={`${className} text-lime-400`} />;
+    case 'dna_sequencer': return <DnaSequencerIcon className={`${className} text-purple-400`} />;
+    case 'enzyme_reactor': return <EnzymeReactorIcon className={`${className} text-rose-400`} />;
+    case 'structural_assembler': return <StructuralAssemblerIcon className={`${className} text-amber-400`} />;
+    default: return null;
+  }
 };

@@ -1,3 +1,4 @@
+
 import { Upgrade, Resource } from '../../types';
 
 export const biologicalUpgrades2: Upgrade[] = [
@@ -37,6 +38,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["The La Brea Tar Pits", "The Burgess Shale", "The Green River Formation", "The Messel Pit"],
                 answerIndex: 1
               }
+            },
+            {
+              text: "Trilobites were one of the most successful early animal groups, dominating the oceans for over 270 million years before going extinct. They were arthropods, related to modern insects and crustaceans.",
+              quiz: {
+                  question: "Trilobites, one of the most successful early animal groups, were a type of what?",
+                  options: ["Mollusc", "Arthropod", "Annelid worm", "Echinoderm"],
+                  answerIndex: 1
+              }
             }
         ],
         subUpgrades: [
@@ -73,6 +82,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["Molluscs", "Chordates", "Arthropods", "Cnidarians"],
                 answerIndex: 2
               }
+            },
+            {
+              text: "The primary structural component of an arthropod's exoskeleton is chitin, a long-chain polymer of N-acetylglucosamine. It is the second most abundant natural biopolymer in the world, after cellulose.",
+              quiz: {
+                  question: "What is the primary structural component of an arthropod's exoskeleton?",
+                  options: ["Cellulose", "Keratin", "Collagen", "Chitin"],
+                  answerIndex: 3
+              }
             }
         ],
         subUpgrades: [
@@ -107,6 +124,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "What are the cells that build bone called?",
                 options: ["Osteoclasts", "Chondrocytes", "Osteocytes", "Osteoblasts"],
                 answerIndex: 3
+              }
+            },
+            {
+              text: "In addition to providing support, the endoskeleton serves as a site for hematopoiesis, the production of new blood cells, which occurs in the bone marrow.",
+              quiz: {
+                  question: "What vital process, besides providing support, occurs in the bone marrow of an endoskeleton?",
+                  options: ["Digestion", "Nerve signal transmission", "Hormone production", "Blood cell production"],
+                  answerIndex: 3
               }
             }
         ],
@@ -152,6 +177,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["Digesting waste products", "Storing memories", "Active roles in signal transmission", "Producing adrenaline"],
                 answerIndex: 2
               }
+            },
+            {
+              text: "The longest axon in the human body belongs to the sciatic nerve, which runs from the base of the spine to the big toe of each foot.",
+              quiz: {
+                  question: "The longest axon in the human body runs from the base of the spine to where?",
+                  options: ["The fingertips", "The big toe", "The top of the head", "The heart"],
+                  answerIndex: 1
+              }
             }
         ],
         subUpgrades: [
@@ -196,6 +229,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "What is the leading theory for the cause of the extinction that wiped out the dinosaurs?",
                 options: ["A massive volcanic eruption", "A sudden ice age", "A massive asteroid impact", "A deadly global pandemic"],
                 answerIndex: 2
+              }
+            },
+            {
+              text: "The Cretaceous-Paleogene (K-Pg) extinction event is marked by a thin layer of sediment found all over the world that is rich in iridium, an element that is rare in Earth's crust but abundant in asteroids.",
+              quiz: {
+                  question: "What element, abundant in asteroids, marks the boundary of the K-Pg extinction event in the geological record?",
+                  options: ["Carbon", "Oxygen", "Iridium", "Gold"],
+                  answerIndex: 2
               }
             }
         ],
@@ -512,6 +553,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["It produces oxygen", "Its intermediates are used to synthesize other vital molecules", "It helps the cell move", "It copies DNA"],
                 answerIndex: 1
               }
+            },
+            {
+              text: "The Krebs Cycle is also known as the Citric Acid Cycle because citrate is the first molecule produced when acetyl-CoA joins with oxaloacetate at the start of the cycle.",
+              quiz: {
+                  question: "The Krebs Cycle is also known by what other name?",
+                  options: ["The Calvin Cycle", "The Citric Acid Cycle", "The Glycolysis Cycle", "The Urea Cycle"],
+                  answerIndex: 1
+              }
             }
         ],
         subUpgrades: [
@@ -557,6 +606,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["The digestive and respiratory systems", "The skeletal and muscular systems", "The endocrine and nervous systems", "The circulatory and immune systems"],
                 answerIndex: 2
               }
+            },
+            {
+              text: "The hypothalamus, a small region in the brain, acts as the body's primary thermostat, regulating body temperature through mechanisms like sweating and shivering.",
+              quiz: {
+                  question: "What part of the brain acts as the body's 'thermostat' to regulate temperature?",
+                  options: ["Cerebellum", "Cerebral Cortex", "Hypothalamus", "Medulla Oblongata"],
+                  answerIndex: 2
+              }
             }
         ],
         subUpgrades: [
@@ -592,6 +649,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "What process creates the vast diversity of antibodies and T-cell receptors?",
                 options: ["Meiosis", "Mitosis", "V(D)J recombination", "Horizontal gene transfer"],
                 answerIndex: 2
+              }
+            },
+            {
+              text: "B cells, a type of lymphocyte, are responsible for producing antibodies. Each B cell produces a unique antibody that can recognize a specific antigen.",
+              quiz: {
+                  question: "Which type of immune cell is responsible for producing antibodies?",
+                  options: ["T cells", "B cells", "Macrophages", "Neutrophils"],
+                  answerIndex: 1
               }
             }
         ],
@@ -636,6 +701,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "What does the Red Queen hypothesis suggest about sexual reproduction?",
                 options: ["It helps hosts evolve defenses against co-evolving parasites", "It allows species to run faster", "It makes organisms red", "It is only useful for royalty"],
                 answerIndex: 0
+              }
+            },
+            {
+              text: "Parthenogenesis is a natural form of asexual reproduction in which growth and development of embryos occur without fertilization by a male. It occurs in some insects, reptiles, and fish.",
+              quiz: {
+                  question: "What is the term for asexual reproduction where an embryo develops without fertilization?",
+                  options: ["Budding", "Binary Fission", "Parthenogenesis", "Spore Formation"],
+                  answerIndex: 2
               }
             }
         ],
@@ -682,6 +755,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["Changing its color", "Making it glow in the dark", "Growing legs where antennae should be", "Making it twice as large"],
                 answerIndex: 2
               }
+            },
+            {
+              text: "Small changes in the expression patterns of HOX genes during embryonic development can lead to major changes in the adult body plan, a key mechanism in animal evolution.",
+              quiz: {
+                  question: "Small changes in the expression of which genes can lead to major changes in an animal's body plan?",
+                  options: ["Metabolic genes", "HOX genes", "Immune system genes", "Hemoglobin genes"],
+                  answerIndex: 1
+              }
             }
         ],
         subUpgrades: [
@@ -727,6 +808,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 options: ["It would take billions of years", "It can't evolve, it must be created", "In a surprisingly small number of generations", "It only evolved once in Earth's history"],
                 answerIndex: 2
               }
+            },
+            {
+              text: "The compound eye of insects is made up of thousands of tiny independent visual units called ommatidia, each with its own lens and photoreceptor cells. This gives them a wide field of view and excellent motion detection.",
+              quiz: {
+                  question: "The compound eyes of insects are composed of thousands of individual units called what?",
+                  options: ["Retinas", "Pupils", "Ommatidia", "Cones"],
+                  answerIndex: 2
+              }
             }
         ],
         subUpgrades: [
@@ -771,6 +860,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "The development of a head is also linked to the development of what other structure?",
                 options: ["A tail", "A mouth", "A protective shell", "Wings"],
                 answerIndex: 1
+              }
+            },
+            {
+              text: "The human brain, the ultimate result of cephalization, is incredibly energy-intensive, consuming about 20% of the body's total oxygen and calories despite making up only about 2% of the body's weight.",
+              quiz: {
+                  question: "About what percentage of the body's total energy does the human brain consume?",
+                  options: ["2%", "5%", "10%", "20%"],
+                  answerIndex: 3
               }
             }
         ],
@@ -906,6 +1003,14 @@ export const biologicalUpgrades2: Upgrade[] = [
                 question: "What does the enzyme catalase do?",
                 options: ["Converts water into hydrogen peroxide", "Converts hydrogen peroxide into water and oxygen", "Creates superoxide radicals", "Breaks down fats"],
                 answerIndex: 1
+              }
+            },
+            {
+              text: "Vitamin C (ascorbic acid) is a well-known water-soluble antioxidant that can neutralize free radicals and help regenerate other antioxidants like Vitamin E.",
+              quiz: {
+                  question: "Which of these is a well-known water-soluble antioxidant vitamin?",
+                  options: ["Vitamin D", "Vitamin K", "Vitamin A", "Vitamin C"],
+                  answerIndex: 3
               }
             }
         ], 
@@ -1148,6 +1253,14 @@ export const biologicalUpgrades2: Upgrade[] = [
             options: ["Alzheimer's Disease", "Parkinson's Disease", "Multiple Sclerosis", "Huntington's Disease"],
             answerIndex: 2
           }
+        },
+        {
+          text: "The cells that produce the myelin sheath are called Schwann cells in the peripheral nervous system (nerves outside the brain and spinal cord) and oligodendrocytes in the central nervous system.",
+          quiz: {
+              question: "What are the myelin-producing cells in the central nervous system called?",
+              options: ["Astrocytes", "Neurons", "Schwann Cells", "Oligodendrocytes"],
+              answerIndex: 3
+          }
         }
       ],
       subUpgrades: [
@@ -1217,6 +1330,14 @@ export const biologicalUpgrades2: Upgrade[] = [
             question: "What genetic disorder impairs the ability to form blood clots?",
             options: ["Sickle Cell Anemia", "Cystic Fibrosis", "Hemophilia", "Down Syndrome"],
             answerIndex: 2
+          }
+        },
+        {
+          text: "The final step of the clotting cascade is the conversion of fibrinogen, a soluble protein, into insoluble fibrin fibers. These fibers form a mesh that traps platelets and red blood cells to form a stable clot.",
+          quiz: {
+              question: "What protein forms the meshwork that creates a stable blood clot?",
+              options: ["Hemoglobin", "Collagen", "Fibrin", "Keratin"],
+              answerIndex: 2
           }
         }
       ],

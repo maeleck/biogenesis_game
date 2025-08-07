@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage, RewardedAd } from './types';
-import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES, RUSH_DURATION_SECONDS, KNOWLEDGE_XP_PER_CORRECT_ANSWER, XP_TO_NEXT_KNOWLEDGE_LEVEL, KNOWLEDGE_BONUS_PER_LEVEL } from './constants';
+import { Resource, ProtocellState, PanelContent, SubUpgrade, Upgrade, TestState, Quiz, Fact, ProteinLootType, ProteinLootState, ChamberUpgradeLevels, CraftableItem, CombatResult, Enemy, HuntStage, RewardedAd, UniqueResource } from './types';
+import { KNOBS, INITIAL_RESOURCES, INITIAL_WORKERS, TICK_RATE_MS, INITIAL_MAX_FORCE, INITIAL_MAX_HANDS, BASE_STARDUST_GENERATION, UPGRADES, MAP_SCENERY, INITIAL_PROTOCELL_TRAINING_LEVELS, PROTOCELL_TRAINING_CONFIG, INITIAL_STARDUST_CAPACITY, TEST_REWARD_STARDUST_CAP_PERCENTAGE, TEST_REWARD_GENERATION_SECONDS, BASE_RESOURCE_CAPACITIES, CHAMBER_UPGRADES, INITIAL_PROTEIN_LOOT, CRAFTABLE_ITEMS, ENEMIES, GENE_CARDS, XP_TO_NEXT_LEVEL, LEVEL_UP_STAT_BONUS, INITIAL_PROTOCELL_STATE, HUNT_STAGES, RUSH_DURATION_SECONDS, KNOWLEDGE_XP_PER_CORRECT_ANSWER, XP_TO_NEXT_KNOWLEDGE_LEVEL, KNOWLEDGE_BONUS_PER_LEVEL, UNIQUE_RESOURCES } from './constants';
 import ResourceDisplay from './components/ResourceDisplay';
 import ProcessPanel from './components/JobPanel';
 import MapNode from './components/MapNode';
@@ -78,7 +78,13 @@ function App() {
   const [testState, setTestState] = useState<TestState>({ currentQuestion: null, lastAnswerStatus: 'unanswered' });
 
   // Manufacturing State
-  const [craftedItemLevels, setCraftedItemLevels] = useState<Record<string, number>>(initialSaveData?.craftedItemLevels || {});
+  const [uniqueResources, setUniqueResources] = useState<Record<UniqueResource, number>>(initialSaveData?.uniqueResources || {
+      [UniqueResource.SyntheticAlloy]: 0,
+      [UniqueResource.LogicCircuit]: 0,
+      [UniqueResource.BiopolymerGel]: 0,
+      [UniqueResource.ResonantCrystal]: 0,
+  });
+  const [purchasedManufacturingItems, setPurchasedManufacturingItems] = useState<Set<string>>(new Set(initialSaveData?.purchasedManufacturingItems || []));
 
   // Knowledge & Rush state
   const [knowledgeLevel, setKnowledgeLevel] = useState<number>(initialSaveData?.knowledgeLevel || 1);
@@ -199,26 +205,32 @@ function App() {
     const bonuses = {
       baseGeneration: {} as Partial<Record<Resource, number>>,
       protocellLootMultiplier: 1,
+      protocellXpMultiplier: 1,
+      singleLootMultipliers: {} as Partial<Record<ProteinLootType, number>>,
     };
 
-    for (const itemId in craftedItemLevels) {
-      const level = craftedItemLevels[itemId];
-      if (level > 0) {
+    purchasedManufacturingItems.forEach(itemId => {
         const item = CRAFTABLE_ITEMS.find(i => i.id === itemId);
         if (item) {
-          const itemEffects = item.effects(level);
-          itemEffects.forEach(effect => {
+          item.effects.forEach(effect => {
             if (effect.type === 'ADD_BASE_GENERATION') {
               bonuses.baseGeneration[effect.resource] = (bonuses.baseGeneration[effect.resource] || 0) + effect.value;
             } else if (effect.type === 'INCREASE_PROTOCELL_LOOT_MULTIPLIER') {
               bonuses.protocellLootMultiplier += effect.value;
+            } else if (effect.type === 'INCREASE_PROTOCELL_XP_MULTIPLIER') {
+              bonuses.protocellXpMultiplier += effect.value;
+            } else if (effect.type === 'INCREASE_LOOT_MULTIPLIER_SINGLE') {
+              bonuses.singleLootMultipliers[effect.lootType] = (bonuses.singleLootMultipliers[effect.lootType] || 1) + effect.value;
+            } else if (effect.type === 'INCREASE_MAX_FORCE') {
+              setMaxForce(prev => prev + effect.value);
+            } else if (effect.type === 'INCREASE_MAX_HANDS') {
+              setMaxHands(prev => prev + effect.value);
             }
           });
         }
-      }
-    }
+    });
     return bonuses;
-  }, [craftedItemLevels]);
+  }, [purchasedManufacturingItems]);
 
   const knowledgeBonusMultiplier = useMemo(() => {
     return 1 + ((knowledgeLevel - 1) * KNOWLEDGE_BONUS_PER_LEVEL);
@@ -358,6 +370,40 @@ function App() {
     }
   }, [assignedWorkers, maxForce, maxHands]);
 
+  const netGenerationRates = useMemo(() => {
+    const netChanges: Partial<Record<Resource, number>> = {};
+    const resourceMultiplier = knowledgeBonusMultiplier;
+
+    // Base generation
+    for (const res in baseGeneration) {
+      const resourceKey = res as Resource;
+      netChanges[resourceKey] = (netChanges[resourceKey] || 0) + (baseGeneration[resourceKey]! * resourceMultiplier);
+    }
+
+    // Knobs
+    if (unlockedFeatures.has('synthesis') || unlockedFeatures.has('fusion')) {
+      for (const knob of KNOBS) {
+        if (!unlockedKnobs.has(knob.id)) continue;
+
+        const numWorkers = assignedWorkers[knob.id] || 0;
+        if (numWorkers === 0) continue;
+
+        for (const input of knob.inputs) {
+          let cost = input.amount * numWorkers;
+          if (knob.workerType === 'Hands' && knob.costIncreasePerHand && numWorkers > 0) {
+            cost = input.amount * numWorkers * (1 + (numWorkers - 1) * knob.costIncreasePerHand);
+          }
+          netChanges[input.resource] = (netChanges[input.resource] || 0) - cost;
+        }
+        for (const output of knob.outputs) {
+          netChanges[output.resource] = (netChanges[output.resource] || 0) + (output.amount * numWorkers * resourceMultiplier);
+        }
+      }
+    }
+
+    return netChanges;
+  }, [baseGeneration, knowledgeBonusMultiplier, unlockedFeatures, unlockedKnobs, assignedWorkers]);
+
 
   const areDependenciesMet = useCallback((upgradeId: string) => {
       const upgrade = UPGRADES.find(u => u.id === upgradeId);
@@ -371,17 +417,23 @@ function App() {
   }, [purchasedUpgrades]);
 
   const gameTick = useCallback(() => {
-    const resourceMultiplier = knowledgeBonusMultiplier;
-
     setResources(prevResources => {
       const newResources = { ...prevResources };
-      const netChanges: Partial<Record<Resource, number>> = {};
+      const netChanges = netGenerationRates; // Use pre-calculated rates
       
+      // The gameTick logic had a check for whether a knob could run.
+      // This is complex for the UI, but for the tick, it's essential.
+      // We need to re-evaluate which knobs can actually run this tick.
+      const perTickNetChanges: Partial<Record<Resource, number>> = {};
+      const resourceMultiplier = knowledgeBonusMultiplier;
+
+      // Base generation always happens
       for (const res in baseGeneration) {
           const resourceKey = res as Resource;
-          netChanges[resourceKey] = (netChanges[resourceKey] || 0) + baseGeneration[resourceKey]! * resourceMultiplier;
+          perTickNetChanges[resourceKey] = (perTickNetChanges[resourceKey] || 0) + baseGeneration[resourceKey]! * resourceMultiplier;
       }
 
+      // Re-calculate knob effects based on available resources this tick
       if (unlockedFeatures.has('synthesis') || unlockedFeatures.has('fusion')) {
         for (const knob of KNOBS) {
           if (!unlockedKnobs.has(knob.id)) continue;
@@ -389,44 +441,37 @@ function App() {
           const numWorkers = assignedWorkers[knob.id] || 0;
           if (numWorkers === 0) continue;
 
-          let maxPossibleRuns = numWorkers;
+          let canRun = true;
           for (const input of knob.inputs) {
             let cost = input.amount * numWorkers;
             if (knob.workerType === 'Hands' && knob.costIncreasePerHand && numWorkers > 0) {
                  cost = input.amount * numWorkers * (1 + (numWorkers - 1) * knob.costIncreasePerHand);
             }
-            const resourceAvailable = newResources[input.resource] + (netChanges[input.resource] || 0);
-            
-            if (cost > 0) {
-                if (resourceAvailable < cost) {
-                    maxPossibleRuns = 0; 
-                    break;
-                }
-            } else {
-                maxPossibleRuns = numWorkers;
+            if (prevResources[input.resource] < cost) {
+                canRun = false;
+                break;
             }
           }
-
-          const effectiveRuns = maxPossibleRuns > 0 ? numWorkers : 0;
           
-          if (effectiveRuns > 0) {
+          if (canRun) {
             for (const input of knob.inputs) {
-                let cost = input.amount * effectiveRuns;
-                 if (knob.workerType === 'Hands' && knob.costIncreasePerHand && effectiveRuns > 0) {
-                    cost = input.amount * effectiveRuns * (1 + (effectiveRuns - 1) * knob.costIncreasePerHand);
+                let cost = input.amount * numWorkers;
+                 if (knob.workerType === 'Hands' && knob.costIncreasePerHand && numWorkers > 0) {
+                    cost = input.amount * numWorkers * (1 + (numWorkers - 1) * numWorkers * knob.costIncreasePerHand);
                  }
-              netChanges[input.resource] = (netChanges[input.resource] || 0) - cost;
+              perTickNetChanges[input.resource] = (perTickNetChanges[input.resource] || 0) - cost;
             }
             for (const output of knob.outputs) {
-              netChanges[output.resource] = (netChanges[output.resource] || 0) + (output.amount * effectiveRuns * resourceMultiplier);
+              perTickNetChanges[output.resource] = (perTickNetChanges[output.resource] || 0) + (output.amount * numWorkers * resourceMultiplier);
             }
           }
         }
       }
 
+
       for (const key in newResources) {
         const resourceKey = key as Resource;
-        let newAmount = newResources[resourceKey] + (netChanges[resourceKey] || 0);
+        let newAmount = newResources[resourceKey] + (perTickNetChanges[resourceKey] || 0);
 
         const capacity = resourceCapacities[resourceKey];
         if (capacity !== undefined) {
@@ -438,7 +483,7 @@ function App() {
 
       return newResources;
     });
-  }, [assignedWorkers, baseGeneration, unlockedFeatures, unlockedKnobs, resourceCapacities, knowledgeBonusMultiplier]);
+  }, [assignedWorkers, baseGeneration, unlockedFeatures, unlockedKnobs, resourceCapacities, knowledgeBonusMultiplier, netGenerationRates]);
 
   useEffect(() => {
     if (gameState !== 'playing') return;
@@ -490,7 +535,8 @@ function App() {
         collectedGeneCards: Array.from(collectedGeneCards),
         selectedHuntStageId,
         testState,
-        craftedItemLevels,
+        uniqueResources,
+        purchasedManufacturingItems: Array.from(purchasedManufacturingItems),
         knowledgeLevel,
         knowledgeXP,
         lastRushResult,
@@ -506,7 +552,8 @@ function App() {
     resources, universalStorageLevel, stardustGenerationMultiplier, assignedWorkers,
     maxForce, maxHands, purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels,
     unlockedFeatures, unlockedKnobs, protocellState, protocellTrainingLevels, protocellBaseBonuses,
-    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, craftedItemLevels, 
+    chamberUpgradeLevels, proteinLoot, collectedGeneCards, selectedHuntStageId, testState, 
+    uniqueResources, purchasedManufacturingItems,
     knowledgeLevel, knowledgeXP, lastRushResult, adCooldownEndTime
   ]);
   
@@ -554,7 +601,14 @@ function App() {
       }
       return newRes;
     });
-    alert('DEBUG: Added 1,000,000 to all resources!');
+    setUniqueResources(prev => {
+        const newRes = { ...prev };
+        for (const resKey of Object.values(UniqueResource)) {
+            newRes[resKey] = (newRes[resKey] || 0) + 1000;
+        }
+        return newRes;
+    });
+    alert('DEBUG: Added 1,000,000 to all base resources and 1000 to unique resources!');
   }, []);
 
   const handleDebugGiveLoot = useCallback(() => {
@@ -636,9 +690,15 @@ function App() {
     }
   };
 
-  const canAfford = useCallback((costs: {resource: Resource; amount: number}[]) => {
-      return costs.every(c => resources[c.resource] >= c.amount);
-  }, [resources]);
+  const canAfford = useCallback((costs: {resource: Resource | UniqueResource; amount: number}[]) => {
+      return costs.every(c => {
+        if (Object.values(Resource).includes(c.resource as Resource)) {
+            return resources[c.resource as Resource] >= c.amount;
+        } else {
+            return uniqueResources[c.resource as UniqueResource] >= c.amount;
+        }
+      });
+  }, [resources, uniqueResources]);
 
   const handlePurchaseUpgrade = (upgradeId: string) => {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
@@ -649,7 +709,7 @@ function App() {
     setResources(prev => {
         const newRes = {...prev};
         for (const cost of upgrade.cost) {
-            newRes[cost.resource] -= cost.amount;
+            newRes[cost.resource as Resource] -= cost.amount;
         }
         return newRes;
     });
@@ -837,7 +897,7 @@ function App() {
             result.outcome = 'win';
             combatLog.push(`Protocell is victorious!`);
             
-            const xpMultiplier = 1;
+            const xpMultiplier = manufacturingBonuses.protocellXpMultiplier;
             result.xpGained = Math.floor(enemy.rewards.xp * xpMultiplier);
             
             setProtocellState(prev => ({ ...prev, xp: prev.xp + result.xpGained }));
@@ -845,7 +905,9 @@ function App() {
             for (const key in enemy.rewards.loot) {
                 const lootType = key as ProteinLootType;
                 const [min, max] = enemy.rewards.loot[lootType]!;
-                const amount = Math.floor((min + Math.random() * (max - min)) * lootMultiplier);
+                const singleLootMultiplier = manufacturingBonuses.singleLootMultipliers[lootType] || 1;
+                const amount = Math.floor((min + Math.random() * (max - min)) * lootMultiplier * singleLootMultiplier);
+
                 if (amount > 0) {
                     result.lootGained[lootType] = amount;
                 }
@@ -892,23 +954,38 @@ function App() {
     }
   };
 
-  const handleCraftItem = (itemId: string) => {
+  const handlePurchaseManufacturingItem = (itemId: string) => {
+    if (purchasedManufacturingItems.has(itemId)) return;
+
     const item = CRAFTABLE_ITEMS.find(i => i.id === itemId);
     if (!item) return;
 
-    const currentLevel = craftedItemLevels[itemId] || 0;
-    if (item.maxLevel && currentLevel >= item.maxLevel) return;
+    if (canAfford(item.cost)) {
+        item.cost.forEach(c => {
+            if (Object.values(Resource).includes(c.resource as Resource)) {
+                setResources(prev => ({ ...prev, [c.resource]: prev[c.resource as Resource] - c.amount }));
+            } else {
+                setUniqueResources(prev => ({ ...prev, [c.resource]: prev[c.resource as UniqueResource] - c.amount }));
+            }
+        });
+        setPurchasedManufacturingItems(prev => new Set(prev).add(itemId));
+    }
+  };
 
-    const costs = item.cost(currentLevel);
+  const handleCraftUniqueResource = (uniqueResourceId: UniqueResource) => {
+    const recipe = UNIQUE_RESOURCES[uniqueResourceId];
+    if (!recipe) return;
+
+    const costs = recipe.inputs;
     if (canAfford(costs)) {
         setResources(prev => {
-            const newRes = {...prev};
+            const newRes = { ...prev };
             costs.forEach(c => {
-                newRes[c.resource] -= c.amount;
+                newRes[c.resource as Resource] -= c.amount;
             });
             return newRes;
         });
-        setCraftedItemLevels(prev => ({...prev, [itemId]: currentLevel + 1 }));
+        setUniqueResources(prev => ({ ...prev, [uniqueResourceId]: prev[uniqueResourceId] + 1 }));
     }
   };
 
@@ -1093,7 +1170,7 @@ function App() {
 
     setRushState(prev => ({
       ...prev,
-      score: prev.score + (correct ? 1 : 0),
+      score: correct ? prev.score + 1 : Math.max(0, prev.score - 1),
       currentQuestion: nextQuestion,
     }));
   }, [rushState, availableQuestions]);
@@ -1148,6 +1225,7 @@ function App() {
                     resource={res}
                     amount={resources[res]}
                     capacity={resourceCapacities[res]}
+                    generationRate={netGenerationRates[res]}
                   />
                 ))}
               </div>
@@ -1236,9 +1314,11 @@ function App() {
                     )}
                     {activeMainTab === 'manufacturing' && unlockedFeatures.has('manufacturing') && (
                         <ManufacturingPanel
-                            craftedItemLevels={craftedItemLevels}
+                            purchasedManufacturingItems={purchasedManufacturingItems}
                             resources={resources}
-                            onCraft={handleCraftItem}
+                            uniqueResources={uniqueResources}
+                            onPurchaseItem={handlePurchaseManufacturingItem}
+                            onCraftResource={handleCraftUniqueResource}
                         />
                     )}
                     {activeMainTab === 'protocell' && unlockedFeatures.has('protocell') && (
@@ -1302,8 +1382,8 @@ function App() {
             <div className="relative" style={{ width: 2000, height: 2500 }}>
                 {MAP_SCENERY.map((s, i) => <MapScenery key={i} {...s} />)}
                 <MapSection title="Cosmic Era" y="0%" height="25%" colorClass="bg-gradient-to-b from-blue-900/20 to-transparent" />
-                <MapSection title="Planetary Era" y="25%" height="20%" colorClass="bg-gradient-to-b from-yellow-900/10 to-transparent" />
-                <MapSection title="Biological Era" y="45%" height="55%" colorClass="bg-gradient-to-b from-green-900/10 to-transparent" />
+                <MapSection title="Planetary Era" y="25%" height="12%" colorClass="bg-gradient-to-b from-yellow-900/10 to-transparent" />
+                <MapSection title="Biological Era" y="37%" height="63%" colorClass="bg-gradient-to-b from-green-900/10 to-transparent" />
                 <MapLines upgrades={UPGRADES} purchasedUpgrades={purchasedUpgrades} visibleUpgrades={visibleUpgrades} />
                 {visibleUpgrades.map(upgrade => (
                     <MapNode

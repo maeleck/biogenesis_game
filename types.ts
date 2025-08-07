@@ -1,7 +1,4 @@
 
-
-
-
 export enum Resource {
   Stardust = 'Stardust',
   Hydrogen = 'Hydrogen',
@@ -15,6 +12,13 @@ export enum Resource {
   ATP = 'ATP',
 }
 
+export enum UniqueResource {
+  SyntheticAlloy = 'Synthetic Alloy',
+  LogicCircuit = 'Logic Circuit',
+  BiopolymerGel = 'Biopolymer Gel',
+  ResonantCrystal = 'Resonant Crystal',
+}
+
 export enum ProteinLootType {
   StructuralFragments = 'Structural Fragments',
   CatalyticEnzymes = 'Catalytic Enzymes',
@@ -26,6 +30,12 @@ export type ProteinLootState = Record<ProteinLootType, number>;
 export interface ResourceData {
   name: Resource;
   description: string;
+}
+
+export interface UniqueResourceData {
+  name: UniqueResource;
+  description: string;
+  inputs: { resource: Resource; amount: number }[];
 }
 
 export interface Knob {
@@ -48,7 +58,9 @@ export type UpgradeEffect =
   | { type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource, value: number }
   | { type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed' | 'efficiency' | 'resilience', value: number }
   | { type: 'INCREASE_UNIVERSAL_STORAGE', value: number }
-  | { type: 'INCREASE_PROTOCELL_LOOT_MULTIPLIER', value: number };
+  | { type: 'INCREASE_PROTOCELL_LOOT_MULTIPLIER', value: number }
+  | { type: 'INCREASE_PROTOCELL_XP_MULTIPLIER', value: number }
+  | { type: 'INCREASE_LOOT_MULTIPLIER_SINGLE', lootType: ProteinLootType, value: number };
 
 export interface SubUpgrade {
   id: string;
@@ -125,10 +137,9 @@ export interface TestState {
 export interface CraftableItem {
   id: string;
   name: string;
-  description: (level: number) => string;
-  cost: (level: number) => { resource: Resource; amount: number }[];
-  effects: (level: number) => UpgradeEffect[];
-  maxLevel?: number;
+  description: string;
+  cost: { resource: Resource | UniqueResource; amount: number }[];
+  effects: UpgradeEffect[];
 }
 
 export interface GeneCard {

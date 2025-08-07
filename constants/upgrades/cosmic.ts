@@ -71,6 +71,14 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["Premature gravitational collapse", "Excessive heat generation", "Radioactive decay", "Unwanted chemical reactions"],
             answerIndex: 0
           }
+        },
+        {
+          text: "The observable universe is estimated to be about 93 billion light-years in diameter and contains at least two trillion galaxies, each with billions of stars.",
+          quiz: {
+            question: "What is the estimated diameter of the observable universe?",
+            options: ["13.8 billion light-years", "93 billion light-years", "1 light-year", "100,000 light-years"],
+            answerIndex: 1
+          }
         }
       ],
       subUpgrades: [
@@ -207,6 +215,15 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["A solid, rocky surface", "A very low temperature", "Ejection of powerful jets of gas", "Orbiting planets already"],
             answerIndex: 2
           }
+        },
+        {
+          text: "After the main accretion phase, a young star is known as a T Tauri star. These are pre-main-sequence stars that are not yet hot enough for hydrogen fusion but are still gravitationally contracting.",
+          unlockedBySubUpgradeId: 'pf_force_1',
+          quiz: {
+            question: "What is the name for a pre-main-sequence star that has finished its main accretion phase?",
+            options: ["Red Giant", "White Dwarf", "T Tauri star", "Neutron Star"],
+            answerIndex: 2
+          }
         }
       ],
       subUpgrades: [
@@ -240,6 +257,15 @@ export const cosmicUpgrades: Upgrade[] = [
           quiz: {
             question: "In which type of stars is the CNO cycle the dominant fusion process?",
             options: ["All stars", "Stars less massive than the Sun", "Stars more massive than the Sun", "Only in dead stars"],
+            answerIndex: 2
+          }
+        },
+        {
+          text: "Carbon is primarily formed in stars through the triple-alpha process, where three helium nuclei (alpha particles) are fused together. This process requires extremely high temperatures and densities.",
+          unlockedBySubUpgradeId: 'sn_cno_1',
+          quiz: {
+            question: "What is the name of the process that fuses three helium nuclei to form carbon?",
+            options: ["The CNO Cycle", "The Proton-Proton Chain", "The Triple-Alpha Process", "Nuclear Fission"],
             answerIndex: 2
           }
         }
@@ -303,6 +329,15 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 1
           }
         },
+        {
+          text: "A Type Ia supernova occurs in a binary system where a white dwarf star accretes matter from a companion, eventually reaching a critical mass and exploding. These are used as 'standard candles' to measure cosmic distances.",
+          unlockedBySubUpgradeId: 'se_enrichment_1',
+          quiz: {
+            question: "What are Type Ia supernovae used for by astronomers?",
+            options: ["Finding new planets", "As 'standard candles' to measure cosmic distances", "Creating black holes", "As a source of radio signals"],
+            answerIndex: 1
+          }
+        }
       ],
       subUpgrades: [
         { id: 'se_enrichment_1', name: 'Heavy Element Enrichment', description: 'Improve the efficiency of Iron fusion from stellar remnants.', cost: () => ({ resource: Resource.Iron, amount: 15 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 0.2 }] },
@@ -360,6 +395,14 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["Formation of a new, larger star", "Creation of r-process elements like gold", "Absorption of all nearby matter", "The creation of dark energy"],
             answerIndex: 1
           }
+        },
+        {
+          text: "The collision of neutron stars produces powerful gravitational waves, ripples in the fabric of spacetime, which were first directly detected by the LIGO experiment in 2017 for this type of event.",
+          quiz: {
+            question: "What powerful phenomenon, predicted by Einstein, is produced by a neutron star collision?",
+            options: ["A gamma-ray burst", "Gravitational waves", "A magnetic field reversal", "A new type of star"],
+            answerIndex: 1
+          }
         }
       ],
       subUpgrades: [
@@ -402,6 +445,15 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["Their spiral shape", "Their color", "They rotate faster than their visible mass suggests", "Their number of stars"],
             answerIndex: 2
           }
+        },
+        {
+          text: "One of the leading candidates for dark matter particles are WIMPs (Weakly Interacting Massive Particles). They are hypothetical particles that do not interact with light but do interact through gravity and the weak nuclear force.",
+          unlockedBySubUpgradeId: 'dm_rotation_curve',
+          quiz: {
+            question: "What are WIMPs, a leading candidate for dark matter?",
+            options: ["Very small black holes", "Weakly Interacting Massive Particles", "A type of neutrino", "Large dust clouds"],
+            answerIndex: 1
+          }
         }
       ],
       subUpgrades: [
@@ -426,6 +478,14 @@ export const cosmicUpgrades: Upgrade[] = [
             question: "What holds galaxies together?",
             options: ["Magnetic fields", "Gravity", "Stellar wind pressure", "Cosmic strings"],
             answerIndex: 1
+          }
+        },
+        {
+          text: "Galaxies are broadly classified into three main types: spiral (like our Milky Way), elliptical (older, redder stars), and irregular (no distinct shape). Their shape is often a result of their formation and merger history.",
+          quiz: {
+            question: "Which of these is NOT one of the three main types of galaxies?",
+            options: ["Spiral", "Elliptical", "Globular", "Irregular"],
+            answerIndex: 2
           }
         }
       ],
@@ -537,6 +597,14 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["Wandering in interstellar space", "At the center of large galaxies", "Only in the early universe", "Orbiting large stars"],
             answerIndex: 1
           }
+        },
+        {
+          text: "The event horizon of a black hole is the 'point of no return'. Anything that crosses it, including light, cannot escape the black hole's gravitational pull.",
+          quiz: {
+            question: "What is the 'point of no return' for a black hole called?",
+            options: ["The singularity", "The accretion disk", "The event horizon", "The photon sphere"],
+            answerIndex: 2
+          }
         }],
         subUpgrades: [{ id: 'smbh_gravity_well', name: 'Deepen Gravity Well', description: 'The intense gravity provides a significant boost to max Force.', cost: () => ({ resource: Resource.Iron, amount: 75000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 30 }] }]
     }
@@ -579,6 +647,14 @@ export const cosmicUpgrades: Upgrade[] = [
             options: ["5%", "27%", "68%", "95%"],
             answerIndex: 2
           }
+        },
+        {
+          text: "The simplest explanation for dark energy is the 'cosmological constant,' an intrinsic energy of space itself, first proposed by Albert Einstein (for different reasons).",
+          quiz: {
+            question: "What is the simplest explanation for dark energy, first proposed by Einstein?",
+            options: ["The aether", "A fifth fundamental force", "The cosmological constant", "String theory"],
+            answerIndex: 2
+          }
         }],
         subUpgrades: [{ id: 'de_understanding', name: 'Cosmological Constant', description: 'A deeper understanding of dark energy boosts all Stardust acquisition.', cost: () => ({ resource: Resource.Stardust, amount: 120000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
     }
@@ -619,6 +695,14 @@ export const cosmicUpgrades: Upgrade[] = [
           quiz: {
             question: "What type of galaxy is often the result of a major galactic merger?",
             options: ["A smaller spiral galaxy", "A large irregular galaxy", "A much larger elliptical galaxy", "Two separate smaller galaxies"],
+            answerIndex: 2
+          }
+        },
+        {
+          text: "Our own Milky Way galaxy is on a collision course with the Andromeda galaxy. This galactic merger is predicted to occur in about 4.5 billion years.",
+          quiz: {
+            question: "Which galaxy is the Milky Way predicted to collide with in about 4.5 billion years?",
+            options: ["The Triangulum Galaxy", "The Sombrero Galaxy", "The Andromeda Galaxy", "The Pinwheel Galaxy"],
             answerIndex: 2
           }
         }],
