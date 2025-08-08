@@ -693,6 +693,29 @@ const icons: Record<string, React.FC> = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 10.5l3 3m0-3l-3 3" />
     </svg>
   ),
+  amoeba_proteus: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 11-9-9c0 1.44.34 2.8.95 4.02.34.68.88 1.29 1.5 1.8.6.5 1.25.83 2 1 .74.17 1.5.18 2.25.08 1.5-.2 2.5-1.12 3.5-2.4.5-.64 1-1.28 1.5-1.9.5-.63 1-1.27 1.5-1.9.75-.93 1.5-1.5 2.5-1.5s2 .75 2 2.25-.5 3.75-1.5 4.5-2.5 1-3.5 1h-3z" />
+    </svg>
+  ),
+  c_elegans: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12C3.75 9.25 6.25 5 12 5s8.25 4.25 8.25 7-2.75 4-8.25 4S3.75 14.75 3.75 12z" />
+    </svg>
+  ),
+  tardigrade: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 10.5V12m0 1.5V15m3.75-4.5V12m0 1.5V15m3.75-4.5V12m0 1.5V15M4.5 9.75h15A2.25 2.25 0 0121.75 12v0a2.25 2.25 0 01-2.25 2.25h-15A2.25 2.25 0 012.25 12v0A2.25 2.25 0 014.5 9.75z" />
+    </svg>
+  ),
+  d_radiodurans: () => (
+    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <circle cx="9" cy="9" r="2.25" />
+      <circle cx="15" cy="9" r="2.25" />
+      <circle cx="9" cy="15" r="2.25" />
+      <circle cx="15" cy="15" r="2.25" />
+    </svg>
+  ),
 };
 
 export const UpgradeIcon: React.FC<{ iconId: string }> = ({ iconId }) => {

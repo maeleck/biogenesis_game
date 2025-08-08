@@ -296,6 +296,31 @@ function App() {
     
     return { stardustCapacity: finalStardustCapacity, baseGeneration: finalBaseGeneration };
   }, [purchasedUpgrades, purchasedSubUpgrades, subUpgradeLevels, stardustGenerationMultiplier, manufacturingBonuses]);
+  
+  const chamberBonuses = useMemo(() => {
+    const bonuses = {
+        xpMultiplier: 1,
+        geneCardDropChanceMultiplier: 1,
+        singleLootMultipliers: {} as Partial<Record<ProteinLootType, number>>,
+    };
+
+    for (const upgradeId in chamberUpgradeLevels) {
+        const level = chamberUpgradeLevels[upgradeId];
+        const upgrade = CHAMBER_UPGRADES.find(u => u.id === upgradeId);
+        if (level > 0 && upgrade) {
+            const effect = upgrade.effect(level);
+            if (effect.type === 'INCREASE_XP_MULTIPLIER') {
+                bonuses.xpMultiplier += effect.value; // Additive bonus
+            } else if (effect.type === 'INCREASE_GENE_CARD_DROP_CHANCE') {
+                bonuses.geneCardDropChanceMultiplier += effect.value; // Additive bonus
+            } else if (effect.type === 'INCREASE_LOOT_MULTIPLIER_SINGLE' && effect.lootType) {
+                bonuses.singleLootMultipliers[effect.lootType] = (bonuses.singleLootMultipliers[effect.lootType] || 1) + effect.value;
+            }
+        }
+    }
+    return bonuses;
+  }, [chamberUpgradeLevels]);
+
 
   const protocellAttributes = useMemo(() => {
     const finalAttrs: ProtocellState['attributes'] = { ...protocellTrainingLevels };
@@ -897,7 +922,7 @@ function App() {
             result.outcome = 'win';
             combatLog.push(`Protocell is victorious!`);
             
-            const xpMultiplier = manufacturingBonuses.protocellXpMultiplier;
+            const xpMultiplier = manufacturingBonuses.protocellXpMultiplier * chamberBonuses.xpMultiplier;
             result.xpGained = Math.floor(enemy.rewards.xp * xpMultiplier);
             
             setProtocellState(prev => ({ ...prev, xp: prev.xp + result.xpGained }));
@@ -905,7 +930,11 @@ function App() {
             for (const key in enemy.rewards.loot) {
                 const lootType = key as ProteinLootType;
                 const [min, max] = enemy.rewards.loot[lootType]!;
-                const singleLootMultiplier = manufacturingBonuses.singleLootMultipliers[lootType] || 1;
+                
+                const baseManufacturingBonus = (manufacturingBonuses.singleLootMultipliers[lootType] || 1) - 1;
+                const baseChamberBonus = (chamberBonuses.singleLootMultipliers[lootType] || 1) - 1;
+                const singleLootMultiplier = 1 + baseManufacturingBonus + baseChamberBonus;
+
                 const amount = Math.floor((min + Math.random() * (max - min)) * lootMultiplier * singleLootMultiplier);
 
                 if (amount > 0) {
@@ -922,7 +951,7 @@ function App() {
                 return newLoot;
             });
             
-            if (Math.random() < enemy.rewards.geneCardDropChance) {
+            if (Math.random() < (enemy.rewards.geneCardDropChance * chamberBonuses.geneCardDropChanceMultiplier)) {
                 const availableCards = GENE_CARDS.filter(card => !collectedGeneCards.has(card.id));
                 if (availableCards.length > 0) {
                     const foundCard = availableCards[Math.floor(Math.random() * availableCards.length)];

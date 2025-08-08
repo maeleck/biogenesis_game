@@ -31,4 +31,34 @@ export const GENE_CARDS: GeneCard[] = [
         description: 'Provides instructions for making human growth hormone, a protein that plays a crucial role in controlling the body\'s growth and metabolism.',
         application: 'Recombinant HGH is used to treat growth disorders in children and growth hormone deficiency in adults. It was one of the first successes of biotechnology, replacing the risky practice of extracting the hormone from human cadavers.'
     },
+    {
+        id: 'luciferase',
+        name: 'Luciferase',
+        description: 'A generic term for a class of oxidative enzymes that produce bioluminescence, or "living light". It is famously responsible for the glow of fireflies.',
+        application: 'Widely used in biotechnology as a reporter gene. Its light-producing properties make it easy to detect and quantify, allowing researchers to study gene expression and other cellular processes with high sensitivity.'
+    },
+    {
+        id: 'tert',
+        name: 'Telomerase (TERT)',
+        description: 'The gene for Telomerase Reverse Transcriptase, a key component of the enzyme that maintains the protective caps (telomeres) on the ends of chromosomes.',
+        application: 'A major focus of anti-aging and cancer research. While its activity in most body cells is low, cancer cells often reactivate it to achieve a form of cellular immortality, making it a prime target for therapies.'
+    },
+    {
+        id: 'p53',
+        name: 'p53',
+        description: 'Often called the "guardian of the genome," this gene codes for a protein that regulates the cell cycle and functions as a tumor suppressor. It can halt cell division or trigger cell death (apoptosis) in response to DNA damage.',
+        application: 'Mutations in the p53 gene are found in over 50% of all human cancers. Understanding its function is central to oncology and the development of new cancer treatments.'
+    },
+    {
+        id: 'myod',
+        name: 'MyoD',
+        description: 'A "master regulator" gene that codes for a transcription factor which can convert many different cell types directly into muscle cells.',
+        application: 'A crucial tool in stem cell research and regenerative medicine. Studying MyoD helps scientists understand how to control cell differentiation and potentially grow new muscle tissue to treat injuries and diseases like muscular dystrophy.'
+    },
+    {
+        id: 'foxp2',
+        name: 'FOXP2',
+        description: 'One of the first genes to be strongly implicated in the development of speech and language. It codes for a transcription factor that regulates many other genes.',
+        application: 'Studying FOXP2 provides insights into the neurobiological basis of human language and its evolution. It helps researchers understand how the human brain is wired for this unique and complex cognitive ability.'
+    }
 ];

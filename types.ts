@@ -123,8 +123,9 @@ export interface ChamberUpgrade {
   maxLevel: number;
   cost: (level: number) => number;
   effect: (level: number) => {
-    type: 'ADD_BASE_ATTRIBUTE' | 'INCREASE_LOOT_MULTIPLIER';
+    type: 'ADD_BASE_ATTRIBUTE' | 'INCREASE_LOOT_MULTIPLIER' | 'INCREASE_XP_MULTIPLIER' | 'INCREASE_GENE_CARD_DROP_CHANCE' | 'INCREASE_LOOT_MULTIPLIER_SINGLE';
     attribute?: keyof ProtocellState['attributes'];
+    lootType?: ProteinLootType; // For INCREASE_LOOT_MULTIPLIER_SINGLE
     value: number;
   };
 }

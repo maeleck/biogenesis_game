@@ -28,5 +28,33 @@ export const HUNT_STAGES: HuntStage[] = [
         description: 'An extremely hazardous region where deadly and sophisticated viruses are rampant. High risk, high reward.',
         levelRequirement: 20,
         enemyIds: ['escherichia_coli', 'hiv_retrovirus']
+    },
+    {
+        id: 'tidal_flats',
+        name: 'Tidal Flats',
+        description: 'An environment with constantly changing conditions, inhabited by versatile and opportunistic organisms.',
+        levelRequirement: 25,
+        enemyIds: ['escherichia_coli', 'amoeba_proteus', 'c_elegans']
+    },
+    {
+        id: 'deep_sea_floor',
+        name: 'Deep Sea Floor',
+        description: 'The crushing pressure and darkness of the abyss are home to resilient and strange lifeforms.',
+        levelRequirement: 30,
+        enemyIds: ['c_elegans', 'tardigrade']
+    },
+    {
+        id: 'cryo_volcanic_field',
+        name: 'Cryo-Volcanic Field',
+        description: 'A bizarre landscape of ice and volcanic activity, where only the most durable extremophiles can survive.',
+        levelRequirement: 35,
+        enemyIds: ['tardigrade', 'bacillus_subtilis', 'd_radiodurans']
+    },
+    {
+        id: 'irradiated_zone',
+        name: 'Irradiated Zone',
+        description: 'A highly radioactive area where genetic integrity is a constant battle. The organisms here are masters of DNA repair.',
+        levelRequirement: 40,
+        enemyIds: ['hiv_retrovirus', 'd_radiodurans']
     }
 ];

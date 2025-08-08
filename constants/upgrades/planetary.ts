@@ -1,4 +1,5 @@
 
+
 import { Upgrade, Resource } from '../../types';
 
 export const planetaryUpgrades: Upgrade[] = [
@@ -7,7 +8,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'protoplanetary_disk',
     name: 'Protoplanetary Disk',
     description: 'Form a swirling disk of dense gas and dust around a young star, the birthplace of planets.',
-    cost: [{ resource: Resource.Stardust, amount: 300 }],
+    cost: [{ resource: Resource.Stardust, amount: 30 }],
     position: { x: 20, y: 25 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['rock_formation'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }],
     icon: 'protoplanetary_disk',
@@ -59,10 +60,10 @@ export const planetaryUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'pd_accretion_1', name: 'Disk Accretion', description: 'Improve passive generation of Rock from the disk.', cost: () => ({ resource: Resource.Rock, amount: 25 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }] },
-        { id: 'pd_frost_line_1', name: 'Frost Line Analysis', description: 'Begin concentrating icy materials to passively generate Water.', cost: () => ({ resource: Resource.Rock, amount: 100 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] },
-        { id: 'pd_storage_1', name: 'Planetesimal Bins', description: 'Increase the storage capacity for planetary materials.', cost: () => ({ resource: Resource.Iron, amount: 500 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 2 }] },
-        { id: 'pd_eddy_currents', name: 'Induce Eddy Currents', description: 'Create whirlpools in the disk to concentrate heavy materials, passively generating Iron.', cost: () => ({ resource: Resource.Rock, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 0.2 }] }
+        { id: 'pd_accretion_1', name: 'Disk Accretion', description: 'Improve passive generation of Rock from the disk.', cost: () => ({ resource: Resource.Rock, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }] },
+        { id: 'pd_frost_line_1', name: 'Frost Line Analysis', description: 'Begin concentrating icy materials to passively generate Water.', cost: () => ({ resource: Resource.Rock, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] },
+        { id: 'pd_storage_1', name: 'Planetesimal Bins', description: 'Increase the storage capacity for planetary materials.', cost: () => ({ resource: Resource.Iron, amount: 50 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 2 }] },
+        { id: 'pd_eddy_currents', name: 'Induce Eddy Currents', description: 'Create whirlpools in the disk to concentrate heavy materials, passively generating Iron.', cost: () => ({ resource: Resource.Rock, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 0.2 }] }
       ]
     }
   },
@@ -70,7 +71,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'kuiper_belt',
     name: 'Kuiper Belt Formation',
     description: 'Form a belt of icy planetesimals at the edge of the system.',
-    cost: [{ resource: Resource.Rock, amount: 1000 }],
+    cost: [{ resource: Resource.Rock, amount: 100 }],
     position: { x: 10, y: 28 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }],
     icon: 'kuiper_belt',
@@ -122,10 +123,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'kb_harvesting', name: 'Icy Body Harvesting', description: 'Improve passive generation of Water from the belt.', cost: () => ({ resource: Resource.Water, amount: 1500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
-            { id: 'kb_comets', name: 'Comet Herding', description: "Learn to herd comets, boosting passive Water generation.", cost: () => ({ resource: Resource.Water, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 3 }] },
-            { id: 'kb_scattered', name: 'Scattered Disk Mining', description: 'Mine the chaotic scattered disk for extra Rock.', cost: () => ({ resource: Resource.Rock, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
-            { id: 'kb_gravity_assist', name: 'Gravity Assist', description: "Use the gravity of Kuiper Belt objects to increase your max Force.", cost: () => ({ resource: Resource.Rock, amount: 2500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
+            { id: 'kb_harvesting', name: 'Icy Body Harvesting', description: 'Improve passive generation of Water from the belt.', cost: () => ({ resource: Resource.Water, amount: 150 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
+            { id: 'kb_comets', name: 'Comet Herding', description: "Learn to herd comets, boosting passive Water generation.", cost: () => ({ resource: Resource.Water, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 3 }] },
+            { id: 'kb_scattered', name: 'Scattered Disk Mining', description: 'Mine the chaotic scattered disk for extra Rock.', cost: () => ({ resource: Resource.Rock, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
+            { id: 'kb_gravity_assist', name: 'Gravity Assist', description: "Use the gravity of Kuiper Belt objects to increase your max Force.", cost: () => ({ resource: Resource.Rock, amount: 250 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
         ]
     }
   },
@@ -133,7 +134,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'planetary_accretion',
     name: 'Planetary Accretion',
     description: 'Dust grains stick together, forming planetesimals which then collide and grow into planets.',
-    cost: [{ resource: Resource.Rock, amount: 50 }],
+    cost: [{ resource: Resource.Rock, amount: 20 }],
     position: { x: 40, y: 25 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['water_formation'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }],
     icon: 'planetary_accretion',
@@ -185,10 +186,10 @@ export const planetaryUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'pa_runaway_1', name: 'Runaway Accretion', description: 'Boost the passive generation of Rock.', cost: () => ({ resource: Resource.Rock, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }] },
-        { id: 'pa_force_3', name: 'Gravitational Tractor', description: 'Use planetary gravity fields to increase maximum Force.', cost: () => ({ resource: Resource.Rock, amount: 500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 15 }] },
-        { id: 'pa_oligarchs', name: 'Oligarchic Growth', description: 'Dominate orbital zones to improve Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 750 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
-        { id: 'pa_giant_impacts', name: 'Giant Impact Planning', description: 'Plan giant impacts to increase Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] }
+        { id: 'pa_runaway_1', name: 'Runaway Accretion', description: 'Boost the passive generation of Rock.', cost: () => ({ resource: Resource.Rock, amount: 25 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }] },
+        { id: 'pa_force_3', name: 'Gravitational Tractor', description: 'Use planetary gravity fields to increase maximum Force.', cost: () => ({ resource: Resource.Rock, amount: 50 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 15 }] },
+        { id: 'pa_oligarchs', name: 'Oligarchic Growth', description: 'Dominate orbital zones to improve Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 75 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
+        { id: 'pa_giant_impacts', name: 'Giant Impact Planning', description: 'Plan giant impacts to increase Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 100 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] }
       ]
     }
   },
@@ -196,7 +197,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'planetary_differentiation',
     name: 'Planetary Differentiation',
     description: 'The planet heats up, causing denser materials to sink to the core.',
-    cost: [{ resource: Resource.Iron, amount: 1000 }],
+    cost: [{ resource: Resource.Iron, amount: 100 }],
     position: { x: 55, y: 22 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
     icon: 'planetary_differentiation',
@@ -248,10 +249,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'pd_core_formation', name: 'Core Formation', description: 'A stable iron core improves passive Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
-            { id: 'pd_mantle', name: 'Mantle Convection', description: 'A convecting mantle drives geology, improving passive Rock generation.', cost: () => ({ resource: Resource.Iron, amount: 2500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
-            { id: 'pd_crust', name: 'Crust Solidification', description: 'A solid crust increases your capacity for storing Rock and Iron.', cost: () => ({ resource: Resource.Iron, amount: 3000 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Rock, value: 1000 }, { type: 'INCREASE_CAPACITY', resource: Resource.Iron, value: 500 }] },
-            { id: 'pd_force', name: 'Density Control', description: 'Mastering density separation grants you more max Force.', cost: () => ({ resource: Resource.Iron, amount: 3500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
+            { id: 'pd_core_formation', name: 'Core Formation', description: 'A stable iron core improves passive Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
+            { id: 'pd_mantle', name: 'Mantle Convection', description: 'A convecting mantle drives geology, improving passive Rock generation.', cost: () => ({ resource: Resource.Iron, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
+            { id: 'pd_crust', name: 'Crust Solidification', description: 'A solid crust increases your capacity for storing Rock and Iron.', cost: () => ({ resource: Resource.Iron, amount: 300 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Rock, value: 1000 }, { type: 'INCREASE_CAPACITY', resource: Resource.Iron, value: 500 }] },
+            { id: 'pd_force', name: 'Density Control', description: 'Mastering density separation grants you more max Force.', cost: () => ({ resource: Resource.Iron, amount: 350 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
         ]
     }
   },
@@ -259,7 +260,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'moon_formation',
     name: 'Moon Formation',
     description: 'A large impactor strikes the planet, creating a debris ring that coalesces into a moon.',
-    cost: [{ resource: Resource.Rock, amount: 2000 }],
+    cost: [{ resource: Resource.Rock, amount: 200 }],
     position: { x: 58, y: 28 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }],
     icon: 'moon_formation',
@@ -311,10 +312,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'mf_tidal_forces', name: 'Tidal Forces', description: 'The moon\'s gravity stirs the planet, passively generating a small amount of all planetary resources.', cost: () => ({ resource: Resource.Rock, amount: 3000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] },
-            { id: 'mf_composition', name: 'Analyze Lunar Rocks', description: 'Understanding the moon\'s composition improves Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
-            { id: 'mf_recession', name: 'Tidal Recession', description: "Harness the energy of the Moon's recession to generate more Water.", cost: () => ({ resource: Resource.Rock, amount: 5000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
-            { id: 'mf_force', name: 'Gravitational Anchor', description: 'The Moon acts as a gravitational anchor, increasing your max Force.', cost: () => ({ resource: Resource.Rock, amount: 6000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
+            { id: 'mf_tidal_forces', name: 'Tidal Forces', description: 'The moon\'s gravity stirs the planet, passively generating a small amount of all planetary resources.', cost: () => ({ resource: Resource.Rock, amount: 300 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] },
+            { id: 'mf_composition', name: 'Analyze Lunar Rocks', description: 'Understanding the moon\'s composition improves Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
+            { id: 'mf_recession', name: 'Tidal Recession', description: "Harness the energy of the Moon's recession to generate more Water.", cost: () => ({ resource: Resource.Rock, amount: 500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
+            { id: 'mf_force', name: 'Gravitational Anchor', description: 'The Moon acts as a gravitational anchor, increasing your max Force.', cost: () => ({ resource: Resource.Rock, amount: 600 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
         ]
     }
   },
@@ -322,7 +323,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'cometary_delivery',
     name: 'Cometary Delivery',
     description: 'Harness comets and asteroids to deliver water and organic molecules to the young planet.',
-    cost: [{ resource: Resource.Water, amount: 50 }, { resource: Resource.Rock, amount: 250 }],
+    cost: [{ resource: Resource.Water, amount: 20 }, { resource: Resource.Rock, amount: 50 }],
     position: { x: 65, y: 25 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['asteroid_mining'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 10 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'cometary_impact',
@@ -374,10 +375,10 @@ export const planetaryUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'cd_water_1', name: 'Ice Harvesting', description: 'Improve passive generation of Water.', cost: () => ({ resource: Resource.Water, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 3 }] },
-        { id: 'cd_organics_1', name: 'Organic Seeding', description: 'Cometary impacts now also passively generate small amounts of Carbon.', cost: () => ({ resource: Resource.Water, amount: 500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }] },
-        { id: 'cd_isotopic_ratio', name: 'Isotopic Analysis', description: 'Analyzing water isotopes improves the efficiency of Water collection.', cost: () => ({ resource: Resource.Water, amount: 750 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Water, value: 0.1 }] },
-        { id: 'cd_tail_dynamics', name: 'Comet Trajectory Control', description: "Mastering comet trajectories grants more max Force.", cost: () => ({ resource: Resource.Water, amount: 1000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
+        { id: 'cd_water_1', name: 'Ice Harvesting', description: 'Improve passive generation of Water.', cost: () => ({ resource: Resource.Water, amount: 25 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 3 }] },
+        { id: 'cd_organics_1', name: 'Organic Seeding', description: 'Cometary impacts now also passively generate small amounts of Carbon.', cost: () => ({ resource: Resource.Water, amount: 50 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }] },
+        { id: 'cd_isotopic_ratio', name: 'Isotopic Analysis', description: 'Analyzing water isotopes improves the efficiency of Water collection.', cost: () => ({ resource: Resource.Water, amount: 75 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Water, value: 0.1 }] },
+        { id: 'cd_tail_dynamics', name: 'Comet Trajectory Control', description: "Mastering comet trajectories grants more max Force.", cost: () => ({ resource: Resource.Water, amount: 100 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
       ]
     }
   },
@@ -385,7 +386,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'first_oceans',
     name: 'First Oceans',
     description: 'Water vapor condenses, forming vast oceans that cover the planet.',
-    cost: [{ resource: Resource.Water, amount: 5000 }],
+    cost: [{ resource: Resource.Water, amount: 500 }],
     position: { x: 88, y: 25 },
     effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Water, value: 10000 }],
     icon: 'first_oceans',
@@ -437,10 +438,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'fo_hydrological_cycle', name: 'Hydrological Cycle', description: 'A stable water cycle improves passive Water generation.', cost: () => ({ resource: Resource.Water, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }] },
-            { id: 'fo_iron', name: 'Dissolved Iron', description: 'The iron-rich oceans provide a small passive generation of Iron.', cost: () => ({ resource: Resource.Water, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] },
-            { id: 'fo_capacity', name: 'Oceanic Basin', description: 'Deepen the oceanic basins to vastly increase Water capacity.', cost: () => ({ resource: Resource.Water, amount: 12000 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Water, value: 20000 }] },
-            { id: 'fo_salinity', name: 'Salinity Control', description: 'Controlling the salinity of the oceans boosts Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 15000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.5 }] }
+            { id: 'fo_hydrological_cycle', name: 'Hydrological Cycle', description: 'A stable water cycle improves passive Water generation.', cost: () => ({ resource: Resource.Water, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }] },
+            { id: 'fo_iron', name: 'Dissolved Iron', description: 'The iron-rich oceans provide a small passive generation of Iron.', cost: () => ({ resource: Resource.Water, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] },
+            { id: 'fo_capacity', name: 'Oceanic Basin', description: 'Deepen the oceanic basins to vastly increase Water capacity.', cost: () => ({ resource: Resource.Water, amount: 1200 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Water, value: 20000 }] },
+            { id: 'fo_salinity', name: 'Salinity Control', description: 'Controlling the salinity of the oceans boosts Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 1500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.5 }] }
         ]
     }
   },
@@ -448,7 +449,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'volcanic_activity',
     name: 'Volcanic Activity',
     description: 'Planetary volcanoes release trapped gases and chemicals, shaping the early atmosphere and oceans.',
-    cost: [{ resource: Resource.Rock, amount: 800 }, { resource: Resource.Iron, amount: 200 }],
+    cost: [{ resource: Resource.Rock, amount: 80 }, { resource: Resource.Iron, amount: 20 }],
     position: { x: 48, y: 32 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'volcano',
@@ -500,10 +501,10 @@ export const planetaryUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'va_outgassing', name: 'Intensify Outgassing', description: 'Increase passive Carbon generation from volcanoes.', cost: () => ({ resource: Resource.Iron, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 3 }] },
-        { id: 'va_hot_springs', name: 'Cultivate Hot Springs', description: 'Utilize geothermal energy to passively create Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 800 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.5 }] },
-        { id: 'va_geothermal', name: 'Geothermal Power', description: 'Harness geothermal energy to boost the generation of all planetary resources.', cost: () => ({ resource: Resource.Iron, amount: 600 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.05 }, { type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Water, value: 0.05 }] },
-        { id: 'va_pressure', name: 'Magma Pressure Control', description: "Controlling magma pressure gives you greater command over geology, increasing max Force.", cost: () => ({ resource: Resource.Rock, amount: 1200 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
+        { id: 'va_outgassing', name: 'Intensify Outgassing', description: 'Increase passive Carbon generation from volcanoes.', cost: () => ({ resource: Resource.Iron, amount: 40 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 3 }] },
+        { id: 'va_hot_springs', name: 'Cultivate Hot Springs', description: 'Utilize geothermal energy to passively create Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 80 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.5 }] },
+        { id: 'va_geothermal', name: 'Geothermal Power', description: 'Harness geothermal energy to boost the generation of all planetary resources.', cost: () => ({ resource: Resource.Iron, amount: 60 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.05 }, { type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Water, value: 0.05 }] },
+        { id: 'va_pressure', name: 'Magma Pressure Control', description: "Controlling magma pressure gives you greater command over geology, increasing max Force.", cost: () => ({ resource: Resource.Rock, amount: 120 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
       ]
     }
   },
@@ -511,7 +512,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'plate_tectonics',
     name: 'Plate Tectonics',
     description: 'The planets crust breaks into moving plates, recycling materials and driving geological activity.',
-    cost: [{ resource: Resource.Rock, amount: 5000 }],
+    cost: [{ resource: Resource.Rock, amount: 500 }],
     position: { x: 60, y: 32 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }],
     icon: 'plate_tectonics',
@@ -555,10 +556,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'pt_subduction', name: 'Subduction Zones', description: 'Efficiently recycling crust boosts passive generation of Carbon and Rock.', cost: () => ({ resource: Resource.Rock, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
-            { id: 'pt_supercontinent', name: 'Supercontinent Cycle', description: 'Understanding the supercontinent cycle improves Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 10000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
-            { id: 'pt_efficiency', name: 'Mantle Plume Control', description: 'Controlling mantle plumes improves Carbon generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 12000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Carbon, value: 0.1 }] },
-            { id: 'pt_force', name: 'Continental Drift', description: 'Harness the immense force of moving continents to increase your max Force.', cost: () => ({ resource: Resource.Rock, amount: 15000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 15 }] }
+            { id: 'pt_subduction', name: 'Subduction Zones', description: 'Efficiently recycling crust boosts passive generation of Carbon and Rock.', cost: () => ({ resource: Resource.Rock, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
+            { id: 'pt_supercontinent', name: 'Supercontinent Cycle', description: 'Understanding the supercontinent cycle improves Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 1000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
+            { id: 'pt_efficiency', name: 'Mantle Plume Control', description: 'Controlling mantle plumes improves Carbon generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 1200 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Carbon, value: 0.1 }] },
+            { id: 'pt_force', name: 'Continental Drift', description: 'Harness the immense force of moving continents to increase your max Force.', cost: () => ({ resource: Resource.Rock, amount: 1500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 15 }] }
         ]
     }
   },
@@ -567,7 +568,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'late_heavy_bombardment',
     name: 'Late Heavy Bombardment',
     description: 'A period of intense comet and asteroid impacts that reshapes the planet\'s surface.',
-    cost: [{ resource: Resource.Rock, amount: 2500 }],
+    cost: [{ resource: Resource.Rock, amount: 250 }],
     position: { x: 78, y: 30 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }],
     icon: 'late_heavy_bombardment',
@@ -611,10 +612,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'lhb_surface_cracking', name: 'Surface Cracking', description: 'The impacts expose new minerals, improving passive Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 3000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }] },
-            { id: 'lhb_water', name: 'Volatile Delivery', description: 'The bombardment delivers a massive payload of water.', cost: () => ({ resource: Resource.Rock, amount: 3500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }] },
-            { id: 'lhb_iron', name: 'Core Delivery', description: 'Some impactors are rich in iron, boosting passive Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
-            { id: 'lhb_force', name: 'Impact Control', description: 'Controlling the trajectories of impactors grants you more max Force.', cost: () => ({ resource: Resource.Rock, amount: 4500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
+            { id: 'lhb_surface_cracking', name: 'Surface Cracking', description: 'The impacts expose new minerals, improving passive Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 300 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 5 }] },
+            { id: 'lhb_water', name: 'Volatile Delivery', description: 'The bombardment delivers a massive payload of water.', cost: () => ({ resource: Resource.Rock, amount: 350 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 5 }] },
+            { id: 'lhb_iron', name: 'Core Delivery', description: 'Some impactors are rich in iron, boosting passive Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
+            { id: 'lhb_force', name: 'Impact Control', description: 'Controlling the trajectories of impactors grants you more max Force.', cost: () => ({ resource: Resource.Rock, amount: 450 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] }
         ]
     }
   },
@@ -622,7 +623,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'magnetosphere',
     name: 'Magnetosphere',
     description: 'Generate a planetary magnetic field to shield against stellar wind and cosmic radiation.',
-    cost: [{ resource: Resource.Iron, amount: 2500 }],
+    cost: [{ resource: Resource.Iron, amount: 250 }],
     position: { x: 55, y: 18 },
     effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }],
     icon: 'magnetosphere',
@@ -674,10 +675,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'mag_deflection', name: 'Strengthen Deflectors', description: 'A stronger field allows for better control, granting more max Force.', cost: () => ({ resource: Resource.Iron, amount: 3000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] },
-            { id: 'mag_atmosphere', name: 'Atmospheric Retention', description: "A stable atmosphere allows for better water retention, boosting passive Water generation.", cost: () => ({ resource: Resource.Iron, amount: 3500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
-            { id: 'mag_flip', name: 'Polarity Control', description: "Learning to control magnetic flips grants more max Force.", cost: () => ({ resource: Resource.Iron, amount: 4000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] },
-            { id: 'mag_efficiency', name: 'Dynamo Efficiency', description: 'Improve the efficiency of the core dynamo, improving Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 4500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] }
+            { id: 'mag_deflection', name: 'Strengthen Deflectors', description: 'A stronger field allows for better control, granting more max Force.', cost: () => ({ resource: Resource.Iron, amount: 300 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] },
+            { id: 'mag_atmosphere', name: 'Atmospheric Retention', description: "A stable atmosphere allows for better water retention, boosting passive Water generation.", cost: () => ({ resource: Resource.Iron, amount: 350 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 2 }] },
+            { id: 'mag_flip', name: 'Polarity Control', description: "Learning to control magnetic flips grants more max Force.", cost: () => ({ resource: Resource.Iron, amount: 400 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] },
+            { id: 'mag_efficiency', name: 'Dynamo Efficiency', description: 'Improve the efficiency of the core dynamo, improving Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 450 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] }
         ]
     }
   },
@@ -685,7 +686,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'tide_pools',
     name: 'Tidal Pools',
     description: 'The moon\'s gravity creates coastal pools with wet-dry cycles, ideal for concentrating chemicals.',
-    cost: [{ resource: Resource.Water, amount: 3000 }],
+    cost: [{ resource: Resource.Water, amount: 300 }],
     position: { x: 62, y: 35 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.2 }],
     icon: 'tide_pools',
@@ -729,10 +730,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'tp_concentration', name: 'Chemical Concentration', description: 'Enhance wet-dry cycles to passively generate more Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.3 }] },
-            { id: 'tp_catalysis', name: 'Clay Catalysis', description: 'Seed pools with catalytic clays to generate Amino Acids.', cost: () => ({ resource: Resource.Water, amount: 5000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.2 }] },
-            { id: 'tp_uv', name: 'UV Protection', description: 'Optimize pool depth for UV protection, boosting Nucleotide formation.', cost: () => ({ resource: Resource.Water, amount: 6000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.1 }] },
-            { id: 'tp_interlink', name: 'Interlinked Pools', description: 'Create a network of tidal pools, increasing Primordial Soup capacity.', cost: () => ({ resource: Resource.Water, amount: 7000 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.PrimordialSoup, value: 1000 }] }
+            { id: 'tp_concentration', name: 'Chemical Concentration', description: 'Enhance wet-dry cycles to passively generate more Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 0.3 }] },
+            { id: 'tp_catalysis', name: 'Clay Catalysis', description: 'Seed pools with catalytic clays to generate Amino Acids.', cost: () => ({ resource: Resource.Water, amount: 500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.2 }] },
+            { id: 'tp_uv', name: 'UV Protection', description: 'Optimize pool depth for UV protection, boosting Nucleotide formation.', cost: () => ({ resource: Resource.Water, amount: 600 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.1 }] },
+            { id: 'tp_interlink', name: 'Interlinked Pools', description: 'Create a network of tidal pools, increasing Primordial Soup capacity.', cost: () => ({ resource: Resource.Water, amount: 700 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.PrimordialSoup, value: 1000 }] }
         ]
     }
   },
@@ -740,7 +741,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'banded_iron_formations',
     name: 'Banded Iron Formations',
     description: 'The first oxygen produced by life rusts the iron in the oceans, creating vast mineral deposits.',
-    cost: [{ resource: Resource.Iron, amount: 5000 }],
+    cost: [{ resource: Resource.Iron, amount: 500 }],
     position: { x: 92, y: 22 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
     icon: 'banded_iron_formations',
@@ -784,10 +785,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'bif_mining', name: 'Iron Sequestration', description: 'Harvesting these iron deposits provides a passive Iron income.', cost: () => ({ resource: Resource.Iron, amount: 6000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
-            { id: 'bif_efficiency', name: 'Oxygen Cycle', description: 'Understanding the oxygen cycle improves Iron generation efficiency.', cost: () => ({ resource: Resource.Iron, amount: 7000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Iron, value: 0.1 }] },
-            { id: 'bif_storage', name: 'Vast Deposits', description: 'Exploiting these vast deposits increases your Iron capacity.', cost: () => ({ resource: Resource.Iron, amount: 8000 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Iron, value: 2000 }] },
-            { id: 'bif_force', name: 'Industrial Foundation', description: 'The foundation of industry grants you more max Force.', cost: () => ({ resource: Resource.Iron, amount: 9000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
+            { id: 'bif_mining', name: 'Iron Sequestration', description: 'Harvesting these iron deposits provides a passive Iron income.', cost: () => ({ resource: Resource.Iron, amount: 600 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 2 }] },
+            { id: 'bif_efficiency', name: 'Oxygen Cycle', description: 'Understanding the oxygen cycle improves Iron generation efficiency.', cost: () => ({ resource: Resource.Iron, amount: 700 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Iron, value: 0.1 }] },
+            { id: 'bif_storage', name: 'Vast Deposits', description: 'Exploiting these vast deposits increases your Iron capacity.', cost: () => ({ resource: Resource.Iron, amount: 800 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Iron, value: 2000 }] },
+            { id: 'bif_force', name: 'Industrial Foundation', description: 'The foundation of industry grants you more max Force.', cost: () => ({ resource: Resource.Iron, amount: 900 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
         ]
     }
   },
@@ -795,7 +796,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'continental_crust',
     name: 'Continental Crust',
     description: 'Form lighter, buoyant continental crust that rises above the oceans.',
-    cost: [{ resource: Resource.Rock, amount: 8000 }],
+    cost: [{ resource: Resource.Rock, amount: 800 }],
     position: { x: 65, y: 30 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }],
     icon: 'continental_crust',
@@ -839,10 +840,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'cc_weathering', name: 'Crust Weathering', description: 'The erosion of continents provides a passive stream of Rock.', cost: () => ({ resource: Resource.Rock, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
-            { id: 'cc_granite', name: 'Granite Formation', description: 'Forming granite boosts Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 12000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
-            { id: 'cc_carbon_cycle', name: 'Carbon Cycle Regulation', description: 'Regulating the carbon cycle improves passive Carbon generation.', cost: () => ({ resource: Resource.Rock, amount: 14000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
-            { id: 'cc_storage', name: 'Thicken Crust', description: 'Thickening the crust increases your Rock storage capacity.', cost: () => ({ resource: Resource.Rock, amount: 16000 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Rock, value: 5000 }] }
+            { id: 'cc_weathering', name: 'Crust Weathering', description: 'The erosion of continents provides a passive stream of Rock.', cost: () => ({ resource: Resource.Rock, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 3 }] },
+            { id: 'cc_granite', name: 'Granite Formation', description: 'Forming granite boosts Rock generation efficiency.', cost: () => ({ resource: Resource.Rock, amount: 1200 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Rock, value: 0.1 }] },
+            { id: 'cc_carbon_cycle', name: 'Carbon Cycle Regulation', description: 'Regulating the carbon cycle improves passive Carbon generation.', cost: () => ({ resource: Resource.Rock, amount: 1400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
+            { id: 'cc_storage', name: 'Thicken Crust', description: 'Thickening the crust increases your Rock storage capacity.', cost: () => ({ resource: Resource.Rock, amount: 1600 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Rock, value: 5000 }] }
         ]
     }
   },
@@ -850,7 +851,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'snowball_earth',
     name: 'Snowball Earth',
     description: 'A period of intense global glaciation, challenging early life to survive.',
-    cost: [{ resource: Resource.Water, amount: 10000 }],
+    cost: [{ resource: Resource.Water, amount: 1000 }],
     position: { x: 90, y: 35 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Carbon, value: 0.05 }],
     icon: 'snowball_earth',
@@ -894,10 +895,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'se_recovery', name: 'Volcanic Recovery', description: 'Understanding the recovery from this period boosts Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 5000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
-            { id: 'se_resilience', name: 'Life\'s Resilience', description: "The resilience of life during this harsh time improves the efficiency of all biological resources.", cost: () => ({ resource: Resource.Water, amount: 15000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.PrimordialSoup, value: 0.1 }] },
-            { id: 'se_nutrients', name: 'Nutrient Runoff', description: 'Harness the post-glacial nutrient runoff to boost Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 20000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
-            { id: 'se_albedo', name: 'Albedo Control', description: "Mastering the planet's reflectivity grants more max Force.", cost: () => ({ resource: Resource.Water, amount: 25000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
+            { id: 'se_recovery', name: 'Volcanic Recovery', description: 'Understanding the recovery from this period boosts Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
+            { id: 'se_resilience', name: 'Life\'s Resilience', description: "The resilience of life during this harsh time improves the efficiency of all biological resources.", cost: () => ({ resource: Resource.Water, amount: 1500 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.PrimordialSoup, value: 0.1 }] },
+            { id: 'se_nutrients', name: 'Nutrient Runoff', description: 'Harness the post-glacial nutrient runoff to boost Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
+            { id: 'se_albedo', name: 'Albedo Control', description: "Mastering the planet's reflectivity grants more max Force.", cost: () => ({ resource: Resource.Water, amount: 2500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] }
         ]
     }
   },
@@ -905,7 +906,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'hadean_eon',
     name: 'Hadean Eon',
     description: 'Survive the chaotic first eon of the planet\'s history, characterized by intense heat and impacts.',
-    cost: [{ resource: Resource.Rock, amount: 1000 }],
+    cost: [{ resource: Resource.Rock, amount: 100 }],
     position: { x: 48, y: 28 },
     effects: [{ type: 'INCREASE_MAX_FORCE', value: 2 }],
     icon: 'hadean_eon',
@@ -949,10 +950,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'he_resilience', name: 'Chaotic Resilience', description: 'Mastering chaos grants more max Force.', cost: () => ({ resource: Resource.Rock, amount: 1500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 3 }] },
-            { id: 'he_magma_ocean', name: 'Magma Ocean Control', description: 'Controlling the magma ocean improves Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] },
-            { id: 'he_zircon', name: 'Analyze Zircon Crystals', description: 'Analyzing ancient zircons improves Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 2500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }] },
-            { id: 'he_steam_atmosphere', name: 'Steam Atmosphere', description: 'Harness the early steam atmosphere to generate Water.', cost: () => ({ resource: Resource.Rock, amount: 3000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] }
+            { id: 'he_resilience', name: 'Chaotic Resilience', description: 'Mastering chaos grants more max Force.', cost: () => ({ resource: Resource.Rock, amount: 150 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 3 }] },
+            { id: 'he_magma_ocean', name: 'Magma Ocean Control', description: 'Controlling the magma ocean improves Iron generation.', cost: () => ({ resource: Resource.Rock, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }] },
+            { id: 'he_zircon', name: 'Analyze Zircon Crystals', description: 'Analyzing ancient zircons improves Rock generation.', cost: () => ({ resource: Resource.Rock, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Rock, value: 2 }] },
+            { id: 'he_steam_atmosphere', name: 'Steam Atmosphere', description: 'Harness the early steam atmosphere to generate Water.', cost: () => ({ resource: Resource.Rock, amount: 300 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Water, value: 1 }] }
         ]
     }
   },
@@ -960,7 +961,7 @@ export const planetaryUpgrades: Upgrade[] = [
     id: 'archean_eon',
     name: 'Archean Eon',
     description: 'A new eon dawns as the crust cools and the first life, prokaryotes, appears.',
-    cost: [{ resource: Resource.Water, amount: 8000 }],
+    cost: [{ resource: Resource.Water, amount: 800 }],
     position: { x: 92, y: 28 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }],
     icon: 'archean_eon',
@@ -996,10 +997,10 @@ export const planetaryUpgrades: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'ae_prokaryotes', name: 'Prokaryotic Mats', description: 'The first microbial mats begin to enrich the oceans, generating Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
-            { id: 'ae_stromatolites', name: 'Cultivate Stromatolites', description: 'Cultivating stromatolites passively generates Amino Acids.', cost: () => ({ resource: Resource.Water, amount: 12000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.5 }] },
-            { id: 'ae_efficiency', name: 'Anaerobic Efficiency', description: 'Mastering the anaerobic environment improves Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 14000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.PrimordialSoup, value: 0.1 }] },
-            { id: 'ae_hands', name: 'First stirrings', description: 'The first life grants you more max Hands.', cost: () => ({ resource: Resource.Water, amount: 16000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] }
+            { id: 'ae_prokaryotes', name: 'Prokaryotic Mats', description: 'The first microbial mats begin to enrich the oceans, generating Primordial Soup.', cost: () => ({ resource: Resource.Water, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
+            { id: 'ae_stromatolites', name: 'Cultivate Stromatolites', description: 'Cultivating stromatolites passively generates Amino Acids.', cost: () => ({ resource: Resource.Water, amount: 1200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.5 }] },
+            { id: 'ae_efficiency', name: 'Anaerobic Efficiency', description: 'Mastering the anaerobic environment improves Primordial Soup generation.', cost: () => ({ resource: Resource.Water, amount: 1400 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.PrimordialSoup, value: 0.1 }] },
+            { id: 'ae_hands', name: 'First stirrings', description: 'The first life grants you more max Hands.', cost: () => ({ resource: Resource.Water, amount: 1600 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] }
         ]
     }
   },

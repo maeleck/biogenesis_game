@@ -75,5 +75,54 @@ export const ENEMIES: Enemy[] = [
             loot: { [ProteinLootType.GeneticMaterial]: [50, 75] },
             geneCardDropChance: 0.10, // Higher chance for a rarer enemy
         }
+    },
+    // NEW ENEMIES
+    {
+        id: 'amoeba_proteus',
+        name: 'Amoeba proteus',
+        icon: 'amoeba_proteus',
+        description: 'A large single-celled organism known for its constantly changing shape. It engulfs its prey using pseudopods.',
+        stats: { hp: 150, attack: 25, speed: 18 },
+        rewards: {
+            xp: 60,
+            loot: { [ProteinLootType.StructuralFragments]: [30, 50], [ProteinLootType.CatalyticEnzymes]: [25, 40] },
+            geneCardDropChance: 0.03,
+        }
+    },
+    {
+        id: 'c_elegans',
+        name: 'C. elegans',
+        icon: 'c_elegans',
+        description: 'A transparent nematode (roundworm), about 1 mm in length, which lives in temperate soil environments. A model organism in biology.',
+        stats: { hp: 200, attack: 35, speed: 30 },
+        rewards: {
+            xp: 90,
+            loot: { [ProteinLootType.StructuralFragments]: [50, 70], [ProteinLootType.GeneticMaterial]: [30, 40] },
+            geneCardDropChance: 0.05,
+        }
+    },
+    {
+        id: 'tardigrade',
+        name: 'Tardigrade',
+        icon: 'tardigrade',
+        description: 'A water-dwelling, eight-legged micro-animal, also known as a water bear. Famed for its incredible resilience and ability to survive extreme conditions.',
+        stats: { hp: 300, attack: 20, speed: 5 },
+        rewards: {
+            xp: 120,
+            loot: { [ProteinLootType.StructuralFragments]: [100, 150] },
+            geneCardDropChance: 0.02,
+        }
+    },
+    {
+        id: 'd_radiodurans',
+        name: 'D. radiodurans',
+        icon: 'd_radiodurans',
+        description: 'An extremophilic bacterium, one of the most radiation-resistant organisms known. It can repair its own DNA from hundreds of double-strand breaks.',
+        stats: { hp: 250, attack: 45, speed: 25 },
+        rewards: {
+            xp: 150,
+            loot: { [ProteinLootType.GeneticMaterial]: [100, 120], [ProteinLootType.CatalyticEnzymes]: [50, 70] },
+            geneCardDropChance: 0.12,
+        }
     }
 ];

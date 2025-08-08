@@ -5,7 +5,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'abiogenesis',
     name: 'Abiogenesis',
     description: 'The first spark of life emerges from non-living matter in a primordial soup.',
-    cost: [{ resource: Resource.Water, amount: 100 }, { resource: Resource.Carbon, amount: 100 }],
+    cost: [{ resource: Resource.Water, amount: 20 }, { resource: Resource.Carbon, amount: 20 }],
     position: { x: 40, y: 48 },
     effects: [{ type: 'UNLOCK_FEATURE', value: 'synthesis' }, { type: 'UNLOCK_KNOBS', value: ['soup_creation'] }, { type: 'INCREASE_MAX_HANDS', value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 2 }],
     icon: 'abiogenesis',
@@ -59,11 +59,11 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'ab_soup_1', name: 'Rich Chemical Broth', description: 'Improve the passive generation of Primordial Soup.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 50 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
-        { id: 'ab_vents_1', name: 'Harness Vents', description: 'Utilize deep sea vents to passively generate Amino Acids.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.5 }] },
-        { id: 'ab_hands_1', name: 'Early Manipulation', description: 'The first stirrings of purpose grant additional max Hands.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
-        { id: 'ab_catalysis', name: 'Mineral Catalysis', description: 'Use mineral surfaces to catalyze reactions, improving Amino Acid generation.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 350 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
-        { id: 'ab_polymerization', name: 'Surface Polymerization', description: 'Use clay surfaces to drive the polymerization of nucleotides into the first RNA strands.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.2 }] }
+        { id: 'ab_soup_1', name: 'Rich Chemical Broth', description: 'Improve the passive generation of Primordial Soup.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.PrimordialSoup, value: 1 }] },
+        { id: 'ab_vents_1', name: 'Harness Vents', description: 'Utilize deep sea vents to passively generate Amino Acids.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 0.5 }] },
+        { id: 'ab_hands_1', name: 'Early Manipulation', description: 'The first stirrings of purpose grant additional max Hands.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 50 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
+        { id: 'ab_catalysis', name: 'Mineral Catalysis', description: 'Use mineral surfaces to catalyze reactions, improving Amino Acid generation.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 35 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
+        { id: 'ab_polymerization', name: 'Surface Polymerization', description: 'Use clay surfaces to drive the polymerization of nucleotides into the first RNA strands.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 75 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.2 }] }
       ]
     }
   },
@@ -71,7 +71,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'aquaporins',
     name: 'Aquaporins',
     description: 'Develop protein channels to facilitate the rapid transport of water across cell membranes.',
-    cost: [{ resource: Resource.AminoAcids, amount: 200 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 20 }],
     position: { x: 10, y: 38 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 3 }],
     icon: 'aquaporins',
@@ -97,8 +97,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'aq_efficiency', name: 'Water Transport', description: 'Faster water transport improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
-        { id: 'aq_gating', name: 'Selective Gating', description: 'Prevent unwanted molecules from passing through the channel, improving resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 250 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
+        { id: 'aq_efficiency', name: 'Water Transport', description: 'Faster water transport improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 20 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'aq_gating', name: 'Selective Gating', description: 'Prevent unwanted molecules from passing through the channel, improving resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 25 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
       ]
     }
   },
@@ -106,7 +106,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'histone_gene_regulation',
     name: 'Histone Gene Regulation',
     description: 'Evolve histone proteins to package DNA into chromatin, regulating gene expression.',
-    cost: [{ resource: Resource.AminoAcids, amount: 300 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 30 }],
     position: { x: 15, y: 43 },
     effects: [{ type: 'INCREASE_MAX_HANDS', value: 2 }],
     icon: 'histone_gene_regulation',
@@ -132,8 +132,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'hgr_control', name: 'Chromatin Control', description: 'Better gene regulation grants more Max Hands.', cost: () => ({ resource: Resource.Nucleotides, amount: 200 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 3 }] },
-        { id: 'hgr_stability', name: 'DNA Stability', description: 'Properly packaged DNA is less prone to damage, improving resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 300 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] },
+        { id: 'hgr_control', name: 'Chromatin Control', description: 'Better gene regulation grants more Max Hands.', cost: () => ({ resource: Resource.Nucleotides, amount: 20 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 3 }] },
+        { id: 'hgr_stability', name: 'DNA Stability', description: 'Properly packaged DNA is less prone to damage, improving resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 30 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] },
       ]
     }
   },
@@ -141,7 +141,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'actin_cytoskeleton',
     name: 'Actin Cytoskeleton',
     description: 'Construct a dynamic network of actin filaments providing structural support and enabling cell motility.',
-    cost: [{ resource: Resource.AminoAcids, amount: 500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 50 }],
     position: { x: 12, y: 50 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }],
     icon: 'actin_cytoskeleton',
@@ -167,8 +167,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'ac_motility', name: 'Cellular Motility', description: 'A more dynamic cytoskeleton improves protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 250 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }] },
-        { id: 'ac_support', name: 'Structural Support', description: 'A stronger cytoskeleton improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 300 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+        { id: 'ac_motility', name: 'Cellular Motility', description: 'A more dynamic cytoskeleton improves protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 25 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }] },
+        { id: 'ac_support', name: 'Structural Support', description: 'A stronger cytoskeleton improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 30 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
       ]
     }
   },
@@ -176,7 +176,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'myosin_motors',
     name: 'Myosin Motors',
     description: 'Evolve motor proteins that move along actin filaments, generating force for muscle contraction and transport.',
-    cost: [{ resource: Resource.ATP, amount: 800 }],
+    cost: [{ resource: Resource.ATP, amount: 80 }],
     position: { x: 12, y: 58 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }],
     icon: 'myosin_motors',
@@ -202,8 +202,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'mm_contraction', name: 'Muscle Contraction', description: 'Developing muscle-like structures greatly improves protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 1000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 15 }] },
-        { id: 'mm_transport', name: 'Intracellular Transport', description: 'Efficient cargo transport within the cell improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 1200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'mm_contraction', name: 'Muscle Contraction', description: 'Developing muscle-like structures greatly improves protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 15 }] },
+        { id: 'mm_transport', name: 'Intracellular Transport', description: 'Efficient cargo transport within the cell improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 120 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
       ]
     }
   },
@@ -211,7 +211,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'opsin_proteins',
     name: 'Opsin Proteins',
     description: 'Develop the first light-sensitive proteins, the foundation for all forms of vision.',
-    cost: [{ resource: Resource.AminoAcids, amount: 1500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 150 }],
     position: { x: 25, y: 65 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 2 }],
     icon: 'opsin_proteins',
@@ -237,8 +237,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'op_light_sense', name: 'Light Sensitivity', description: 'Being able to sense light improves protocell hunt speed.', cost: () => ({ resource: Resource.ATP, amount: 800 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
-        { id: 'op_uv_defense', name: 'UV Detection', description: 'Detecting harmful UV light allows the cell to avoid damage, improving resilience.', cost: () => ({ resource: Resource.ATP, amount: 900 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+        { id: 'op_light_sense', name: 'Light Sensitivity', description: 'Being able to sense light improves protocell hunt speed.', cost: () => ({ resource: Resource.ATP, amount: 80 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
+        { id: 'op_uv_defense', name: 'UV Detection', description: 'Detecting harmful UV light allows the cell to avoid damage, improving resilience.', cost: () => ({ resource: Resource.ATP, amount: 90 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
       ]
     }
   },
@@ -246,7 +246,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'hemoglobin',
     name: 'Hemoglobin',
     description: 'Evolve a complex protein capable of binding and transporting oxygen through a circulatory system.',
-    cost: [{ resource: Resource.Iron, amount: 2000 }, { resource: Resource.AminoAcids, amount: 2000 }],
+    cost: [{ resource: Resource.Iron, amount: 200 }, { resource: Resource.AminoAcids, amount: 200 }],
     position: { x: 18, y: 70 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }],
     icon: 'hemoglobin',
@@ -272,8 +272,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'hb_transport', name: 'Oxygen Transport', description: 'Efficient oxygen delivery improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 1200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }] },
-        { id: 'hb_co2_transport', name: 'Carbon Dioxide Transport', description: 'Hemoglobin also helps transport CO2 waste, improving protocell efficiency further.', cost: () => ({ resource: Resource.ATP, amount: 1500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'hb_transport', name: 'Oxygen Transport', description: 'Efficient oxygen delivery improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 120 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }] },
+        { id: 'hb_co2_transport', name: 'Carbon Dioxide Transport', description: 'Hemoglobin also helps transport CO2 waste, improving protocell efficiency further.', cost: () => ({ resource: Resource.ATP, amount: 150 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
       ]
     }
   },
@@ -281,7 +281,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'collagen_synthesis',
     name: 'Collagen Synthesis',
     description: 'Synthesize the main structural protein of connective tissues, providing strength and elasticity.',
-    cost: [{ resource: Resource.AminoAcids, amount: 3000 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 300 }],
     position: { x: 25, y: 78 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
     icon: 'collagen_synthesis',
@@ -307,8 +307,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'cs_strength', name: 'Structural Strength', description: 'A strong collagen framework improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 4000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
-        { id: 'cs_elasticity', name: 'Tissue Elasticity', description: 'Elastic tissues allow for faster movement, improving protocell speed.', cost: () => ({ resource: Resource.AminoAcids, amount: 4500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
+        { id: 'cs_strength', name: 'Structural Strength', description: 'A strong collagen framework improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 400 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
+        { id: 'cs_elasticity', name: 'Tissue Elasticity', description: 'Elastic tissues allow for faster movement, improving protocell speed.', cost: () => ({ resource: Resource.AminoAcids, amount: 450 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
       ]
     }
   },
@@ -316,7 +316,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'vibration_sensing',
     name: 'Vibration Sensing',
     description: 'Develop mechanoreceptors to detect vibrations in water or on surfaces, a precursor to hearing.',
-    cost: [{ resource: Resource.ATP, amount: 1500 }],
+    cost: [{ resource: Resource.ATP, amount: 150 }],
     position: { x: 45, y: 88 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 3 }],
     icon: 'vibration_sensing',
@@ -342,8 +342,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'vs_detection', name: 'Predator Detection', description: 'Better detection of threats improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 2000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
-        { id: 'vs_communication', name: 'Communication', description: 'Using vibrations to communicate improves hunting efficiency.', cost: () => ({ resource: Resource.ATP, amount: 2500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'vs_detection', name: 'Predator Detection', description: 'Better detection of threats improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+        { id: 'vs_communication', name: 'Communication', description: 'Using vibrations to communicate improves hunting efficiency.', cost: () => ({ resource: Resource.ATP, amount: 250 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
       ]
     }
   },
@@ -351,7 +351,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'chemosensation',
     name: 'Chemosensation',
     description: 'Evolve receptors to detect specific chemicals, the basis for taste and smell.',
-    cost: [{ resource: Resource.AminoAcids, amount: 2000 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 200 }],
     position: { x: 55, y: 95 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 3 }],
     icon: 'chemosensation',
@@ -377,8 +377,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'cs_food_finding', name: 'Food Finding', description: 'Improved ability to find nutrients improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 2200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
-        { id: 'cs_toxin_avoidance', name: 'Toxin Avoidance', description: 'Better detection of harmful chemicals improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 2400 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+        { id: 'cs_food_finding', name: 'Food Finding', description: 'Improved ability to find nutrients improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 220 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'cs_toxin_avoidance', name: 'Toxin Avoidance', description: 'Better detection of harmful chemicals improves protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 240 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
       ]
     }
   },
@@ -386,7 +386,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'liposomes',
     name: 'Liposomes',
     description: 'Form spherical vesicles of a lipid bilayer, an essential step in creating a cell membrane.',
-    cost: [{ resource: Resource.AminoAcids, amount: 500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 50 }],
     position: { x: 70, y: 60 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 2 }],
     icon: 'liposomes',
@@ -412,8 +412,8 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'lipo_stability', name: 'Membrane Stability', description: 'More stable membranes improve protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 300 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] },
-        { id: 'lipo_permeability', name: 'Control Permeability', description: 'Better control over what crosses the membrane improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 350 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 3 }] },
+        { id: 'lipo_stability', name: 'Membrane Stability', description: 'More stable membranes improve protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 30 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] },
+        { id: 'lipo_permeability', name: 'Control Permeability', description: 'Better control over what crosses the membrane improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 35 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 3 }] },
       ]
     }
   },
@@ -467,18 +467,18 @@ export const biologicalUpgrades1: Upgrade[] = [
           text: "Substrate-level phosphorylation is a direct phosphorylation of ADP with a phosphate group by using the energy obtained from a coupled reaction. It is a much simpler process than oxidative phosphorylation and likely evolved first.", 
           unlockedBySubUpgradeId: 'ac_substrate_level',
           quiz: {
-            question: "What is substrate-level phosphorylation?",
+            question: "What is 'substrate-level phosphorylation'?",
             options: ["A way to destroy ATP", "A process that requires oxygen", "A direct method of producing ATP from a coupled reaction", "A type of photosynthesis"],
             answerIndex: 2
           }
         }
       ],
       subUpgrades: [
-        { id: 'ac_efficiency_1', name: 'ATP Synthase', description: 'Develop efficient ATP synthase enzymes.', cost: () => ({ resource: Resource.ATP, amount: 50 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 0.2 }] },
-        { id: 'ac_cycle_1', name: 'ADP Recycling', description: 'Passively generate a small amount of ATP from ambient energy.', cost: () => ({ resource: Resource.ATP, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 0.5 }] },
-        { id: 'ac_storage', name: 'Phosphate Bonds', description: 'Reinforce high-energy phosphate bonds, increasing ATP storage capacity.', cost: () => ({ resource: Resource.ATP, amount: 150 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.ATP, value: 500 }] },
-        { id: 'ac_hands', name: 'Energy Management', description: 'Better energy management allows for more complex tasks, increasing max Hands.', cost: () => ({ resource: Resource.ATP, amount: 500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
-        { id: 'ac_substrate_level', name: 'Substrate-Level Phosphorylation', description: 'Develop the first direct ATP synthesis pathway, a precursor to more complex metabolisms.', cost: () => ({ resource: Resource.AminoAcids, amount: 750 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.ATP, value: 0.05 }] }
+        { id: 'ac_efficiency_1', name: 'ATP Synthase', description: 'Develop efficient ATP synthase enzymes.', cost: () => ({ resource: Resource.ATP, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 0.2 }] },
+        { id: 'ac_cycle_1', name: 'ADP Recycling', description: 'Passively generate a small amount of ATP from ambient energy.', cost: () => ({ resource: Resource.ATP, amount: 25 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 0.5 }] },
+        { id: 'ac_storage', name: 'Phosphate Bonds', description: 'Reinforce high-energy phosphate bonds, increasing ATP storage capacity.', cost: () => ({ resource: Resource.ATP, amount: 15 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.ATP, value: 500 }] },
+        { id: 'ac_hands', name: 'Energy Management', description: 'Better energy management allows for more complex tasks, increasing max Hands.', cost: () => ({ resource: Resource.ATP, amount: 50 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
+        { id: 'ac_substrate_level', name: 'Substrate-Level Phosphorylation', description: 'Develop the first direct ATP synthesis pathway, a precursor to more complex metabolisms.', cost: () => ({ resource: Resource.AminoAcids, amount: 75 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.ATP, value: 0.05 }] }
       ]
     }
   },
@@ -486,7 +486,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'protein_folding',
     name: 'Protein Folding',
     description: 'Chains of amino acids must fold into precise 3D shapes to become functional proteins.',
-    cost: [{ resource: Resource.AminoAcids, amount: 100 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 10 }],
     position: { x: 30, y: 46 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }],
     icon: 'protein_folding',
@@ -521,9 +521,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'pf_structure', name: 'Secondary Structures', description: 'Improve folding accuracy, boosting all biological generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 150 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.05 }] },
-            { id: 'pf_hydrophobic', name: 'Hydrophobic Effect', description: 'Harness the hydrophobic effect to speed up folding, improving protocell speed.', cost: () => ({ resource: Resource.AminoAcids, amount: 200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
-            { id: 'pf_dogma', name: 'Anfinsen\'s Dogma', description: 'A deeper understanding of folding improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 250 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
+            { id: 'pf_structure', name: 'Secondary Structures', description: 'Improve folding accuracy, boosting all biological generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 15 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.05 }] },
+            { id: 'pf_hydrophobic', name: 'Hydrophobic Effect', description: 'Harness the hydrophobic effect to speed up folding, improving protocell speed.', cost: () => ({ resource: Resource.AminoAcids, amount: 20 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
+            { id: 'pf_dogma', name: 'Anfinsen\'s Dogma', description: 'A deeper understanding of folding improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 25 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
         ]
     }
   },
@@ -531,7 +531,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'ribosomes',
     name: 'Ribosome Assembly',
     description: 'Construct complex molecular machines responsible for translating RNA into proteins.',
-    cost: [{ resource: Resource.AminoAcids, amount: 500 }, { resource: Resource.Nucleotides, amount: 500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 50 }, { resource: Resource.Nucleotides, amount: 50 }],
     position: { x: 42, y: 55 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }],
     icon: 'ribosomes',
@@ -557,8 +557,8 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'rib_efficiency', name: 'Increase Efficiency', description: 'Improve ribosomal efficiency, granting more max Hands.', cost: () => ({ resource: Resource.ATP, amount: 500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
-            { id: 'rib_polysomes', name: 'Polysomes', description: 'Allow multiple ribosomes to translate the same mRNA simultaneously, boosting production speed.', cost: () => ({ resource: Resource.ATP, amount: 600 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] }
+            { id: 'rib_efficiency', name: 'Increase Efficiency', description: 'Improve ribosomal efficiency, granting more max Hands.', cost: () => ({ resource: Resource.ATP, amount: 50 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
+            { id: 'rib_polysomes', name: 'Polysomes', description: 'Allow multiple ribosomes to translate the same mRNA simultaneously, boosting production speed.', cost: () => ({ resource: Resource.ATP, amount: 60 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] }
         ]
     }
   },
@@ -566,7 +566,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'heat_shock_proteins',
     name: 'Heat Shock Proteins',
     description: 'Develop molecular "chaperones" that help other proteins fold correctly and prevent aggregation.',
-    cost: [{ resource: Resource.AminoAcids, amount: 350 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 35 }],
     position: { x: 22, y: 42 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }],
     icon: 'heat_shock_proteins',
@@ -601,9 +601,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'hsp_chaperone', name: 'Molecular Chaperones', description: 'Improve protein quality control, boosting protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 450 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
-            { id: 'hsp_ubiquity', name: 'Stress Response', description: 'A better stress response improves all biological generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 550 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
-            { id: 'hsp_thermotolerance', name: 'Thermotolerance', description: 'Increased resistance to heat damage further improves resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 650 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
+            { id: 'hsp_chaperone', name: 'Molecular Chaperones', description: 'Improve protein quality control, boosting protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 45 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
+            { id: 'hsp_ubiquity', name: 'Stress Response', description: 'A better stress response improves all biological generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 55 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
+            { id: 'hsp_thermotolerance', name: 'Thermotolerance', description: 'Increased resistance to heat damage further improves resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 65 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
         ]
     }
   },
@@ -611,7 +611,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'green_fluorescent_protein',
     name: 'Green Fluorescent Protein',
     description: 'Synthesize a protein that glows bright green under blue light, a revolutionary tool for observing biological processes.',
-    cost: [{ resource: Resource.AminoAcids, amount: 500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 50 }],
     position: { x: 35, y: 78 },
     effects: [{ type: 'INCREASE_MAX_HANDS', value: 2 }],
     icon: 'green_fluorescent_protein',
@@ -646,9 +646,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'gfp_tagging', name: 'Protein Tagging', description: 'Using GFP as a research tool grants more max Hands.', cost: () => ({ resource: Resource.AminoAcids, amount: 600 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
-            { id: 'gfp_chromophore', name: 'Optimize Chromophore', description: 'A brighter protein improves all biological generation efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 700 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
-            { id: 'gfp_fret', name: 'FRET Analysis', description: 'Use fluorescent resonance energy transfer to study protein-protein interactions, boosting efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 800 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] }
+            { id: 'gfp_tagging', name: 'Protein Tagging', description: 'Using GFP as a research tool grants more max Hands.', cost: () => ({ resource: Resource.AminoAcids, amount: 60 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
+            { id: 'gfp_chromophore', name: 'Optimize Chromophore', description: 'A brighter protein improves all biological generation efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 70 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
+            { id: 'gfp_fret', name: 'FRET Analysis', description: 'Use fluorescent resonance energy transfer to study protein-protein interactions, boosting efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 80 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] }
         ]
     }
   },
@@ -709,11 +709,11 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'rw_synthesis_1', name: 'Nucleotide Assembly', description: 'Improve passive generation of Nucleotides.', cost: () => ({ resource: Resource.Nucleotides, amount: 100 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.5 }] },
-        { id: 'rw_ribozymes_1', name: 'Catalytic RNA', description: 'Use Ribozymes to improve Amino Acid passive generation.', cost: () => ({ resource: Resource.Nucleotides, amount: 500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }] },
-        { id: 'rw_stability', name: 'Improve Stability', description: 'Develop more stable RNA structures, increasing Nucleotide capacity.', cost: () => ({ resource: Resource.Nucleotides, amount: 250 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Nucleotides, value: 500 }] },
-        { id: 'rw_replication', name: 'RNA Replication', description: 'Improve the fidelity of RNA replication, boosting Nucleotide generation efficiency.', cost: () => ({ resource: Resource.Nucleotides, amount: 400 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Nucleotides, value: 0.1 }] },
-        { id: 'rw_splicing', name: 'RNA Splicing', description: 'Develop primitive self-splicing introns, allowing a single RNA gene to code for multiple products.', cost: () => ({ resource: Resource.Nucleotides, amount: 600 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 2 }] }
+        { id: 'rw_synthesis_1', name: 'Nucleotide Assembly', description: 'Improve passive generation of Nucleotides.', cost: () => ({ resource: Resource.Nucleotides, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 0.5 }] },
+        { id: 'rw_ribozymes_1', name: 'Catalytic RNA', description: 'Use Ribozymes to improve Amino Acid passive generation.', cost: () => ({ resource: Resource.Nucleotides, amount: 50 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }] },
+        { id: 'rw_stability', name: 'Improve Stability', description: 'Develop more stable RNA structures, increasing Nucleotide capacity.', cost: () => ({ resource: Resource.Nucleotides, amount: 25 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Nucleotides, value: 500 }] },
+        { id: 'rw_replication', name: 'RNA Replication', description: 'Improve the fidelity of RNA replication, boosting Nucleotide generation efficiency.', cost: () => ({ resource: Resource.Nucleotides, amount: 40 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Nucleotides, value: 0.1 }] },
+        { id: 'rw_splicing', name: 'RNA Splicing', description: 'Develop primitive self-splicing introns, allowing a single RNA gene to code for multiple products.', cost: () => ({ resource: Resource.Nucleotides, amount: 60 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 2 }] }
       ]
     }
   },
@@ -771,11 +771,11 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'pc_membrane', name: 'Membrane Stability', description: 'Improve the stability of the lipid membrane, boosting base protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 2 }] },
-        { id: 'pc_transport', name: 'Nutrient Transport', description: 'Develop primitive channels for nutrient transport, boosting base protocell efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 2 }] },
-        { id: 'pc_motility', name: 'Primitive Motility', description: 'Develop basic motility, boosting base protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 2 }] },
-        { id: 'pc_internalization', name: 'Internal Environment', description: 'Improve the control of the internal environment, increasing all biological resource capacities.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 200 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 1 }] },
-        { id: 'pc_lipid_scavenging', name: 'Lipid Scavenging', description: 'Incorporate lipids directly from the environment to grow and repair the cell membrane.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] }
+        { id: 'pc_membrane', name: 'Membrane Stability', description: 'Improve the stability of the lipid membrane, boosting base protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 10 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 2 }] },
+        { id: 'pc_transport', name: 'Nutrient Transport', description: 'Develop primitive channels for nutrient transport, boosting base protocell efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 10 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 2 }] },
+        { id: 'pc_motility', name: 'Primitive Motility', description: 'Develop basic motility, boosting base protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 10 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 2 }] },
+        { id: 'pc_internalization', name: 'Internal Environment', description: 'Improve the control of the internal environment, increasing all biological resource capacities.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 20 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 1 }] },
+        { id: 'pc_lipid_scavenging', name: 'Lipid Scavenging', description: 'Incorporate lipids directly from the environment to grow and repair the cell membrane.', cost: () => ({ resource: Resource.PrimordialSoup, amount: 50 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 3 }] }
       ]
     }
   },
@@ -783,7 +783,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'glycolysis',
     name: 'Glycolysis',
     description: 'Develop the first metabolic pathway to break down glucose and produce ATP.',
-    cost: [{ resource: Resource.ATP, amount: 50 }],
+    cost: [{ resource: Resource.ATP, amount: 5 }],
     position: { x: 62, y: 52 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }],
     icon: 'glycolysis',
@@ -836,11 +836,11 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'gly_efficiency', name: 'Enzyme Optimization', description: 'Optimize the enzymes of the glycolytic pathway to improve protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
-        { id: 'gly_speed', name: 'Rapid Breakdown', description: 'Increase the speed of glucose breakdown, improving protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 120 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
-        { id: 'gly_fermentation', name: 'Anaerobic Fermentation', description: 'Develop fermentation pathways to recycle key molecules, improving protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 150 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
-        { id: 'gly_atp_boost', name: 'Substrate-Level Boost', description: 'Improve the direct production of ATP from glycolysis, passively generating more ATP.', cost: () => ({ resource: Resource.ATP, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 1 }] },
-        { id: 'gly_hexokinase', name: 'Improve Hexokinase', description: 'Improve the first enzyme of glycolysis, increasing ATP generation multiplier.', cost: () => ({ resource: Resource.ATP, amount: 250 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.ATP, value: 0.05 }] }
+        { id: 'gly_efficiency', name: 'Enzyme Optimization', description: 'Optimize the enzymes of the glycolytic pathway to improve protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 10 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+        { id: 'gly_speed', name: 'Rapid Breakdown', description: 'Increase the speed of glucose breakdown, improving protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 12 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 5 }] },
+        { id: 'gly_fermentation', name: 'Anaerobic Fermentation', description: 'Develop fermentation pathways to recycle key molecules, improving protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 15 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+        { id: 'gly_atp_boost', name: 'Substrate-Level Boost', description: 'Improve the direct production of ATP from glycolysis, passively generating more ATP.', cost: () => ({ resource: Resource.ATP, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 1 }] },
+        { id: 'gly_hexokinase', name: 'Improve Hexokinase', description: 'Improve the first enzyme of glycolysis, increasing ATP generation multiplier.', cost: () => ({ resource: Resource.ATP, amount: 25 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.ATP, value: 0.05 }] }
       ]
     }
   },
@@ -848,7 +848,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'dna_replication',
     name: 'DNA Replication',
     description: 'Evolve a more stable DNA-based genetic system with reliable replication.',
-    cost: [{ resource: Resource.Nucleotides, amount: 75 }],
+    cost: [{ resource: Resource.Nucleotides, amount: 7 }],
     position: { x: 75, y: 48 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }, { type: 'UNLOCK_FEATURE', value: 'chamber_upgrades' }],
     icon: 'dna',
@@ -901,11 +901,11 @@ export const biologicalUpgrades1: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'dna_proofreading', name: 'DNA Polymerase Proofreading', description: 'Improve proofreading to reduce mutations, significantly boosting protocell resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 150 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
-        { id: 'dna_semiconservative', name: 'Semi-Conservative Replication', description: 'Perfect the replication process, improving Nucleotide generation.', cost: () => ({ resource: Resource.Nucleotides, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }] },
-        { id: 'dna_doublehelix', name: 'Stabilize Double Helix', description: 'A more stable helix increases your Nucleotide storage capacity.', cost: () => ({ resource: Resource.Nucleotides, amount: 250 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Nucleotides, value: 1000 }] },
-        { id: 'dna_genetic_library', name: 'Genetic Library', description: 'A stable genetic library allows for more complex tasks, increasing max Hands.', cost: () => ({ resource: Resource.Nucleotides, amount: 300 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] },
-        { id: 'dna_origin_rep', name: 'Optimize Replication Origins', description: 'Increase the number of replication origins to speed up DNA synthesis.', cost: () => ({ resource: Resource.Nucleotides, amount: 350 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Nucleotides, value: 0.1 }] }
+        { id: 'dna_proofreading', name: 'DNA Polymerase Proofreading', description: 'Improve proofreading to reduce mutations, significantly boosting protocell resilience.', cost: () => ({ resource: Resource.Nucleotides, amount: 15 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
+        { id: 'dna_semiconservative', name: 'Semi-Conservative Replication', description: 'Perfect the replication process, improving Nucleotide generation.', cost: () => ({ resource: Resource.Nucleotides, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }] },
+        { id: 'dna_doublehelix', name: 'Stabilize Double Helix', description: 'A more stable helix increases your Nucleotide storage capacity.', cost: () => ({ resource: Resource.Nucleotides, amount: 25 }), effects: [{ type: 'INCREASE_CAPACITY', resource: Resource.Nucleotides, value: 1000 }] },
+        { id: 'dna_genetic_library', name: 'Genetic Library', description: 'A stable genetic library allows for more complex tasks, increasing max Hands.', cost: () => ({ resource: Resource.Nucleotides, amount: 30 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] },
+        { id: 'dna_origin_rep', name: 'Optimize Replication Origins', description: 'Increase the number of replication origins to speed up DNA synthesis.', cost: () => ({ resource: Resource.Nucleotides, amount: 35 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Nucleotides, value: 0.1 }] }
       ]
     }
   },
@@ -913,7 +913,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'dna_repair',
     name: 'DNA Repair',
     description: 'Develop enzymatic pathways to find and correct damage to DNA molecules, safeguarding the genome.',
-    cost: [{ resource: Resource.Nucleotides, amount: 1200 }, { resource: Resource.ATP, amount: 1000 }],
+    cost: [{ resource: Resource.Nucleotides, amount: 120 }, { resource: Resource.ATP, amount: 100 }],
     position: { x: 78, y: 44 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
     icon: 'dna_repair',
@@ -939,8 +939,8 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'dr_efficiency', name: 'Repair Efficiency', description: 'Improve the speed and accuracy of DNA repair, greatly boosting protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 2000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }] },
-            { id: 'dr_double_strand', name: 'Double-Strand Break Repair', description: 'Mastering the repair of the most dangerous DNA damage further boosts resilience.', cost: () => ({ resource: Resource.ATP, amount: 2500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
+            { id: 'dr_efficiency', name: 'Repair Efficiency', description: 'Improve the speed and accuracy of DNA repair, greatly boosting protocell resilience.', cost: () => ({ resource: Resource.ATP, amount: 200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 15 }] },
+            { id: 'dr_double_strand', name: 'Double-Strand Break Repair', description: 'Mastering the repair of the most dangerous DNA damage further boosts resilience.', cost: () => ({ resource: Resource.ATP, amount: 250 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] },
         ]
     }
   },
@@ -948,7 +948,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'transcription_factors',
     name: 'Transcription Factors',
     description: 'Evolve proteins that bind to specific DNA sequences to control which genes are turned on or off.',
-    cost: [{ resource: Resource.AminoAcids, amount: 2500 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 250 }],
     position: { x: 88, y: 55 },
     effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
     icon: 'transcription_factors',
@@ -974,8 +974,8 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'tf_control', name: 'Gene Expression Control', description: 'Mastery over gene expression allows for more complex biological manipulation.', cost: () => ({ resource: Resource.AminoAcids, amount: 3500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }] },
-            { id: 'tf_combinatorial', name: 'Combinatorial Control', description: 'Use multiple transcription factors to achieve fine-tuned gene expression, improving efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 4000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+            { id: 'tf_control', name: 'Gene Expression Control', description: 'Mastery over gene expression allows for more complex biological manipulation.', cost: () => ({ resource: Resource.AminoAcids, amount: 350 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 15 }] },
+            { id: 'tf_combinatorial', name: 'Combinatorial Control', description: 'Use multiple transcription factors to achieve fine-tuned gene expression, improving efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 400 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
         ]
     }
   },
@@ -983,7 +983,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'p53_protein',
     name: 'p53 Tumor Suppressor',
     description: 'Evolve a tumor suppressor protein that regulates the cell cycle and prevents cancer.',
-    cost: [{ resource: Resource.AminoAcids, amount: 8000 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 800 }],
     position: { x: 25, y: 58 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }],
     icon: 'p53_protein',
@@ -1018,9 +1018,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'p53_cycle_arrest', name: 'Cell Cycle Arrest', description: 'Improve the ability to halt the cell cycle, boosting protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 9000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
-            { id: 'p53_cancer', name: 'Cancer Resistance', description: 'Resistance to uncontrolled growth improves efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 10000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
-            { id: 'p53_apoptosis', name: 'Apoptosis Induction', description: 'Perfect programmed cell death to eliminate damaged cells, greatly improving resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 11000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }
+            { id: 'p53_cycle_arrest', name: 'Cell Cycle Arrest', description: 'Improve the ability to halt the cell cycle, boosting protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 900 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
+            { id: 'p53_cancer', name: 'Cancer Resistance', description: 'Resistance to uncontrolled growth improves efficiency.', cost: () => ({ resource: Resource.AminoAcids, amount: 1000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 5 }] },
+            { id: 'p53_apoptosis', name: 'Apoptosis Induction', description: 'Perfect programmed cell death to eliminate damaged cells, greatly improving resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 1100 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }
         ]
     }
   },
@@ -1028,7 +1028,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'eukaryotic_cell',
     name: 'Eukaryotic Cell',
     description: 'Develop a cell with a nucleus and other membrane-bound organelles.',
-    cost: [{ resource: Resource.Nucleotides, amount: 2000 }, { resource: Resource.AminoAcids, amount: 2000 }],
+    cost: [{ resource: Resource.Nucleotides, amount: 200 }, { resource: Resource.AminoAcids, amount: 200 }],
     position: { x: 85, y: 65 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 20 }],
     icon: 'eukaryotic_cell',
@@ -1063,9 +1063,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'ec_compartmentalization', name: 'Compartmentalization', description: 'Specialized organelles improve the efficiency of all synthesis tasks.', cost: () => ({ resource: Resource.AminoAcids, amount: 3000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
-            { id: 'ec_endomembrane', name: 'Endomembrane System', description: 'An efficient internal factory improves all biological resource generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 4000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }] },
-            { id: 'ec_nucleus', name: 'Nuclear Envelope', description: 'Protecting the DNA within a nucleus improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 5000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }
+            { id: 'ec_compartmentalization', name: 'Compartmentalization', description: 'Specialized organelles improve the efficiency of all synthesis tasks.', cost: () => ({ resource: Resource.AminoAcids, amount: 300 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 5 }] },
+            { id: 'ec_endomembrane', name: 'Endomembrane System', description: 'An efficient internal factory improves all biological resource generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }] },
+            { id: 'ec_nucleus', name: 'Nuclear Envelope', description: 'Protecting the DNA within a nucleus improves protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] }
         ]
     }
   },
@@ -1073,7 +1073,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'endosymbiosis',
     name: 'Endosymbiosis',
     description: 'A prokaryotic cell is engulfed by another, evolving into a mitochondrion and revolutionizing energy production.',
-    cost: [{ resource: Resource.ATP, amount: 5000 }],
+    cost: [{ resource: Resource.ATP, amount: 500 }],
     position: { x: 90, y: 80 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 10 }],
     icon: 'endosymbiosis',
@@ -1108,9 +1108,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'es_mitochondria', name: 'Mitochondrial Efficiency', description: 'Optimize the new "powerhouse" of the cell to greatly boost passive ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 20 }] },
-            { id: 'es_energy', name: 'Energy Surplus', description: 'The vast energy surplus improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 10000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 15 }] },
-            { id: 'es_integration', name: 'Genetic Integration', description: 'Transfer some mitochondrial genes to the host nucleus for better control, improving resilience.', cost: () => ({ resource: Resource.ATP, amount: 12000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
+            { id: 'es_mitochondria', name: 'Mitochondrial Efficiency', description: 'Optimize the new "powerhouse" of the cell to greatly boost passive ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 20 }] },
+            { id: 'es_energy', name: 'Energy Surplus', description: 'The vast energy surplus improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 1000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 15 }] },
+            { id: 'es_integration', name: 'Genetic Integration', description: 'Transfer some mitochondrial genes to the host nucleus for better control, improving resilience.', cost: () => ({ resource: Resource.ATP, amount: 1200 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 5 }] }
         ]
     }
   },
@@ -1118,7 +1118,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'photosynthesis',
     name: 'Photosynthesis',
     description: 'Develop chloroplasts to harness light energy, producing vast amounts of ATP.',
-    cost: [{ resource: Resource.Carbon, amount: 5000 }],
+    cost: [{ resource: Resource.Carbon, amount: 500 }],
     position: { x: 80, y: 45 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 15 }],
     icon: 'photosynthesis',
@@ -1153,9 +1153,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'ps_chloroplasts', name: 'Chloroplast Optimization', description: 'Improve the light-capturing ability of chloroplasts, boosting passive ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 6000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 25 }] },
-            { id: 'ps_calvin', name: 'Calvin Cycle Efficiency', description: 'Improve the efficiency of carbon fixation, passively generating Carbon.', cost: () => ({ resource: Resource.ATP, amount: 8000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
-            { id: 'ps_antenna', name: 'Antenna Complexes', description: 'Develop antenna complexes to funnel light energy more effectively, improving protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 10000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }] },
+            { id: 'ps_chloroplasts', name: 'Chloroplast Optimization', description: 'Improve the light-capturing ability of chloroplasts, boosting passive ATP generation.', cost: () => ({ resource: Resource.ATP, amount: 600 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.ATP, value: 25 }] },
+            { id: 'ps_calvin', name: 'Calvin Cycle Efficiency', description: 'Improve the efficiency of carbon fixation, passively generating Carbon.', cost: () => ({ resource: Resource.ATP, amount: 800 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] },
+            { id: 'ps_antenna', name: 'Antenna Complexes', description: 'Develop antenna complexes to funnel light energy more effectively, improving protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 1000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 10 }] },
         ]
     }
   },
@@ -1163,7 +1163,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'multicellularity',
     name: 'Multicellularity',
     description: 'Cells begin to cooperate and specialize, forming complex, multicellular organisms.',
-    cost: [{ resource: Resource.AminoAcids, amount: 10000 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 1000 }],
     position: { x: 70, y: 88 },
     effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
     icon: 'multicellularity',
@@ -1198,9 +1198,9 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'mc_specialization', name: 'Cellular Specialization', description: 'Coordinated cells work more effectively, granting more Max Hands.', cost: () => ({ resource: Resource.AminoAcids, amount: 15000 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] },
-            { id: 'mc_communication', name: 'Intercellular Signaling', description: 'Improve cell-to-cell communication, boosting all biological resource generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 20000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
-            { id: 'mc_development', name: 'Developmental Programs', description: 'Develop genetic programs for building a complex body, increasing protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 25000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
+            { id: 'mc_specialization', name: 'Cellular Specialization', description: 'Coordinated cells work more effectively, granting more Max Hands.', cost: () => ({ resource: Resource.AminoAcids, amount: 1500 }), effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }] },
+            { id: 'mc_communication', name: 'Intercellular Signaling', description: 'Improve cell-to-cell communication, boosting all biological resource generation.', cost: () => ({ resource: Resource.AminoAcids, amount: 2000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.AminoAcids, value: 0.1 }] },
+            { id: 'mc_development', name: 'Developmental Programs', description: 'Develop genetic programs for building a complex body, increasing protocell resilience.', cost: () => ({ resource: Resource.AminoAcids, amount: 2500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'resilience', value: 10 }] },
         ]
     }
   },
@@ -1208,7 +1208,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'circulatory_system',
     name: 'Circulatory System',
     description: 'Evolve a system of vessels and a pump to transport nutrients and oxygen throughout a large body.',
-    cost: [{ resource: Resource.ATP, amount: 18000 }, {resource: Resource.Iron, amount: 5000}],
+    cost: [{ resource: Resource.ATP, amount: 1800 }, {resource: Resource.Iron, amount: 500}],
     position: { x: 75, y: 82 },
     effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 15 }],
     icon: 'circulatory_system',
@@ -1234,8 +1234,8 @@ export const biologicalUpgrades1: Upgrade[] = [
             }
         ],
         subUpgrades: [
-            { id: 'cs_efficiency', name: 'Transport Efficiency', description: 'A more efficient circulatory system greatly improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 25000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 20 }] },
-            { id: 'cs_four_chamber', name: 'Four-Chambered Heart', description: 'Develop a highly efficient heart, boosting protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 30000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }] },
+            { id: 'cs_efficiency', name: 'Transport Efficiency', description: 'A more efficient circulatory system greatly improves protocell efficiency.', cost: () => ({ resource: Resource.ATP, amount: 2500 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 20 }] },
+            { id: 'cs_four_chamber', name: 'Four-Chambered Heart', description: 'Develop a highly efficient heart, boosting protocell speed.', cost: () => ({ resource: Resource.ATP, amount: 3000 }), effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'speed', value: 10 }] },
         ]
     }
   },
@@ -1243,7 +1243,7 @@ export const biologicalUpgrades1: Upgrade[] = [
     id: 'limitless_manipulation',
     name: 'Collective Consciousness',
     description: 'Develop a hive-mind link between biological units, allowing for unparalleled coordination. Unlocks repeatable upgrades.',
-    cost: [{ resource: Resource.AminoAcids, amount: 20000 }],
+    cost: [{ resource: Resource.AminoAcids, amount: 2000 }],
     position: { x: 82, y: 95 },
     effects: [],
     icon: 'hive_mind',
@@ -1282,7 +1282,7 @@ export const biologicalUpgrades1: Upgrade[] = [
           id: 'hands_inf_cap',
           name: 'Expand Hands Limit',
           description: 'Strengthen the psychic link, increasing your maximum Hands capacity.',
-          cost: (level) => ({ resource: Resource.AminoAcids, amount: Math.floor(5000 * Math.pow(1.5, level)) }),
+          cost: (level) => ({ resource: Resource.AminoAcids, amount: Math.floor(500 * Math.pow(1.5, level)) }),
           effects: [{ type: 'INCREASE_MAX_HANDS', value: 10 }],
           repeatable: {}
         },
@@ -1290,7 +1290,7 @@ export const biologicalUpgrades1: Upgrade[] = [
           id: 'hands_inf_efficiency',
           name: 'Hive Mind Efficiency',
           description: 'Improve the efficiency of the collective, slightly boosting all biological resource generation.',
-          cost: (level) => ({ resource: Resource.ATP, amount: Math.floor(10000 * Math.pow(1.8, level)) }),
+          cost: (level) => ({ resource: Resource.ATP, amount: Math.floor(1000 * Math.pow(1.8, level)) }),
           effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.AminoAcids, value: 1 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Nucleotides, value: 1 }],
           repeatable: {}
         },
@@ -1298,7 +1298,7 @@ export const biologicalUpgrades1: Upgrade[] = [
           id: 'hands_inf_processing',
           name: 'Parallel Processing',
           description: 'Improve the hive mind\'s parallel processing, improving protocell efficiency.',
-          cost: (level) => ({ resource: Resource.ATP, amount: Math.floor(15000 * Math.pow(2, level)) }),
+          cost: (level) => ({ resource: Resource.ATP, amount: Math.floor(1500 * Math.pow(2, level)) }),
           effects: [{ type: 'IMPROVE_PROTOCELL_ATTRIBUTE', attribute: 'efficiency', value: 1 }],
           repeatable: {}
         }

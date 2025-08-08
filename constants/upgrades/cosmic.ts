@@ -90,7 +90,7 @@ export const cosmicUpgrades: Upgrade[] = [
           id: 'co_inf_cap', 
           name: 'Cosmic Fabric Expansion', 
           description: 'Bend spacetime to increase your stardust containment field and passively attract more. Infinitely expandable.', 
-          cost: (level) => ({ resource: Resource.Stardust, amount: Math.floor(50 * Math.pow(4, level)) }), 
+          cost: (level) => ({ resource: Resource.Stardust, amount: Math.floor(25 * Math.pow(2.5, level)) }), 
           effects: [
               { type: 'INCREASE_CAPACITY', resource: Resource.Stardust, value: 0 }, // Handled by special logic in App.tsx
               { type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 0 } // Handled by special logic in App.tsx
@@ -104,7 +104,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'star_cluster_formation',
     name: 'Star Cluster',
     description: 'Form a dense cluster of stars, a stellar nursery that passively generates stardust.',
-    cost: [{ resource: Resource.Stardust, amount: 1500 }],
+    cost: [{ resource: Resource.Stardust, amount: 150 }],
     position: { x: 48, y: 18 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 20 }],
     icon: 'star_cluster',
@@ -130,8 +130,8 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'sc_density', name: 'Increase Density', description: 'A denser cluster passively attracts more Stardust.', cost: () => ({ resource: Resource.Stardust, amount: 2000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 30 }] },
-        { id: 'sc_evolution', name: 'Study Stellar Evolution', description: 'Understanding star life cycles boosts Stardust collection efficiency.', cost: () => ({ resource: Resource.Stardust, amount: 4000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }] }
+        { id: 'sc_density', name: 'Increase Density', description: 'A denser cluster passively attracts more Stardust.', cost: () => ({ resource: Resource.Stardust, amount: 200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 30 }] },
+        { id: 'sc_evolution', name: 'Study Stellar Evolution', description: 'Understanding star life cycles boosts Stardust collection efficiency.', cost: () => ({ resource: Resource.Stardust, amount: 400 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }] }
       ]
     }
   },
@@ -139,7 +139,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'cosmic_microwave_background',
     name: 'CMB Analysis',
     description: 'Study the faint afterglow of the Big Bang to understand the initial conditions of the universe.',
-    cost: [{ resource: Resource.Stardust, amount: 20 }],
+    cost: [{ resource: Resource.Stardust, amount: 10 }],
     position: { x: 15, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }],
     icon: 'cosmic_microwave_background',
@@ -174,8 +174,8 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'cmb_fluctuations', name: 'Analyze Anisotropies', description: 'Pinpoint denser regions of primordial matter to improve Stardust collection.', cost: () => ({ resource: Resource.Stardust, amount: 40 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 30 }] },
-        { id: 'cmb_polarization', name: 'Detect B-Modes', description: 'Refine analysis of CMB polarization to boost overall Stardust gain.', cost: () => ({ resource: Resource.Stardust, amount: 100 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] },
+        { id: 'cmb_fluctuations', name: 'Analyze Anisotropies', description: 'Pinpoint denser regions of primordial matter to improve Stardust collection.', cost: () => ({ resource: Resource.Stardust, amount: 20 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 30 }] },
+        { id: 'cmb_polarization', name: 'Detect B-Modes', description: 'Refine analysis of CMB polarization to boost overall Stardust gain.', cost: () => ({ resource: Resource.Stardust, amount: 50 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] },
       ]
     }
   },
@@ -183,7 +183,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'protostar_formation',
     name: 'Protostar Formation',
     description: 'A large mass of gas and dust collapses, forming a protostar, the precursor to a star.',
-    cost: [{ resource: Resource.Stardust, amount: 20 }],
+    cost: [{ resource: Resource.Stardust, amount: 10 }],
     position: { x: 45, y: 10 },
     effects: [{ type: 'UNLOCK_FEATURE', value: 'fusion' }, { type: 'UNLOCK_KNOBS', value: ['h_fusion'] }, { type: 'INCREASE_MAX_FORCE', value: 5 }, { type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }],
     icon: 'protostar',
@@ -227,8 +227,8 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'pf_accel_1', name: 'Accelerated Collapse', description: 'Improve gravitational focusing to get more Hydrogen from Stardust.', cost: () => ({ resource: Resource.Hydrogen, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 1 }] },
-        { id: 'pf_force_1', name: 'Focused Force', description: 'Harness stellar winds to increase maximum available Force.', cost: () => ({ resource: Resource.Stardust, amount: 250 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] },
+        { id: 'pf_accel_1', name: 'Accelerated Collapse', description: 'Improve gravitational focusing to get more Hydrogen from Stardust.', cost: () => ({ resource: Resource.Hydrogen, amount: 5 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 1 }] },
+        { id: 'pf_force_1', name: 'Focused Force', description: 'Harness stellar winds to increase maximum available Force.', cost: () => ({ resource: Resource.Stardust, amount: 25 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 5 }] },
       ]
     }
   },
@@ -236,7 +236,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'stellar_nucleosynthesis',
     name: 'Stellar Nucleosynthesis',
     description: 'Ignite the core of a star, fusing hydrogen into heavier elements like carbon.',
-    cost: [{ resource: Resource.Hydrogen, amount: 20 }],
+    cost: [{ resource: Resource.Hydrogen, amount: 10 }],
     position: { x: 60, y: 10 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['c_fusion'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'nucleosynthesis',
@@ -271,8 +271,8 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'sn_cno_1', name: 'CNO Cycle Mastery', description: 'Improve the efficiency of Carbon fusion.', cost: () => ({ resource: Resource.Carbon, amount: 25 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 0.5 }] },
-        { id: 'sn_capacity_1', name: 'Elemental Storage', description: 'Increase the storage capacity for Hydrogen and Carbon.', cost: () => ({ resource: Resource.Hydrogen, amount: 500 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 1 }] },
+        { id: 'sn_cno_1', name: 'CNO Cycle Mastery', description: 'Improve the efficiency of Carbon fusion.', cost: () => ({ resource: Resource.Carbon, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 0.5 }] },
+        { id: 'sn_capacity_1', name: 'Elemental Storage', description: 'Increase the storage capacity for Hydrogen and Carbon.', cost: () => ({ resource: Resource.Hydrogen, amount: 50 }), effects: [{ type: 'INCREASE_UNIVERSAL_STORAGE', value: 1 }] },
       ]
     }
   },
@@ -280,7 +280,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'agb_star',
     name: 'AGB Star Phase',
     description: 'Medium-mass stars swell into giants, dredging up carbon from their core.',
-    cost: [{ resource: Resource.Carbon, amount: 250 }],
+    cost: [{ resource: Resource.Carbon, amount: 25 }],
     position: { x: 70, y: 8 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }],
     icon: 'agb_star',
@@ -297,7 +297,7 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'agb_dredge', name: 'Third Dredge-up', description: 'Enhance thermal pulses to improve passive Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 400 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 3 }] },
+        { id: 'agb_dredge', name: 'Third Dredge-up', description: 'Enhance thermal pulses to improve passive Carbon generation.', cost: () => ({ resource: Resource.Carbon, amount: 40 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 3 }] },
       ]
     }
   },
@@ -305,7 +305,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'supernova_explosion',
     name: 'Supernova',
     description: 'A massive star ends its life in a cataclysmic explosion, creating the heaviest elements.',
-    cost: [{ resource: Resource.Carbon, amount: 75 }],
+    cost: [{ resource: Resource.Carbon, amount: 30 }],
     position: { x: 70, y: 12 },
     effects: [{ type: 'UNLOCK_KNOBS', value: ['fe_fusion'] }, { type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 1 }],
     icon: 'supernova',
@@ -340,8 +340,8 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'se_enrichment_1', name: 'Heavy Element Enrichment', description: 'Improve the efficiency of Iron fusion from stellar remnants.', cost: () => ({ resource: Resource.Iron, amount: 15 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 0.2 }] },
-        { id: 'se_force_2', name: 'Shockwave Harnessing', description: 'Utilize the power of cosmic shockwaves to increase max Force.', cost: () => ({ resource: Resource.Carbon, amount: 500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] },
+        { id: 'se_enrichment_1', name: 'Heavy Element Enrichment', description: 'Improve the efficiency of Iron fusion from stellar remnants.', cost: () => ({ resource: Resource.Iron, amount: 10 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 0.2 }] },
+        { id: 'se_force_2', name: 'Shockwave Harnessing', description: 'Utilize the power of cosmic shockwaves to increase max Force.', cost: () => ({ resource: Resource.Carbon, amount: 50 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }] },
       ]
     }
   },
@@ -349,7 +349,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'limitless_force',
     name: 'Gravitational Singularity',
     description: 'Harness a localized singularity to vastly increase your command over cosmic forces. Unlocks repeatable upgrades.',
-    cost: [{ resource: Resource.Iron, amount: 2500 }],
+    cost: [{ resource: Resource.Iron, amount: 250 }],
     position: { x: 80, y: 15 },
     effects: [],
     icon: 'singularity',
@@ -370,7 +370,7 @@ export const cosmicUpgrades: Upgrade[] = [
           id: 'force_inf_cap',
           name: 'Expand Force Limit',
           description: 'Deepen the singularity, increasing your maximum Force capacity.',
-          cost: (level) => ({ resource: Resource.Iron, amount: Math.floor(1000 * Math.pow(1.5, level)) }),
+          cost: (level) => ({ resource: Resource.Iron, amount: Math.floor(100 * Math.pow(1.4, level)) }),
           effects: [{ type: 'INCREASE_MAX_FORCE', value: 10 }],
           repeatable: {}
         }
@@ -381,7 +381,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'neutron_star_collision',
     name: 'Neutron Star Collision',
     description: 'Merge two ultra-dense stellar remnants, forging vast amounts of heavy elements.',
-    cost: [{ resource: Resource.Iron, amount: 5000 }],
+    cost: [{ resource: Resource.Iron, amount: 500 }],
     position: { x: 80, y: 10 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 5 }],
     icon: 'neutron_star_collision',
@@ -406,7 +406,7 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'nsc_r_process', name: 'Optimize r-process', description: 'Focus the collision energy to significantly boost passive Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 10 }] }
+        { id: 'nsc_r_process', name: 'Optimize r-process', description: 'Focus the collision energy to significantly boost passive Iron generation.', cost: () => ({ resource: Resource.Iron, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Iron, value: 10 }] }
       ]
     }
   },
@@ -414,7 +414,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'dark_matter_studies',
     name: 'Dark Matter Studies',
     description: "Theorize the existence of an invisible substance that adds gravity to the cosmos.",
-    cost: [{ resource: Resource.Stardust, amount: 2500 }],
+    cost: [{ resource: Resource.Stardust, amount: 250 }],
     position: { x: 75, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }],
     icon: 'dark_matter',
@@ -457,7 +457,7 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'dm_rotation_curve', name: 'Analyze Rotation Curves', description: "Observing dark matter's gravitational influence improves Stardust collection efficiency.", cost: () => ({ resource: Resource.Stardust, amount: 5000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.15 }] }
+        { id: 'dm_rotation_curve', name: 'Analyze Rotation Curves', description: "Observing dark matter's gravitational influence improves Stardust collection efficiency.", cost: () => ({ resource: Resource.Stardust, amount: 500 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.15 }] }
       ]
     }
   },
@@ -465,7 +465,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'galaxy_formation',
     name: 'Galaxy Formation',
     description: 'Dark matter halos allow vast structures of stars, gas, and dust to form.',
-    cost: [{ resource: Resource.Stardust, amount: 50000 }],
+    cost: [{ resource: Resource.Stardust, amount: 5000 }],
     position: { x: 90, y: 18 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.2 }],
     icon: 'galaxy_formation',
@@ -490,7 +490,7 @@ export const cosmicUpgrades: Upgrade[] = [
         }
       ],
       subUpgrades: [
-        { id: 'gf_efficiency', name: 'Galactic Efficiency', description: 'Boost passive Hydrogen generation across the galaxy.', cost: () => ({ resource: Resource.Hydrogen, amount: 10000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 10 }] }
+        { id: 'gf_efficiency', name: 'Galactic Efficiency', description: 'Boost passive Hydrogen generation across the galaxy.', cost: () => ({ resource: Resource.Hydrogen, amount: 1000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 10 }] }
       ]
     }
   },
@@ -500,7 +500,7 @@ export const cosmicUpgrades: Upgrade[] = [
     id: 'interstellar_medium',
     name: 'Interstellar Medium',
     description: 'Cultivate the diffuse gas and dust between stars, a reservoir for future star formation.',
-    cost: [{ resource: Resource.Stardust, amount: 2000 }],
+    cost: [{ resource: Resource.Stardust, amount: 200 }],
     position: { x: 55, y: 16 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 5 }],
     icon: 'interstellar_medium',
@@ -514,14 +514,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 1
           }
         }],
-        subUpgrades: [{ id: 'ism_enrichment', name: 'ISM Enrichment', description: 'Seed the medium with heavy elements, improving Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 2500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 10 }] }]
+        subUpgrades: [{ id: 'ism_enrichment', name: 'ISM Enrichment', description: 'Seed the medium with heavy elements, improving Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 250 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 10 }] }]
     }
   },
   {
     id: 'planetary_nebula',
     name: 'Planetary Nebula',
     description: 'Capture the glowing, expanding shell of gas ejected from a dying low-mass star.',
-    cost: [{ resource: Resource.Carbon, amount: 800 }],
+    cost: [{ resource: Resource.Carbon, amount: 80 }],
     position: { x: 75, y: 10 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 1 }],
     icon: 'planetary_nebula',
@@ -535,14 +535,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'pn_recycling', name: 'Nebula Recycling', description: 'Efficiently harvest the ejected shell for more passive Carbon.', cost: () => ({ resource: Resource.Carbon, amount: 1200 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] }]
+        subUpgrades: [{ id: 'pn_recycling', name: 'Nebula Recycling', description: 'Efficiently harvest the ejected shell for more passive Carbon.', cost: () => ({ resource: Resource.Carbon, amount: 120 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 2 }] }]
     }
   },
   {
     id: 'gravitational_lensing',
     name: 'Gravitational Lensing',
     description: 'Use gravity to bend light, acting as a natural telescope to find resource-rich regions.',
-    cost: [{ resource: Resource.Stardust, amount: 7500 }],
+    cost: [{ resource: Resource.Stardust, amount: 750 }],
     position: { x: 65, y: 22 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.05 }],
     icon: 'gravitational_lensing',
@@ -556,14 +556,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 1
           }
         }],
-        subUpgrades: [{ id: 'gl_focusing', name: 'Lensing Focus', description: 'Refine your observations to further boost Stardust generation efficiency.', cost: () => ({ resource: Resource.Stardust, amount: 10000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
+        subUpgrades: [{ id: 'gl_focusing', name: 'Lensing Focus', description: 'Refine your observations to further boost Stardust generation efficiency.', cost: () => ({ resource: Resource.Stardust, amount: 1000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
     }
   },
   {
     id: 'reionization_epoch',
     name: 'Epoch of Reionization',
     description: 'The first stars produce enough radiation to re-ionize the neutral hydrogen filling the universe.',
-    cost: [{ resource: Resource.Hydrogen, amount: 5000 }],
+    cost: [{ resource: Resource.Hydrogen, amount: 500 }],
     position: { x: 25, y: 20 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }],
     icon: 'reionization',
@@ -577,14 +577,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 1
           }
         }],
-        subUpgrades: [{ id: 're_efficiency', name: 'Reionization Efficiency', description: 'Harness the energy of reionization to passively generate Hydrogen.', cost: () => ({ resource: Resource.Hydrogen, amount: 7500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }] }]
+        subUpgrades: [{ id: 're_efficiency', name: 'Reionization Efficiency', description: 'Harness the energy of reionization to passively generate Hydrogen.', cost: () => ({ resource: Resource.Hydrogen, amount: 750 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 5 }] }]
     }
   },
   {
     id: 'supermassive_black_hole',
     name: 'Supermassive Black Hole',
     description: 'A gravitational singularity at the galactic core, profoundly influencing the galaxy\'s structure.',
-    cost: [{ resource: Resource.Iron, amount: 50000 }],
+    cost: [{ resource: Resource.Iron, amount: 5000 }],
     position: { x: 80, y: 15 },
     effects: [{ type: 'INCREASE_MAX_FORCE', value: 20 }],
     icon: 'black_hole',
@@ -606,14 +606,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'smbh_gravity_well', name: 'Deepen Gravity Well', description: 'The intense gravity provides a significant boost to max Force.', cost: () => ({ resource: Resource.Iron, amount: 75000 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 30 }] }]
+        subUpgrades: [{ id: 'smbh_gravity_well', name: 'Deepen Gravity Well', description: 'The intense gravity provides a significant boost to max Force.', cost: () => ({ resource: Resource.Iron, amount: 7500 }), effects: [{ type: 'INCREASE_MAX_FORCE', value: 30 }] }]
     }
   },
   {
     id: 'quasar',
     name: 'Quasar Activation',
     description: 'Ignite the accretion disk of a supermassive black hole, creating one of the most luminous objects in the universe.',
-    cost: [{ resource: Resource.Stardust, amount: 100000 }],
+    cost: [{ resource: Resource.Stardust, amount: 10000 }],
     position: { x: 85, y: 13 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 100 }],
     icon: 'quasar',
@@ -627,14 +627,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'quasar_jets', name: 'Harness Relativistic Jets', description: 'Channel the quasar\'s immense energy output to boost Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 150000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 150 }] }]
+        subUpgrades: [{ id: 'quasar_jets', name: 'Harness Relativistic Jets', description: 'Channel the quasar\'s immense energy output to boost Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 15000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 150 }] }]
     }
   },
   {
     id: 'dark_energy',
     name: 'Dark Energy',
     description: 'Acknowledge a mysterious repulsive force causing the universe\'s expansion to accelerate.',
-    cost: [{ resource: Resource.Stardust, amount: 100000 }],
+    cost: [{ resource: Resource.Stardust, amount: 10000 }],
     position: { x: 85, y: 21 },
     effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }],
     icon: 'dark_energy',
@@ -656,14 +656,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'de_understanding', name: 'Cosmological Constant', description: 'A deeper understanding of dark energy boosts all Stardust acquisition.', cost: () => ({ resource: Resource.Stardust, amount: 120000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
+        subUpgrades: [{ id: 'de_understanding', name: 'Cosmological Constant', description: 'A deeper understanding of dark energy boosts all Stardust acquisition.', cost: () => ({ resource: Resource.Stardust, amount: 12000 }), effects: [{ type: 'INCREASE_GENERATION_MULTIPLIER', resource: Resource.Stardust, value: 0.1 }] }]
     }
   },
   {
     id: 'cosmic_web',
     name: 'Cosmic Web',
     description: 'Map the vast, filamentary structures of dark matter that form the scaffolding of the universe.',
-    cost: [{ resource: Resource.Stardust, amount: 75000 }],
+    cost: [{ resource: Resource.Stardust, amount: 7500 }],
     position: { x: 80, y: 23 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 10 }],
     icon: 'cosmic_web',
@@ -677,14 +677,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'cw_filaments', name: 'Trace Filaments', description: 'Tracing the gas in cosmic filaments improves passive Hydrogen generation.', cost: () => ({ resource: Resource.Hydrogen, amount: 50000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 20 }] }]
+        subUpgrades: [{ id: 'cw_filaments', name: 'Trace Filaments', description: 'Tracing the gas in cosmic filaments improves passive Hydrogen generation.', cost: () => ({ resource: Resource.Hydrogen, amount: 5000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 20 }] }]
     }
   },
   {
     id: 'galactic_merger',
     name: 'Galactic Merger',
     description: 'Collide two galaxies to trigger a massive burst of star formation and elemental creation.',
-    cost: [{ resource: Resource.Stardust, amount: 200000 }],
+    cost: [{ resource: Resource.Stardust, amount: 20000 }],
     position: { x: 90, y: 16 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 50 }],
     icon: 'galactic_merger',
@@ -706,14 +706,14 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'gm_starburst', name: 'Starburst Galaxy', description: 'The intense star formation significantly boosts Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 250000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 100 }] }]
+        subUpgrades: [{ id: 'gm_starburst', name: 'Starburst Galaxy', description: 'The intense star formation significantly boosts Stardust generation.', cost: () => ({ resource: Resource.Stardust, amount: 25000 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Stardust, value: 100 }] }]
     }
   },
   {
     id: 'population_iii_stars',
     name: 'Population III Stars',
     description: 'Form the very first generation of stars, composed almost purely of Hydrogen.',
-    cost: [{ resource: Resource.Hydrogen, amount: 1000 }],
+    cost: [{ resource: Resource.Hydrogen, amount: 100 }],
     position: { x: 40, y: 15 },
     effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Hydrogen, value: 2 }],
     icon: 'population_iii_stars',
@@ -727,7 +727,7 @@ export const cosmicUpgrades: Upgrade[] = [
             answerIndex: 2
           }
         }],
-        subUpgrades: [{ id: 'p3_enrichment', name: 'First Enrichment', description: 'The death of these first stars provides a small passive income of Carbon.', cost: () => ({ resource: Resource.Hydrogen, amount: 1500 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 0.1 }] }]
+        subUpgrades: [{ id: 'p3_enrichment', name: 'First Enrichment', description: 'The death of these first stars provides a small passive income of Carbon.', cost: () => ({ resource: Resource.Hydrogen, amount: 150 }), effects: [{ type: 'ADD_BASE_GENERATION', resource: Resource.Carbon, value: 0.1 }] }]
     }
   },
 ];
